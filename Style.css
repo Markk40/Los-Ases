@@ -8,17 +8,19 @@
 /* Estilos generales del cuerpo */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #2c2c2c;
     color: #333;
     line-height: 1.6;
 }
 
 /* Estilos para el header */
 header {
-    background-color: #80c7e8;
+    background-color: #9a9a9a;
     color: white;
     text-align: center;
     padding: 20px 0;
+    border-radius: 8px;
+    margin: 10px;
 }
 
 header h1 {
@@ -26,6 +28,38 @@ header h1 {
     margin-bottom: 20px;
     color: black; /* Cambié el color del título a negro */
 }
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #9a9a9a; /* Azul oscuro */
+    border-radius: 8px;
+    margin: 10px;
+}
+
+nav button {
+    background-color: #9a9a9a; /* Azul medio */
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+nav button:hover {
+    background-color: #2c2c2c; /* Azul más oscuro al pasar el mouse */
+    transform: scale(1.05);
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
 
 /* Estilo del formulario */
 form {
