@@ -5,7 +5,6 @@ body {
     padding: 0;
     background-color: #f0f0f0;
 }
-
 /* Contenedor principal que agrupa el contenido de la página */
 .home {
     display: flex;
@@ -82,7 +81,6 @@ form {
     align-items: center; /* Centrar los campos dentro del formulario */
     box-sizing: border-box;
 }
-
 /* Estilo para el título de la página de registro */
 .register header h1 {
     font-size: 48px;
