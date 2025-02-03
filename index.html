@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Registrar Usuario</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Formulario de registro</h1>
+    </header>
+    <section>
+      <form onsubmit="return compararContraseñas()">
+        <label for="username">Nombre Usuario:</label><br>
+        <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" name="email" placeholder="micorreo@correo.es" required><br><br>
+
+        <label for="fnac">Fecha de nacimiento:</label><br>
+        <input type="date" id="fnac" name="fnac" required><br><br>
+
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="contraseña" name="contraseña" required><br><br>
+
+        <label for="contraseña2">Confirmar contraseña:</label><br>
+        <input type="password" id="contraseña2" name="contraseña2" required><br><br>
+
+        <p id="error" style="color: red;"></p>
+
+        <script>
+          function compararContraseñas() {
+            let first_password = document.getElementById("contraseña").value;
+            let second_password = document.getElementById("contraseña2").value;
+            let error_msg = document.getElementById("error");
+
+            if (first_password !== second_password) {
+              error_msg.textContent = "Las contraseñas no coinciden.";
+              document.getElementById("contraseña2").style.backgroundColor = "red";
+              return false;
+            } else if (first_password.length<8){
+              error_msg.textContent = "La longitud minima de la contraseña debe ser de 8 caracteres";
+              document.getElementById("contraseña").style.backgroundColor = "red";
+              return false;
+            }
+            else{
+              error_msg.textContent = "";
+              document.getElementById("contraseña2").style.backgroundColor = "";
+              return true;
+            }
+          }
+        </script>
+        <input type="submit" value="Registrar">
+        <input type="reset" value="Limpiar campos">
+      </form>
+    </section>
+    <main></main>
+    <footer></footer>
+  </body>
+</html>
