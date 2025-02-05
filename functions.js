@@ -19,4 +19,16 @@ function compararContraseñas() {
     }
   }
 
+  function checkLoginStatus() {
+    // Verificamos si hay una variable "isLoggedIn" en localStorage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    // Si está logueado (isLoggedIn es 'true'), ocultamos los botones de login y signup
+    if (isLoggedIn === 'true') {
+        document.getElementById('auth-buttons').style.display = 'none'; // Oculta los botones
+    } else {
+        document.getElementById('auth-buttons').style.display = 'flex'; // Muestra los botones
+    }
+}
+
   

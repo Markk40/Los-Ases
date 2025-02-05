@@ -14,7 +14,7 @@
         <h1 class="company-name">LOS ASES</h1>
         <div class="auth-buttons">
             <button class="login-btn"><a href="">Log In</a></button>
-            <button class="signup-btn"><a href="/register_user.html">Sign Up</a></button>
+            <button class="signup-btn"><a href="register_user.html">Sign Up</a></button>
         </div>
     </header>
 
@@ -22,7 +22,7 @@
         <div class="hero-content">
             <h2>Página de Subastas</h2>
             <nav class="main-buttons">
-                <button><a href="/home/">Home</a></button>
+                <button><a href="index.html">Home</a></button>
                 <button><a href="">Buscar Subastas</a></button>
                 <button><a href="/vender/">Vender Producto</a></button>
             </nav>
@@ -31,8 +31,17 @@
 
     <!-- Pie de página -->
     <footer>
-        <p>&copy; 2024 Los Ases | Contacto: info@losases.com</p>
+        <p>&copy; 2025 Los Ases | Contacto: info@losases.com</p>
     </footer>
+
+    <script src="functions.js"></script>
+
+    <!-- Llamar a la función checkLoginStatus() cuando la página se cargue -->
+    <script>
+        window.onload = function() {
+            checkLoginStatus();  // Verifica el estado del login al cargar la página
+        };
+    </script>
 </body>
 </html>
 <!-- <!DOCTYPE html>

@@ -6,11 +6,18 @@
     <link rel="stylesheet" type="text/css" href="style_register.css">
   </head>
   <body>
-    <!-- Importamos el archivo JavaScript externo -->
-    <script src="functions.js"></script>
-    <header>
-      <h1>Formulario de registro</h1>
+    <!-- Barra de navegación superior -->
+    <header class="navbar">
+      <a href="index.html" class="logo">
+        <img src="logoAses2.jpg" alt="Logo Los Ases">
+      </a>
+      <h1 class="company-name">LOS ASES</h1>
+      <div class="auth-buttons" id="auth-buttons">
+        <button class="login-btn" id="login-btn"><a href="login.html">Log In</a></button>
+        <button class="signup-btn" id="signup-btn"><a href="register_user.html">Sign Up</a></button>
+      </div>
     </header>
+
     <main>
       <div class="register">
         <form onsubmit="return compararContraseñas()">
@@ -35,8 +42,15 @@
         </form>
       </div>
     </main>
-    <footer>
 
+    <footer>
+      <p>&copy; 2025 Los Ases | Contacto: info@losases.com</p>
     </footer>
+    <script src="functions.js"></script>
+    <script>
+      window.onload = function() {
+          checkLoginStatus();  // Verifica el estado del login al cargar la página
+      };
+  </script>
   </body>
 </html>
