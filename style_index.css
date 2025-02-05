@@ -65,9 +65,19 @@ body {
     transition: 0.3s;
 }
 
+.login-btn a, .signup-btn a{
+    text-decoration: none;  /* Elimina la línea debajo del texto */
+    color: black;  /* Cambia el color del texto a negro */
+    font-weight: bold;   
+}
+
 .login-btn:hover, .signup-btn:hover {
     background-color: gray;
     color: white;
+}
+
+.login-btn:hover a, .signup-btn:hover a{
+    color: black;
 }
 
 /* ======= SECCIÓN DE FONDO CON IMAGEN ======= */
