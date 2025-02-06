@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del BMW M3 2020</title>
+    <link rel="stylesheet" href="style_detalles.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <img src="logoAses2.jpg" alt="Logo Los Ases">
+        </a>
+        <h1 class="company-name">LOS ASES</h1>
+        <div class="auth-buttons">
+            <button class="login-btn"><a href="">Log In</a></button>
+            <button class="signup-btn"><a href="register_user.html">Sign Up</a></button>
+        </div>
+    </header>
+
+    <div class="content">
+        <h2>BMW M3 2020</h2>
+        
+        <!-- Carrusel de imágenes -->
+        <div class="carousel" id="carousel">
+            <img src="car1_1.jpg" alt="BMW M3 2020 - 1">
+            <img src="car1_2.jpg" alt="BMW M3 2020 - 2">
+            <img src="car1_3.jpg" alt="BMW M3 2020 - 3">
+            <img src="car1_4.jpg" alt="BMW M3 2020 - 4">
+            <div class="carousel-control left" onclick="moveCarousel(-1)">&#10094;</div>
+            <div class="carousel-control right" onclick="moveCarousel(1)">&#10095;</div>
+        </div>
+
+        <!-- Especificaciones técnicas -->
+        <div class="car-specs">
+            <h3>Especificaciones Técnicas:</h3>
+            <ul>
+                <li>Motor: 3.0L Twin-Turbo</li>
+                <li>Potencia: 473 hp</li>
+                <li>Transmisión: Manual de 6 velocidades</li>
+                <li>Tracción: Trasera</li>
+                <li>Color: Blanco</li>
+            </ul>
+        </div>
+
+        <!-- Botón para pujar -->
+        <button class="btn-bid">Pujar</button>
+    </div>
+
+    <footer>
+        &copy; 2025 Subastas de Coches. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll("#carousel img");
+        const totalImages = images.length;
+
+        function moveCarousel(direction) {
+            currentIndex += direction;
+            
+            // Si el índice pasa del límite, reinicia a 0 o al final para el ciclo
+            if (currentIndex < 0) currentIndex = totalImages - 1;  // Si va al principio
+            if (currentIndex >= totalImages) currentIndex = 0;  // Si va al final
+
+            // Desplazar las imágenes
+            const offset = -currentIndex * 100;
+            images.forEach(image => {
+                image.style.transform = `translateX(${offset}%)`;
+            });
+        }
+    </script>
+</body>
+</html>

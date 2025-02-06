@@ -1,0 +1,187 @@
+/* ======= ESTILOS GENERALES ======= */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Asegura que ocupen toda la pantalla */
+    overflow: hidden; /* Evita el desplazamiento */
+}
+
+/* Asegurarse de que el contenido está centrado y no se expanda innecesariamente */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* ======= BARRA DE NAVEGACIÓN SUPERIOR ======= */
+.navbar {
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* Logo de la empresa */
+.logo img {
+    height: 50px;
+}
+
+/* Nombre de la empresa */
+.company-name {
+    font-size: 24px;
+    font-family: 'Georgia', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-left: 40px;
+}
+
+/* Botones de Login y Sign Up */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 30px;
+}
+
+.login-btn, .signup-btn {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.login-btn a, .signup-btn a{
+    text-decoration: none;  /* Elimina la línea debajo del texto */
+    color: black;  /* Cambia el color del texto a negro */
+    font-weight: bold;   
+}
+
+.login-btn:hover, .signup-btn:hover {
+    background-color: gray;
+    color: white;
+}
+
+.login-btn:hover a, .signup-btn:hover a{
+    color: black;
+}
+/* ======= CONTENIDO ======= */
+.content {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 80px; /* Para evitar que se cubra por la barra de navegación */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Título del coche */
+h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Carrusel de imágenes */
+.carousel {
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.carousel img {
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.carousel-control.left { left: 10px; }
+.carousel-control.right { right: 10px; }
+
+/* Especificaciones técnicas */
+.car-specs {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
+.car-specs h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.car-specs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.car-specs li {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+/* Botón para pujar */
+.btn-bid {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+}
+
+.btn-bid:hover {
+    background-color: gray;
+}
+
+footer {
+    width: 100%;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+    position: absolute;
+    bottom: 0;
+}

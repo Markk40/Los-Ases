@@ -1,0 +1,12 @@
+[
+    { "brand": "BMW", "model": "M3 2020", "price": 50000, "timeLeft": "2h 15m", "img": "car1.jpg" },
+    { "brand": "Audi", "model": "A4 2019", "price": 35000, "timeLeft": "3h 45m", "img": "car2.jpg" },
+    { "brand": "Mercedes", "model": "C200 2021", "price": 40500, "timeLeft": "1h 30m", "img": "car3.jpg" },
+    { "brand": "Ford", "model": "Mustang 2018", "price": 45000, "timeLeft": "4h 10m", "img": "car4.jpg" },
+    { "brand": "Chevrolet", "model": "Camaro 2017", "price": 38000, "timeLeft": "5h 25m", "img": "car5.jpg" },
+    { "brand": "Nissan", "model": "GTR 2022", "price": 80000, "timeLeft": "6h 50m", "img": "car6.jpg" },
+    { "brand": "Toyota", "model": "Supra 2021", "price": 55000, "timeLeft": "3h 20m", "img": "car7.jpg" },
+    { "brand": "Porsche", "model": "911 2019", "price": 90000, "timeLeft": "2h 05m", "img": "car8.jpg" },
+    { "brand": "Ferrari", "model": "F8 Tributo 2021", "price": 200000, "timeLeft": "1h 10m", "img": "car9.jpg" },
+    { "brand": "Lamborghini", "model": "Huracán 2020", "price": 250000, "timeLeft": "2h 50m", "img": "car10.jpg" }
+]
