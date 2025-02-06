@@ -1,33 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <title>Subasta Los Ases</title>
-    <link rel="stylesheet" type="text/css" href="Style.css">
-
-  </head>
-  <!-- Importamos el archivo JavaScript externo -->
-  <script src="functions.js"></script>
-  <body class="home"> <!-- Clase específica para esta página -->
-    <div class="title-box">
-        <h1>Subasta de Los Ases</h1>
-      <nav>
-          <button><a href="/home/">Home</a></button>
-          <button><a href="/register_user.html">Registrar Cuenta</a></button>
-          <button><a href="/css/">Iniciar Sesión</a></button>
-          <button><a href="/js/">Buscar Subastas</a></button>
-          <button><a href="/python/">Vender Producto</a></button>
-      </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Búsqueda</title>
+    <link rel="stylesheet" href="style_index.css">
+    <style>
+        .auction-item { display: inline-block; width: 200px; margin: 10px; }
+        .auction-item img { width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><img src="logoAses2.jpg" alt="Logo"></div>
+        <div class="company-name">Los Ases</div>
+        <div class="auth-buttons">
+            <button class="login-btn"><a href="#">Login</a></button>
+            <button class="signup-btn"><a href="#">Sign Up</a></button>
+        </div>
     </div>
-    <div>
-        <form class="searchbar">
-            <input type="text" placeholder="Buscar...">
-            <button type="submit">
-                <img id="boton_lupa" src="Lupa.jpeg" alt="Buscar">
-            </button>
-        </form>
-    </div>    
-    <main></main>
-    <footer></footer>
-  </body>
+    
+    <div class="content">
+        <h2>Resultados de Búsqueda</h2>
+        <div class="searchbar">
+            <input type="text" id="searchInput" placeholder="Buscar subastas..." onkeyup="searchCars()">
+            <button><img src="Lupa.jpeg" alt="Buscar"></button>
+        </div>
+        
+        <div class="auction-results" id="auctionResults">
+            <!-- Aquí se mostrarán los coches dinámicamente -->
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 Subastas de Coches. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        let cars = []; // Variable global para almacenar los coches
+
+        // Función para cargar el JSON desde el archivo externo
+        async function loadCars() {
+            try {
+                const response = await fetch("cars.json"); // Carga el archivo JSON
+                cars = await response.json(); // Convierte la respuesta en JSON
+                displayCars(); // Muestra los coches en la página
+            } catch (error) {
+                console.error("Error cargando el JSON:", error);
+            }
+        }
+
+        // Función para mostrar los coches en la página
+        function displayCars() {
+            const auctionResults = document.getElementById("auctionResults");
+            auctionResults.innerHTML = ""; // Limpiar antes de añadir
+
+            cars.forEach(car => {
+                const carElement = document.createElement("div");
+                carElement.classList.add("auction-item");
+                carElement.setAttribute("data-brand", car.brand);
+
+                carElement.innerHTML = `
+                    <img src="${car.img}" alt="${car.brand} ${car.model}">
+                    <div class="auction-details">
+                        <h3>${car.brand} ${car.model}</h3>
+                        <p>Precio actual: $${car.price.toLocaleString()}</p>
+                        <p>Tiempo restante: ${car.timeLeft}</p>
+                        <button>Pujar</button>
+                    </div>
+                `;
+
+                auctionResults.appendChild(carElement);
+            });
+        }
+
+        // Función de búsqueda
+        function searchCars() {
+            const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+            const auctionItems = document.querySelectorAll(".auction-item");
+            
+            auctionItems.forEach(item => {
+                const brand = item.getAttribute("data-brand").toLowerCase();
+                if (brand.includes(searchQuery)) {
+                    item.style.display = "inline-block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        // Cargar los coches al iniciar la página
+        window.onload = loadCars;
+    </script>
+</body>
 </html>

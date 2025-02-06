@@ -165,3 +165,65 @@ footer {
     position: absolute;
     bottom: 0;
 }
+
+.searchbar {
+    display: flex; /* Organiza los elementos en una línea */
+    align-items: center; /* Alinea verticalmente */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    /* max-width: 100%; Asegura que no se desborde */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fff;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+
+.searchbar button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchbar button img {
+    width: 25px; /* Ajusta el tamaño de la imagen */
+    height: 25px;
+}
+
+.auction-results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    gap: 20px; /* Espacio entre elementos */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.auction-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.auction-item img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.content {
+    overflow-y: auto; /* Habilita el desplazamiento */
+    max-height: calc(100vh - 80px); /* Ajusta la altura para evitar que sobrepase la pantalla */
+    padding-top: 80px; /* Espaciado para evitar que la barra de navegación lo cubra */
+    width: 100%;
+}
+
+body {
+    overflow-y: auto; /* Permite desplazamiento vertical */
+}
