@@ -20,7 +20,7 @@
 
     <main>
       <div class="register">
-        <form onsubmit="return compararContraseñas()">
+        <form onsubmit="return registrarUsuario(event)">
           <label for="username">Nombre Usuario:</label><br>
           <input type="text" id="username" name="username" placeholder="Username" required><br><br>
 
@@ -29,6 +29,33 @@
 
           <label for="fnac">Fecha de nacimiento:</label><br>
           <input type="date" id="fnac" name="fnac" required><br><br>
+
+          <label for="comuniada">Comunidad Autónoma:</label>
+          <select id="comunidad" name="comunidad" required onchange="actualizarProvincias()">
+            <option value="">Seleccione una comunidad</option>
+            <option value="Andalucía">Andalucía</option>
+            <option value="Aragón">Aragón</option>
+            <option value="Asturias">Asturias</option>
+            <option value="Baleares">Islas Baleares</option>
+            <option value="Canarias">Canarias</option>
+            <option value="Cantabria">Cantabria</option>
+            <option value="Castilla-La Mancha">Castilla-La Mancha</option>
+            <option value="Castilla y León">Castilla y León</option>
+            <option value="Cataluña">Cataluña</option>
+            <option value="Comunidad Valenciana">Comunidad Valenciana</option>
+            <option value="Extremadura">Extremadura</option>
+            <option value="Galicia">Galicia</option>
+            <option value="Madrid">Comunidad de Madrid</option>
+            <option value="Murcia">Región de Murcia</option>
+            <option value="Navarra">Comunidad Foral de Navarra</option>
+            <option value="País Vasco">País Vasco</option>
+            <option value="La Rioja">La Rioja</option>
+          </select>
+          
+          <label for="provincia">Provincia:</label>
+          <select id="provincia" name="provincia" required>
+              <option value="">Seleccione una comunidad</option>
+          </select>
 
           <label for="contraseña">Contraseña:</label><br>
           <input type="password" id="contraseña" name="contraseña" required><br><br>
