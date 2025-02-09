@@ -4,7 +4,7 @@
         "model": "M3 2020",
         "price": 50000,
         "timeLeft": "2h 15m",
-        "img": "car1.jpg",
+        "img": "fotos_coches/BMWm32020_1.webp",
         "details": {
             "engine": "3.0L Twin-Turbo Inline-6",
             "horsepower": 473,
@@ -12,14 +12,14 @@
             "transmission": "6-speed manual",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car1_1.jpg", "car1_2.jpg", "car1_3.jpg"]
+        "additionalImages": ["fotos_coches/BMWm32020_2.webp", "fotos_coches/BMWm32020_3.jpg", "fotos_coches/BMWm32020_4.jpg"]
     },
     {
         "brand": "Audi",
         "model": "A4 2019",
         "price": 35000,
         "timeLeft": "3h 45m",
-        "img": "car2.jpg",
+        "img": "fotos_coches/audiA42019_1.jpg",
         "details": {
             "engine": "2.0L Turbo Inline-4",
             "horsepower": 248,
@@ -27,14 +27,14 @@
             "transmission": "7-speed automatic",
             "drivetrain": "AWD"
         },
-        "additionalImages": ["car2_1.jpg", "car2_2.jpg", "car2_3.jpg"]
+        "additionalImages": ["fotos_coches/audiA42019_2.webp", "fotos_coches/audiA42019_3.jpg", "fotos_coches/audiA42019_4.png"]
     },
     {
         "brand": "Mercedes",
         "model": "C200 2021",
         "price": 40500,
         "timeLeft": "1h 30m",
-        "img": "car3.jpg",
+        "img": "fotos_coches/mercedesC2002021_1.webp",
         "details": {
             "engine": "1.5L Turbo Inline-4",
             "horsepower": 181,
@@ -42,7 +42,7 @@
             "transmission": "9-speed automatic",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car3_1.jpg", "car3_2.jpg", "car3_3.jpg"]
+        "additionalImages": ["fotos_coches/mercedesC2002021_2.webp", "fotos_coches/mercedesC2002021_3.png", "fotos_coches/mercedesC2002021_4.png"]
     },
     {
         "brand": "Ford",

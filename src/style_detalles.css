@@ -4,7 +4,7 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%; /* Asegura que ocupen toda la pantalla */
-    overflow: hidden; /* Evita el desplazamiento */
+    overflow: auto;
 }
 
 /* Asegurarse de que el contenido está centrado y no se expanda innecesariamente */
@@ -121,6 +121,7 @@ h2 {
     width: 100%; /* Cada imagen ocupará todo el ancho del carrusel */
     flex-shrink: 0; /* Evita que las imágenes se encojan */
     display: block; /* Elimina el espacio extra debajo de las imágenes */
+    object-fit: contain;
 }
 
 /* Botones de control para mover las imágenes */
@@ -190,6 +191,6 @@ footer {
     color: white;
     text-align: center;
     margin-top: 40px;
-    position: absolute;
+    position: relative;
     bottom: 0;
 }
