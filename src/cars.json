@@ -94,7 +94,7 @@
         "model": "Supra 2021",
         "price": 55000,
         "timeLeft": "3h 20m",
-        "img": "car7.jpg",
+        "img": "fotos_coches/toyotaSupra2021_1.png",
         "details": {
             "engine": "3.0L Turbo Inline-6",
             "horsepower": 382,
@@ -102,14 +102,14 @@
             "transmission": "8-speed automatic",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car7_1.jpg", "car7_2.jpg", "car7_3.jpg"]
+        "additionalImages": ["fotos_coches/toyotaSupra2021_2.png", "fotos_coches/toyotaSupra2021_3.png", "fotos_coches/toyotaSupra2021_4.png"]
     },
     {
         "brand": "Porsche",
         "model": "911 2019",
         "price": 90000,
         "timeLeft": "2h 05m",
-        "img": "car8.jpg",
+        "img": "fotos_coches/porsche9112019_1.png",
         "details": {
             "engine": "3.0L Twin-Turbo Flat-6",
             "horsepower": 443,
@@ -117,14 +117,14 @@
             "transmission": "8-speed automatic",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car8_1.jpg", "car8_2.jpg", "car8_3.jpg"]
+        "additionalImages": ["fotos_coches/porsche9112019_2.png", "fotos_coches/porsche9112019_3.png", "fotos_coches/porsche9112019_4.png"]
     },
     {
         "brand": "Ferrari",
         "model": "F8 Tributo 2021",
         "price": 200000,
         "timeLeft": "1h 10m",
-        "img": "car9.jpg",
+        "img": "fotos_coches/ferrariF8tributo2018_1.png",
         "details": {
             "engine": "3.9L Twin-Turbo V8",
             "horsepower": 710,
@@ -132,14 +132,14 @@
             "transmission": "7-speed automatic",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car9_1.jpg", "car9_2.jpg", "car9_3.jpg"]
+        "additionalImages": ["fotos_coches/ferrariF8tributo2018_2.png", "fotos_coches/ferrariF8tributo2018_3.png", "fotos_coches/ferrariF8tributo2018_4.png"]
     },
     {
         "brand": "Lamborghini",
         "model": "Huracán 2020",
         "price": 250000,
         "timeLeft": "2h 50m",
-        "img": "car10.jpg",
+        "img": "fotos_coches/lamborghiniHuracan2018_1.png",
         "details": {
             "engine": "5.2L V10",
             "horsepower": 631,
@@ -147,7 +147,7 @@
             "transmission": "7-speed automatic",
             "drivetrain": "AWD"
         },
-        "additionalImages": ["car10_1.jpg", "car10_2.jpg", "car10_3.jpg"]
+        "additionalImages": ["fotos_coches/lamborghiniHuracan2018_2.png", "fotos_coches/lamborghiniHuracan2018_3.png", "fotos_coches/lamborghiniHuracan2018_4.png"]
     }
 ]
 
