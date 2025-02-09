@@ -49,7 +49,7 @@
         "model": "Mustang 2018",
         "price": 45000,
         "timeLeft": "4h 10m",
-        "img": "car4.jpg",
+        "img": "fotos_coches/fordMustang2018_1.png",
         "details": {
             "engine": "5.0L V8",
             "horsepower": 450,
@@ -57,14 +57,14 @@
             "transmission": "6-speed manual",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car4_1.jpg", "car4_2.jpg", "car4_3.jpg"]
+        "additionalImages": ["fotos_coches/fordMustang2018_2.png", "fotos_coches/fordMustang2018_3.png", "fotos_coches/fordMustang2018_4.png"]
     },
     {
         "brand": "Chevrolet",
         "model": "Camaro 2017",
         "price": 38000,
         "timeLeft": "5h 25m",
-        "img": "car5.jpg",
+        "img": "fotos_coches/chevroletCamaro2017_1.png",
         "details": {
             "engine": "6.2L V8",
             "horsepower": 455,
@@ -72,14 +72,14 @@
             "transmission": "6-speed manual",
             "drivetrain": "RWD"
         },
-        "additionalImages": ["car5_1.jpg", "car5_2.jpg", "car5_3.jpg"]
+        "additionalImages": ["fotos_coches/chevroletCamaro2017_2.png", "fotos_coches/chevroletCamaro2017_3.png", "fotos_coches/chevroletCamaro2017_4.png"]
     },
     {
         "brand": "Nissan",
         "model": "GTR 2022",
         "price": 80000,
         "timeLeft": "6h 50m",
-        "img": "car6.jpg",
+        "img": "fotos_coches/nissanGTR2022_1.png",
         "details": {
             "engine": "3.8L Twin-Turbo V6",
             "horsepower": 565,
@@ -87,7 +87,7 @@
             "transmission": "6-speed automatic",
             "drivetrain": "AWD"
         },
-        "additionalImages": ["car6_1.jpg", "car6_2.jpg", "car6_3.jpg"]
+        "additionalImages": ["fotos_coches/nissanGTR2022_2.png", "fotos_coches/nissanGTR2022_3.png", "fotos_coches/nissanGTR2022_4.png"]
     },
     {
         "brand": "Toyota",

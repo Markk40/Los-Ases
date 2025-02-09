@@ -95,6 +95,32 @@ body {
     text-align: center;
 }
 
+/* Estilo del contenedor donde está el título y el botón Atrás */
+.content > .back-btn {
+    color: white;
+    background-color: black;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none; /* Elimina subrayado */
+    border-radius: 5px;
+    margin-right: 20px;
+    display: inline-flex; /* Para alinearlo horizontalmente con el título */
+    align-items: center;
+    justify-content: center;
+}
+
+.content > .back-btn:hover {
+    background-color: gray;
+}
+
+/* Alineación del título con el botón */
+#car-title {
+    display: inline-block; /* Mantenerlo en línea con el botón Atrás */
+    margin-left: 20px; /* Espacio entre el botón y el título */
+}
+
+
 /* Título del coche */
 h2 {
     font-size: 36px;
