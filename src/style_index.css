@@ -161,15 +161,16 @@ footer {
     background-color: black;
     color: white;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 0;
     position: absolute;
     bottom: 0;
 }
 
+
 .searchbar {
     display: flex; /* Organiza los elementos en una línea */
     align-items: center; /* Alinea verticalmente */
-    width: 100%; /* Ocupa todo el ancho disponible */
+    width: 90%; /* Ocupa todo el ancho disponible */
     /* max-width: 100%; Asegura que no se desborde */
     border: 2px solid #ccc;
     border-radius: 5px;
@@ -222,8 +223,17 @@ footer {
     max-height: calc(100vh - 80px); /* Ajusta la altura para evitar que sobrepase la pantalla */
     padding-top: 80px; /* Espaciado para evitar que la barra de navegación lo cubra */
     width: 100%;
+    padding-bottom: 5%;
 }
 
 body {
     overflow-y: auto; /* Permite desplazamiento vertical */
+}
+
+input#searchInput{
+    margin: auto;
+    width: 90%;
+}
+#searchTitle{
+    margin-left: 5%;
 }

@@ -101,21 +101,29 @@ h2 {
     font-weight: bold;
     margin-bottom: 20px;
 }
-
-/* Carrusel de imágenes */
+/* ======= CARRUSEL DE IMÁGENES ======= */
 .carousel {
     width: 100%;
-    max-width: 800px;
-    overflow: hidden;
+    max-width: 800px; /* Puedes ajustar este tamaño si es necesario */
+    overflow: hidden; /* Ocultamos el contenido fuera de los límites del carrusel */
     margin-bottom: 40px;
     position: relative;
 }
 
-.carousel img {
-    width: 100%;
-    transition: transform 0.5s ease;
+/* Contenedor de las imágenes del carrusel */
+.carousel-images {
+    display: flex; /* Mostrar las imágenes en fila */
+    transition: transform 0.5s ease; /* Transición suave para el movimiento */
 }
 
+/* Cada imagen ocupará el 100% del contenedor, y solo se verá una a la vez */
+.carousel-images img {
+    width: 100%; /* Cada imagen ocupará todo el ancho del carrusel */
+    flex-shrink: 0; /* Evita que las imágenes se encojan */
+    display: block; /* Elimina el espacio extra debajo de las imágenes */
+}
+
+/* Botones de control para mover las imágenes */
 .carousel-control {
     position: absolute;
     top: 50%;

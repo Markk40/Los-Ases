@@ -5,23 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de Búsqueda</title>
     <link rel="stylesheet" href="style_index.css">
-    <style>
-        .auction-item { display: inline-block; width: 200px; margin: 10px; }
-        .auction-item img { width: 100%; }
-    </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="logo"><img src="logoAses2.jpg" alt="Logo"></div>
+        <a href="index.html" class="logo">
+            <img src="logoAses2.jpg" alt="Logo Los Ases">
+        </a>
         <div class="company-name">Los Ases</div>
         <div class="auth-buttons">
-            <button class="login-btn"><a href="#">Login</a></button>
-            <button class="signup-btn"><a href="#">Sign Up</a></button>
+            <button class="login-btn"><a href="login.html">Login</a></button>
+            <button class="signup-btn"><a href="register_user.html">Sign Up</a></button>
         </div>
     </div>
     
     <div class="content">
-        <h2>Resultados de Búsqueda</h2>
+        <h2 id="searchTitle">Resultados de Búsqueda</h2>
         <div class="searchbar">
             <input type="text" id="searchInput" placeholder="Buscar subastas..." onkeyup="searchCars()">
             <button><img src="Lupa.jpeg" alt="Buscar"></button>
@@ -33,7 +31,7 @@
     </div>
     
     <footer>
-        &copy; 2025 Subastas de Coches. Todos los derechos reservados.
+        &copy; 2025 Los Ases | Contacto: info@losases.com
     </footer>
 
     <script>
@@ -59,16 +57,21 @@
                 const carElement = document.createElement("div");
                 carElement.classList.add("auction-item");
                 carElement.setAttribute("data-brand", car.brand);
+                carElement.setAttribute("data-model", car.model);
 
                 carElement.innerHTML = `
                     <img src="${car.img}" alt="${car.brand} ${car.model}">
                     <div class="auction-details">
                         <h3>${car.brand} ${car.model}</h3>
-                        <p>Precio actual: $${car.price.toLocaleString()}</p>
+                        <p>Precio actual: ${car.price.toLocaleString()}€</p>
                         <p>Tiempo restante: ${car.timeLeft}</p>
                         <button>Pujar</button>
                     </div>
                 `;
+
+                carElement.addEventListener("click", () => {
+                    window.location.href = `detalles.html?brand=${encodeURIComponent(car.brand)}&model=${encodeURIComponent(car.model)}`;
+                });
 
                 auctionResults.appendChild(carElement);
             });
