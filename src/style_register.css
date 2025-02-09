@@ -177,6 +177,12 @@ input[type="submit"]:hover, input[type="reset"]:hover {
     text-align: center;
 }
 
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
 /* Estilo del footer */
 footer {
     width: 100%;
