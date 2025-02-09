@@ -226,6 +226,9 @@ function registrarUsuario() {
   usuarios.push({ email, password, username, dni, comunidad, provincia });
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("currentUser", email);
+
   document.getElementById("register-form").reset();
 
   window.location.href = "index.html";
@@ -250,8 +253,12 @@ function iniciarSesion(event) {
 
 function checkLoginStatus() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
+
   if (isLoggedIn === "true") {
-      document.getElementById("auth-buttons").style.display = "none";
+      const authButtons = document.getElementById("auth-buttons");
+      if (authButtons) {
+          authButtons.style.display = "none";
+      }
   }
 }
 
