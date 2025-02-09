@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Coche</title>
+    <link rel="stylesheet" href="style_detalles.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <img src="logoAses2.jpg" alt="Logo Los Ases">
+        </a>
+        <h1 class="company-name">LOS ASES</h1>
+        <div class="auth-buttons">
+            <button class="login-btn"><a href="login.html">Log In</a></button>
+            <button class="signup-btn"><a href="register_user.html">Sign Up</a></button>
+        </div>
+    </header>
+
+    <div class="content">
+        <!-- Botón Atrás -->
+        <a href="searchpage.html" class="back-btn">&#10094; Atrás</a>
+
+        <h2 id="car-title">Detalles del Coche</h2>
+        
+        <!-- Carrusel de imágenes -->
+        <div class="carousel">
+            <div class="carousel-images" id="carousel-images"></div>
+            <button class="carousel-control left" onclick="moveCarousel(-1)">&#10094;</button>
+            <button class="carousel-control right" onclick="moveCarousel(1)">&#10095;</button>
+        </div>
+
+        <!-- Especificaciones técnicas -->
+        <div class="car-specs" id="car-specs">
+            <h3>Especificaciones Técnicas:</h3>
+            <ul id="specs-list"></ul>
+        </div>
+
+        <!-- Botón para pujar -->
+        <button class="btn-bid">Pujar</button>
+    </div>
+
+    <footer>
+        &copy; 2025 Los Ases | Contacto: info@losases.com
+    </footer>
+
+    <script>
+        let currentIndex = 0;
+
+        // Obtener parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
+        const brand = params.get("brand");
+        const model = params.get("model");
+
+        // Función para cargar los detalles del coche
+        async function loadCarDetails() {
+            try {
+                const response = await fetch("cars.json");
+                const cars = await response.json();
+                const car = cars.find(c => c.brand === brand && c.model === model);
+                
+                if (car) {
+                    document.getElementById("car-title").textContent = `${car.brand} ${car.model}`;
+                    
+                    // Cargar imágenes en el carrusel
+                    const carouselImages = document.getElementById("carousel-images");
+                    carouselImages.innerHTML = "";
+                    const images = [car.img, ...car.additionalImages];
+                    images.forEach(src => {
+                        const img = document.createElement("img");
+                        img.src = src;
+                        img.alt = `${car.brand} ${car.model}`;
+                        carouselImages.appendChild(img);
+                    });
+                    
+                    // Cargar especificaciones técnicas
+                    const specsList = document.getElementById("specs-list");
+                    specsList.innerHTML = "";
+                    for (const [key, value] of Object.entries(car.details)) {
+                        const li = document.createElement("li");
+                        li.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`;
+                        specsList.appendChild(li);
+                    }
+                } else {
+                    document.querySelector(".content").innerHTML = "<h2>Coche no encontrado</h2>";
+                }
+            } catch (error) {
+                console.error("Error cargando los detalles del coche:", error);
+            }
+        }
+
+        function moveCarousel(direction) {
+            const images = document.querySelectorAll(".carousel-images img");
+            const totalImages = images.length;
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = totalImages - 1;
+            if (currentIndex >= totalImages) currentIndex = 0;
+            const offset = -currentIndex * 100;
+            document.querySelector(".carousel-images").style.transform = `translateX(${offset}%)`;
+        }
+
+        window.onload = loadCarDetails;
+    </script>
+</body>
+</html>

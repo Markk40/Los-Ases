@@ -1,0 +1,239 @@
+/* ======= ESTILOS GENERALES ======= */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Asegura que ocupen toda la pantalla */
+    overflow: hidden; /* Evita el desplazamiento */
+}
+
+/* Asegurarse de que el contenido está centrado y no se expanda innecesariamente */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* ======= BARRA DE NAVEGACIÓN SUPERIOR ======= */
+.navbar {
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* Logo de la empresa */
+.logo img {
+    height: 50px;
+}
+
+/* Nombre de la empresa */
+.company-name {
+    font-size: 24px;
+    font-family: 'Georgia', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-left: 40px;
+}
+
+/* Botones de Login y Sign Up */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 30px;
+}
+
+.login-btn, .signup-btn {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.login-btn a, .signup-btn a{
+    text-decoration: none;  /* Elimina la línea debajo del texto */
+    color: black;  /* Cambia el color del texto a negro */
+    font-weight: bold;   
+}
+
+.login-btn:hover, .signup-btn:hover {
+    background-color: gray;
+    color: white;
+}
+
+.login-btn:hover a, .signup-btn:hover a{
+    color: black;
+}
+
+/* ======= SECCIÓN DE FONDO CON IMAGEN ======= */
+.hero {
+    width: 100%;
+    height: calc(100vh - 70px); /* Asegura que la imagen de fondo ocupe el espacio restante después de la barra de navegación */
+    background-image: url('exposicionCoches.jpg'); /* Ruta de la imagen */
+    background-size: cover;  /* La imagen cubrirá toda la sección */
+    background-position: 20% center; /* Centra la imagen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+/* Capa oscura para mejorar la visibilidad del texto */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Filtro oscuro */
+    z-index: 0;
+}
+
+/* Contenido centrado en la imagen */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.hero-content h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* ======= BOTONES PRINCIPALES ======= */
+.main-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.main-buttons button {
+    background-color: white; /* Fondo blanco por defecto */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+.main-buttons button a{
+    text-decoration: none;  /* Elimina la línea debajo del texto */
+    color: black;  /* Cambia el color del texto a negro */
+    font-weight: bold;
+}
+
+/* Efecto hover: fondo negro y texto blanco */
+.main-buttons button:hover {
+    background-color: black; /* Fondo negro al pasar el cursor */
+    color: white;  /* Texto blanco */
+}
+
+.main-buttons button:hover a{
+    color: white;  /* Texto blanco */
+}
+
+/* ======= PIE DE PÁGINA ======= */
+footer {
+    width: 100%;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-top: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+
+.searchbar {
+    display: flex; /* Organiza los elementos en una línea */
+    align-items: center; /* Alinea verticalmente */
+    width: 90%; /* Ocupa todo el ancho disponible */
+    /* max-width: 100%; Asegura que no se desborde */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fff;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+
+.searchbar button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchbar button img {
+    width: 25px; /* Ajusta el tamaño de la imagen */
+    height: 25px;
+}
+
+.auction-results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    gap: 20px; /* Espacio entre elementos */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.auction-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.auction-item img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.content {
+    overflow-y: auto; /* Habilita el desplazamiento */
+    max-height: calc(100vh - 80px); /* Ajusta la altura para evitar que sobrepase la pantalla */
+    padding-top: 80px; /* Espaciado para evitar que la barra de navegación lo cubra */
+    width: 100%;
+    padding-bottom: 5%;
+}
+
+body {
+    overflow-y: auto; /* Permite desplazamiento vertical */
+}
+
+input#searchInput{
+    margin: auto;
+    width: 90%;
+}
+#searchTitle{
+    margin-left: 5%;
+}
