@@ -1,0 +1,124 @@
+/* Estilos generales */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.companyName {
+    font-size: 24px;
+    font-family: 'Georgia', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Botones */
+.authButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.loginBtn, .signupBtn {
+    background-color: white;
+    color: black;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.loginBtn:hover, .signupBtn:hover {
+    background-color: gray;
+}
+
+/* Contenido */
+.content {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 80px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Carrusel */
+.carousel {
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carouselImages {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carouselImages img {
+    width: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.carouselControl {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.left { left: 10px; }
+.right { right: 10px; }
+
+/* Botón de puja */
+.btnBid {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btnBid:hover {
+    background-color: gray;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+}

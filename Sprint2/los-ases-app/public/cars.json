@@ -1,0 +1,162 @@
+[
+    {
+        "id": "1",
+        "brand": "BMW",
+        "model": "M3 2020",
+        "price": 50000,
+        "timeLeft": "2h 15m",
+        "img": "fotos_coches/BMWm32020_1.webp",
+        "details": {
+            "engine": "3.0L Twin-Turbo Inline-6",
+            "horsepower": 473,
+            "torque": "550 Nm",
+            "transmission": "6-speed manual",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/BMWm32020_2.webp", "fotos_coches/BMWm32020_3.jpg", "fotos_coches/BMWm32020_4.jpg"]
+    },
+    {
+        "id": "2",
+        "brand": "Audi",
+        "model": "A4 2019",
+        "price": 35000,
+        "timeLeft": "3h 45m",
+        "img": "fotos_coches/audiA42019_1.jpg",
+        "details": {
+            "engine": "2.0L Turbo Inline-4",
+            "horsepower": 248,
+            "torque": "370 Nm",
+            "transmission": "7-speed automatic",
+            "drivetrain": "AWD"
+        },
+        "additionalImages": ["fotos_coches/audiA42019_2.webp", "fotos_coches/audiA42019_3.jpg", "fotos_coches/audiA42019_4.png"]
+    },
+    {
+        "id": "3",
+        "brand": "Mercedes",
+        "model": "C200 2021",
+        "price": 40500,
+        "timeLeft": "1h 30m",
+        "img": "fotos_coches/mercedesC2002021_1.webp",
+        "details": {
+            "engine": "1.5L Turbo Inline-4",
+            "horsepower": 181,
+            "torque": "280 Nm",
+            "transmission": "9-speed automatic",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/mercedesC2002021_2.webp", "fotos_coches/mercedesC2002021_3.png", "fotos_coches/mercedesC2002021_4.png"]
+    },
+    {
+        "id": "4",
+        "brand": "Ford",
+        "model": "Mustang 2018",
+        "price": 45000,
+        "timeLeft": "4h 10m",
+        "img": "fotos_coches/fordMustang2018_1.png",
+        "details": {
+            "engine": "5.0L V8",
+            "horsepower": 450,
+            "torque": "529 Nm",
+            "transmission": "6-speed manual",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/fordMustang2018_2.png", "fotos_coches/fordMustang2018_3.png", "fotos_coches/fordMustang2018_4.png"]
+    },
+    {
+        "id": "5",
+        "brand": "Chevrolet",
+        "model": "Camaro 2017",
+        "price": 38000,
+        "timeLeft": "5h 25m",
+        "img": "fotos_coches/chevroletCamaro2017_1.png",
+        "details": {
+            "engine": "6.2L V8",
+            "horsepower": 455,
+            "torque": "614 Nm",
+            "transmission": "6-speed manual",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/chevroletCamaro2017_2.png", "fotos_coches/chevroletCamaro2017_3.png", "fotos_coches/chevroletCamaro2017_4.png"]
+    },
+    {
+        "id": "6",
+        "brand": "Nissan",
+        "model": "GTR 2022",
+        "price": 80000,
+        "timeLeft": "6h 50m",
+        "img": "fotos_coches/nissanGTR2022_1.png",
+        "details": {
+            "engine": "3.8L Twin-Turbo V6",
+            "horsepower": 565,
+            "torque": "633 Nm",
+            "transmission": "6-speed automatic",
+            "drivetrain": "AWD"
+        },
+        "additionalImages": ["fotos_coches/nissanGTR2022_2.png", "fotos_coches/nissanGTR2022_3.png", "fotos_coches/nissanGTR2022_4.png"]
+    },
+    {
+        "id": "7",
+        "brand": "Toyota",
+        "model": "Supra 2021",
+        "price": 55000,
+        "timeLeft": "3h 20m",
+        "img": "fotos_coches/toyotaSupra2021_1.png",
+        "details": {
+            "engine": "3.0L Turbo Inline-6",
+            "horsepower": 382,
+            "torque": "500 Nm",
+            "transmission": "8-speed automatic",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/toyotaSupra2021_2.png", "fotos_coches/toyotaSupra2021_3.png", "fotos_coches/toyotaSupra2021_4.png"]
+    },
+    {
+        "id": "8",
+        "brand": "Porsche",
+        "model": "911 2019",
+        "price": 90000,
+        "timeLeft": "2h 05m",
+        "img": "fotos_coches/porsche9112019_1.png",
+        "details": {
+            "engine": "3.0L Twin-Turbo Flat-6",
+            "horsepower": 443,
+            "torque": "530 Nm",
+            "transmission": "8-speed automatic",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/porsche9112019_2.png", "fotos_coches/porsche9112019_3.png", "fotos_coches/porsche9112019_4.png"]
+    },
+    {
+        "id": "9",
+        "brand": "Ferrari",
+        "model": "F8 Tributo 2021",
+        "price": 200000,
+        "timeLeft": "1h 10m",
+        "img": "fotos_coches/ferrariF8tributo2018_1.png",
+        "details": {
+            "engine": "3.9L Twin-Turbo V8",
+            "horsepower": 710,
+            "torque": "770 Nm",
+            "transmission": "7-speed automatic",
+            "drivetrain": "RWD"
+        },
+        "additionalImages": ["fotos_coches/ferrariF8tributo2018_2.png", "fotos_coches/ferrariF8tributo2018_3.png", "fotos_coches/ferrariF8tributo2018_4.png"]
+    },
+    {
+        "id": "10",
+        "brand": "Lamborghini",
+        "model": "Huracán 2020",
+        "price": 250000,
+        "timeLeft": "2h 50m",
+        "img": "fotos_coches/lamborghiniHuracan2018_1.png",
+        "details": {
+            "engine": "5.2L V10",
+            "horsepower": 631,
+            "torque": "600 Nm",
+            "transmission": "7-speed automatic",
+            "drivetrain": "AWD"
+        },
+        "additionalImages": ["fotos_coches/lamborghiniHuracan2018_2.png", "fotos_coches/lamborghiniHuracan2018_3.png", "fotos_coches/lamborghiniHuracan2018_4.png"]
+    }
+]
