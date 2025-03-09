@@ -238,7 +238,7 @@ const RegisterUser = () => {
     };
 
     return (
-        <div>
+        <div className={styles.registerContainer}>
             <Header />
             <main className={styles.main}>
                 <div className={styles.register}>
