@@ -2,12 +2,15 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import AuctionItem from "@/components/AuctionItem"; // Importamos el componente AuctionItem
 import styles from "./styles.module.css"; // Si tienes un archivo CSS relacionado con esta página
 
 export default function SearchResults() {
   const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [maxPrice, setMaxPrice] = useState(300000);
+  const [category, setCategory] = useState("all"); // Categoría seleccionada
 
   // Cargar coches desde el archivo JSON
   useEffect(() => {
@@ -29,11 +32,32 @@ export default function SearchResults() {
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
+    filterCars(query, maxPrice, category);
+  };
 
-    const filtered = cars.filter((car) =>
-      car.brand.toLowerCase().includes(query)
-    );
+  // Función para filtrar los coches según los filtros aplicados
+  const filterCars = (searchQuery, maxPrice, category) => {
+    const filtered = cars.filter((car) => {
+      const matchesSearch = car.brand.toLowerCase().includes(searchQuery);
+      const matchesPrice = car.price <= maxPrice;
+      const matchesCategory = category === "all" || car.category === category;
+      return matchesSearch && matchesPrice && matchesCategory;
+    });
     setFilteredCars(filtered);
+  };
+
+  // Función para manejar el cambio del filtro de precio máximo
+  const handleMaxPriceChange = (event) => {
+    const newMaxPrice = event.target.value;
+    setMaxPrice(newMaxPrice);
+    filterCars(searchQuery, newMaxPrice, category);
+  };
+
+  // Función para manejar el cambio del filtro de categoría
+  const handleCategoryChange = (event) => {
+    const newCategory = event.target.value;
+    setCategory(newCategory);
+    filterCars(searchQuery, maxPrice, newCategory);
   };
 
   return (
@@ -43,6 +67,7 @@ export default function SearchResults() {
       <div className={styles.content}>
         <h2 className={styles.searchTitle}>Resultados de Búsqueda</h2>
 
+        {/* Barra de búsqueda */}
         <div className={styles.searchbar}>
           <input
             type="text"
@@ -56,27 +81,42 @@ export default function SearchResults() {
           </button>
         </div>
 
+        {/* Filtros */}
+        <div className={styles.filters}>
+          <div className={styles.priceFilter}>
+            <label htmlFor="maxPrice">Precio máximo</label>
+            <input
+              type="range"
+              id="maxPrice"
+              min="20000"
+              max="300000"
+              value={maxPrice}
+              onChange={handleMaxPriceChange}
+            />
+            <span>{maxPrice}€</span>
+          </div>
+
+          <div className={styles.categoryFilter}>
+            <label htmlFor="category">Categoría:</label>
+            <select
+              id="category"
+              value={category}
+              onChange={handleCategoryChange}
+            >
+              <option value="all">Todas</option>
+              <option value="Sedán">Sedán</option>
+              <option value="Deportivo">Deportivo</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Resultados de subastas */}
         <div className={styles.auctionResults} id="auctionResults">
-          {/* Aquí se mostrarán los coches filtrados dinámicamente */}
           {filteredCars.length === 0 ? (
-            <p>No se han encontrado coches.</p>
+            <p className={styles.noResults}>No se han encontrado coches.</p>
           ) : (
             filteredCars.map((car) => (
-              <div
-                key={car.id}
-                className={styles.auctionItem}
-                onClick={() =>
-                  window.location.href = `/detalles/${encodeURIComponent(car.id)}`
-                }
-              >
-                <img src={`/${car.img}`} alt={`${car.brand} ${car.model}`} />
-                <div className={styles.auctionDetails}>
-                  <h3>{`${car.brand} ${car.model}`}</h3>
-                  <p>Precio actual: {car.price.toLocaleString()}€</p>
-                  <p>Tiempo restante: {car.timeLeft}</p>
-                  <button>Pujar</button>
-                </div>
-              </div>
+              <AuctionItem key={car.id} car={car} /> // Usamos el componente AuctionItem
             ))
           )}
         </div>

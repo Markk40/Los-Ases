@@ -1,0 +1,72 @@
+
+/* Cada coche en la lista */
+.auctionItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    min-height: 400px;
+}
+
+/* Imagen del coche */
+.auctionItem img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Contenedor de detalles */
+.auctionDetails {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 10px;
+}
+
+/* Título del coche */
+.auctionDetailsTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: black;
+}
+
+/* Texto de precio y tiempo restante */
+.auctionDetailsText {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Botón de Pujar */
+.auctionItem button {
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: auto;
+}
+
+.auctionItem button:hover {
+    background-color: gray;
+}
+
+/* ======= MENSAJE CUANDO NO HAY COCHES ======= */
+.noResults {
+    color: black;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+}

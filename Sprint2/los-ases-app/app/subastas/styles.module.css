@@ -1,93 +1,54 @@
 /* ======= ESTILOS GENERALES ======= */
-html, body {
-    margin: 0;
-    padding: 0;
+.content {
+    overflow-y: auto; /* Solo la barra de desplazamiento principal */
+    padding-top: 80px;
+    padding-bottom: 5%;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
     background-color: #f0f0f0;
+    color: black;
 }
 
-/* ======= BARRA DE NAVEGACIÓN SUPERIOR ======= */
-.navbar {
-    width: 100%;
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 60px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-}
-
-.logo img {
-    height: 50px;
-}
-
-.company-name {
+/* Título de la búsqueda */
+.searchTitle {
     font-size: 24px;
-    font-family: 'Georgia', serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding-left: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
 }
 
-.auth-buttons {
+/* ======= BARRA DE BÚSQUEDA Y FILTROS ======= */
+.filters {
     display: flex;
-    gap: 10px;
-    margin-right: 30px;
+    justify-content: center; /* Centra los filtros en la fila */
+    gap: 20px; /* Espacio entre los filtros */
+    margin-bottom: 30px;
+    padding: 0 10%; /* Espacio de 10% a cada lado */
+    width: 100%;
 }
 
-.login-btn, .signup-btn {
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 8px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.login-btn a, .signup-btn a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-.login-btn:hover, .signup-btn:hover {
-    background-color: gray;
-    color: white;
-}
-
-.login-btn:hover a, .signup-btn:hover a {
-    color: black;
-}
-
-/* ======= SECCIÓN DE BÚSQUEDA ======= */
+/* Barra de búsqueda */
 .searchbar {
     display: flex;
     align-items: center;
-    width: 90%;
+    width: 80%; /* Barra de búsqueda ocupa el 80% del ancho */
+    margin: 0 auto 30px auto; /* Centra la barra de búsqueda y le da más espacio hacia abajo */
     border: 2px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
-    background-color: #fff;
+    background-color: white;
     flex-direction: row;
-    margin: 0 auto;
+    padding: 5px;
+}
+
+.searchbar input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    color: black;
+    background-color: white;
 }
 
 .searchbar button {
@@ -105,45 +66,41 @@ body {
     height: 25px;
 }
 
-#searchTitle {
-    margin-left: 5%;
-    font-size: 24px;
-    font-weight: bold;
+/* Filtros en la misma fila */
+.priceFilter, .categoryFilter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%; /* Ancho del 45% para cada filtro */
 }
 
-.auction-results {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Slider de precio */
+.priceFilter input {
+    width: 100%; /* Slider ocupa el 100% del ancho disponible */
 }
 
-.auction-item {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    cursor: pointer;
-}
-
-.auction-item img {
-    width: 100%;
+/* Select de categoría */
+.select {
+    font-size: 20px; /* Aumentamos el tamaño de la fuente */
+    padding: 15px;  /* Aumentamos el padding para hacerlo más grande */
     border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; /* Select ocupa el 100% del ancho disponible */
+    min-width: 120px;
+    margin-left: 10px;
+    height: 50px; /* Aumentamos el alto del select */
 }
 
-.auction-item:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+.select option {
+    font-size: 16px;
 }
 
-.content {
-    overflow-y: auto;
-    max-height: calc(100vh - 80px);
-    padding-top: 80px;
-    width: 100%;
-    padding-bottom: 5%;
+/* ======= RESULTADOS DE SUBASTA ======= */
+.auctionResults {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden; /* Evita desbordamientos */
 }
-
-/* Eliminar los estilos de footer */

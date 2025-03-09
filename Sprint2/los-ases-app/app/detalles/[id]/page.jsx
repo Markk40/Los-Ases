@@ -60,13 +60,16 @@ export default function CarDetails() {
         </div>
 
         <div className={styles.carSpecs}>
-          <h3>Especificaciones Técnicas:</h3>
-          <ul>
-            {Object.entries(car.details).map(([key, value]) => (
-              <li key={key}>{`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}</li>
-            ))}
-          </ul>
-        </div>
+        <h3 className={styles.specsTitle}>Especificaciones Técnicas:</h3>
+        <ul>
+          {Object.entries(car.details).map(([key, value]) => (
+            <li key={key} className={styles.specsItem}>
+              {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
+            </li>
+          ))}
+        </ul>
+      </div>
+
 
         <button className={styles.btnBid}>Pujar</button>
       </div>
