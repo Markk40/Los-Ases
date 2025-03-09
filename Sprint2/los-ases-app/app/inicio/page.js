@@ -61,7 +61,7 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className={styles.body}>
             <Header />
             <main className={styles.main}>
                 <div className={styles.login}>

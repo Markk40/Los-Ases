@@ -6,7 +6,7 @@ import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <div>
+    <div className={styles.homeContainer}>
       <Header />
       <section className={styles.hero}>
         <div className={styles.heroContent}>
