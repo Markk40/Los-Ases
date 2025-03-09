@@ -1,0 +1,23 @@
+/* ======= PIE DE PÁGINA ======= */
+.footer {
+    width: 100%;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    position: absolute; /* Fija el footer en la parte inferior */
+    bottom: 0;
+    left: 0;
+    height: 60px; /* Ajusta la altura del footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    overflow-y: auto; /* Habilita el desplazamiento */
+    max-height: calc(100vh - 80px); /* Ajusta la altura para evitar que sobrepase la pantalla */
+    padding-top: 80px; /* Espaciado para evitar que la barra de navegación lo cubra */
+    width: 100%;
+    padding-bottom: 5%;
+}
