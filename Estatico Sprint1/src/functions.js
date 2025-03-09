@@ -264,7 +264,6 @@ function checkLoginStatus() {
 
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("contraseña").addEventListener("input", validarContraseña);
-  checkLoginStatus();
 });
 
 
@@ -273,5 +272,4 @@ document.addEventListener("DOMContentLoaded", function() {
   if (provinciaSelect) {
     provinciaSelect.addEventListener("change", actualizarComunidades);
   }
-  checkLoginStatus();
 });
