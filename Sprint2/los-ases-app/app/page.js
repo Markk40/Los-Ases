@@ -1,21 +1,29 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
     <div>
       <Header />
-      <h1>Página de Inicio</h1>
-      <nav>
-        <ul>
-          <li><Link href="/inicio">Inicio de Sesión</Link></li>
-          <li><Link href="/subastas">Buscar Subastas</Link></li>
-          <li><Link href="/registro">Registro</Link></li>
-        </ul>
-      </nav>
+      <section className={styles.hero}>
+        <div className={styles.heroContent}>
+          <h2>Página de Subastas</h2>
+          <nav className={styles.mainButtons}>
+            <button className={styles.mainButton}>
+              <Link href="/">Home</Link>
+            </button>
+            <button className={styles.mainButton}>
+              <Link href="/subastas">Buscar Subastas</Link>
+            </button>
+            <button className={styles.mainButton}>
+              <Link href="/vender">Vender Producto</Link>
+            </button>
+          </nav>
+        </div>
+      </section>
       <Footer />
     </div>
   );
