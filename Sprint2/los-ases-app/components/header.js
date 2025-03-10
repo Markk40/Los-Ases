@@ -48,18 +48,18 @@ export default function Header() {
       <div className={styles.authButtons}>
         {!isLoggedIn ? (
           <>
-            <button className={styles.loginBtn}>
-              <Link href="/inicio">Log In</Link> 
-            </button>
-            <button className={styles.signupBtn}>
-              <Link href="/registro">Sign Up</Link>
-            </button>
+            <Link href="/inicio">
+              <button className={styles.loginBtn}>Log In</button>
+            </Link> 
+            <Link href="/registro">
+              <button className={styles.signupBtn}>Sign Up</button>
+            </Link>
           </>
         ) : (
           <>
-            <button className={styles.profileBtn}>
-              <Link href="/usuario">Acount</Link>
-            </button>
+            <Link href="/usuario">
+              <button className={styles.profileBtn}>Acount</button>
+            </Link>
             <button className={styles.logoutBtn} onClick={handleLogout}>
               Cerrar Sesión
             </button>

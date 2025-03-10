@@ -12,15 +12,17 @@ export default function Home() {
         <div className={styles.heroContent}>
           <h2>Página de Subastas</h2>
           <nav className={styles.mainButtons}>
-            <button className={styles.mainButton}>
-              <Link href="/">Home</Link>
-            </button>
-            <button className={styles.mainButton}>
-              <Link href="/subastas">Buscar Subastas</Link>
-            </button>
-            <button className={styles.mainButton}>
-              <Link href="/vender">Vender Producto</Link>
-            </button>
+            <Link href="/">
+            <button className={styles.mainButton}>Home</button>
+            </Link>
+
+            <Link href="/subastas">
+              <button className={styles.mainButton}>Buscar Subastas</button>
+            </Link>
+            
+            <Link href="/vender">
+              <button className={styles.mainButton}>Vender Producto</button>
+            </Link>
           </nav>
         </div>
       </section>
