@@ -1,49 +1,61 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importar useRouter para redirigir
+import { useRouter } from 'next/navigation';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import styles from './page.module.css'; 
+import styles from './page.module.css';
 
 const Login = () => {
-    const [username, setUsername] = useState(""); // 🔹 Cambiado de email a username
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false); // 🔹 Estado para deshabilitar el botón durante la petición
-    const router = useRouter(); // Hook para la redirección
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleLogin = async (username, password) => {
         try {
             setLoading(true);
             setError("");
 
-            console.log("Enviando credenciales...", { username, password });
-
-            const response = await fetch("https://das-p2-backend.onrender.com/api/users/login/", {
+            // 1. Petición para obtener token
+            const tokenRes = await fetch("http://localhost:8000/api/token/", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
-            console.log("Respuesta del servidor:", data);
-
-            if (!response.ok) {
-                throw new Error(data.message || "Usuario o contraseña incorrectos");
+            if (!tokenRes.ok) {
+                const err = await tokenRes.json();
+                throw new Error(err.detail || "Credenciales incorrectas");
             }
 
-            // Guardar el token en localStorage para futuras peticiones
-            localStorage.setItem("accessToken", data.access);
-            localStorage.setItem("username", data.username);
+            const tokenData = await tokenRes.json();
+            const accessToken = tokenData.access;
 
-            console.log("Login exitoso. Redirigiendo...");
-            router.push('/'); // 🔹 Redirigir a la página de inicio
+            // 2. Obtener perfil de usuario
+            const profileRes = await fetch("http://localhost:8000/api/users/me/", {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
 
-        } catch (error) {
-            console.error("Error en el login:", error);
-            setError(error.message);
+            if (!profileRes.ok) {
+                throw new Error("Error al obtener el perfil de usuario");
+            }
+
+            const userData = await profileRes.json();
+
+            // Guardar en localStorage
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("username", userData.username);
+            localStorage.setItem("user", JSON.stringify(userData));
+
+            console.log("✅ Login correcto. Redirigiendo...");
+            router.push("/");
+        } catch (err) {
+            console.error("Error en el login:", err);
+            setError(err.message || "Error inesperado al iniciar sesión");
         } finally {
             setLoading(false);
         }
@@ -51,12 +63,10 @@ const Login = () => {
 
     const iniciarSesion = async (event) => {
         event.preventDefault();
-
         if (!username || !password) {
-            setError("Por favor, complete ambos campos.");
+            setError("Por favor, completa ambos campos.");
             return;
         }
-
         await handleLogin(username, password);
     };
 
@@ -95,7 +105,7 @@ const Login = () => {
                             type="submit" 
                             value={loading ? "Iniciando sesión..." : "Iniciar Sesión"} 
                             className={styles.submitButton}
-                            disabled={loading} // 🔹 Evita múltiples envíos
+                            disabled={loading}
                         />
                     </form>
                 </div>
