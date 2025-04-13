@@ -1,0 +1,11 @@
+/* ======= PIE DE PÁGINA ======= */
+.footer {
+    width: 100%;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: 60px;
+    margin-top: auto; /* Esto lo empuja hacia abajo si hay poco contenido */
+}
+  

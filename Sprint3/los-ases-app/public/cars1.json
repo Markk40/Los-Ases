@@ -1,0 +1,122 @@
+[
+    {
+        "title": "BMW M3 2020",
+        "description": "3.0L Twin-Turbo Inline-6, 473hp, 6-speed manual, RWD",
+        "price": 50000,
+        "rating": 4.6,
+        "stock": 1,
+        "brand": "BMW",
+        "category": 1,
+        "thumbnail": "fotos_coches/BMWm32020_1.webp",
+        "creation_date": "2024-04-10T10:00:00Z",
+        "closing_date": "2024-04-20T10:00:00Z"
+    },
+    {
+        "title": "Audi A4 2019",
+        "description": "2.0L Turbo Inline-4, 248hp, 7-speed automatic, AWD",
+        "price": 35000,
+        "rating": 4.3,
+        "stock": 1,
+        "brand": "Audi",
+        "category": 2,
+        "thumbnail": "fotos_coches/audiA42019_1.jpg",
+        "creation_date": "2024-04-11T10:00:00Z",
+        "closing_date": "2024-04-21T10:00:00Z"
+    },
+    {
+        "title": "Mercedes C200 2021",
+        "description": "1.5L Turbo Inline-4, 181hp, 9-speed automatic, RWD",
+        "price": 40500,
+        "rating": 4.2,
+        "stock": 1,
+        "brand": "Mercedes",
+        "category": 2,
+        "thumbnail": "fotos_coches/mercedesC2002021_1.webp",
+        "creation_date": "2024-04-12T10:00:00Z",
+        "closing_date": "2024-04-22T10:00:00Z"
+    },
+    {
+        "title": "Ford Mustang 2018",
+        "description": "5.0L V8, 450hp, 6-speed manual, RWD",
+        "price": 45000,
+        "rating": 4.5,
+        "stock": 1,
+        "brand": "Ford",
+        "category": 1,
+        "thumbnail": "fotos_coches/fordMustang2018_1.png",
+        "creation_date": "2024-04-13T10:00:00Z",
+        "closing_date": "2024-04-23T10:00:00Z"
+    },
+    {
+        "title": "Chevrolet Camaro 2017",
+        "description": "6.2L V8, 455hp, 6-speed manual, RWD",
+        "price": 38000,
+        "rating": 4.4,
+        "stock": 1,
+        "brand": "Chevrolet",
+        "category": 1,
+        "thumbnail": "fotos_coches/chevroletCamaro2017_1.png",
+        "creation_date": "2024-04-14T10:00:00Z",
+        "closing_date": "2024-04-24T10:00:00Z"
+    },
+    {
+        "title": "Nissan GTR 2022",
+        "description": "3.8L Twin-Turbo V6, 565hp, 6-speed automatic, AWD",
+        "price": 80000,
+        "rating": 4.7,
+        "stock": 1,
+        "brand": "Nissan",
+        "category": 3,
+        "thumbnail": "fotos_coches/nissanGTR2022_1.png",
+        "creation_date": "2024-04-15T10:00:00Z",
+        "closing_date": "2024-04-25T10:00:00Z"
+    },
+    {
+        "title": "Toyota Supra 2021",
+        "description": "3.0L Turbo Inline-6, 382hp, 8-speed automatic, RWD",
+        "price": 55000,
+        "rating": 4.6,
+        "stock": 1,
+        "brand": "Toyota",
+        "category": 3,
+        "thumbnail": "fotos_coches/toyotaSupra2021_1.png",
+        "creation_date": "2024-04-16T10:00:00Z",
+        "closing_date": "2024-04-26T10:00:00Z"
+    },
+    {
+        "title": "Porsche 911 2019",
+        "description": "3.0L Twin-Turbo Flat-6, 443hp, 8-speed automatic, RWD",
+        "price": 90000,
+        "rating": 4.8,
+        "stock": 1,
+        "brand": "Porsche",
+        "category": 4,
+        "thumbnail": "fotos_coches/porsche9112019_1.png",
+        "creation_date": "2024-04-17T10:00:00Z",
+        "closing_date": "2024-04-27T10:00:00Z"
+    },
+    {
+        "title": "Ferrari F8 Tributo 2021",
+        "description": "3.9L Twin-Turbo V8, 710hp, 7-speed automatic, RWD",
+        "price": 200000,
+        "rating": 4.9,
+        "stock": 1,
+        "brand": "Ferrari",
+        "category": 4,
+        "thumbnail": "fotos_coches/ferrariF8tributo2018_1.png",
+        "creation_date": "2024-04-18T10:00:00Z",
+        "closing_date": "2024-04-28T10:00:00Z"
+    },
+    {
+        "title": "Lamborghini Huracán 2020",
+        "description": "5.2L V10, 631hp, 7-speed automatic, AWD",
+        "price": 250000,
+        "rating": 5.0,
+        "stock": 1,
+        "brand": "Lamborghini",
+        "category": 4,
+        "thumbnail": "fotos_coches/lamborghiniHuracan2018_1.png",
+        "creation_date": "2024-04-19T10:00:00Z",
+        "closing_date": "2024-04-29T10:00:00Z"
+    }
+]

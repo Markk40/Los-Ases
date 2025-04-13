@@ -1,0 +1,105 @@
+/* ======= ESTILOS GENERALES ======= */
+.homeContainer {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+}
+
+/* Asegura que el contenido principal ocupe el espacio disponible */
+/* .mainContent {
+  flex-grow: 1;
+} */
+
+/* ======= SECCIÓN DE FONDO CON IMAGEN ======= */
+.hero {
+  width: 100%;
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  padding: 0 10%; /* Ajusta los lados de forma más flexible */
+  background-image: url('/exposicionCoches.jpg');
+  background-size: cover;
+  background-position: center center; /* Centra la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+/* Contenido centrado en la imagen */
+.heroContent {
+  position: relative;
+  z-index: 1;
+  color: white;
+  align-items: center;
+}
+
+.heroContent h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* ======= BOTONES PRINCIPALES ======= */
+.mainButtons {
+  display: flex;
+  gap: 15px;
+}
+
+.mainButton {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.mainButton a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.mainButton:hover {
+  background-color: black;
+  color: white;
+}
+
+.mainButton:hover a {
+  color: white;
+}
+
+/* ======= MEDIA QUERY PARA RESPONSIVIDAD ======= */
+@media (max-width: 768px) {
+  .heroContent h2 {
+    font-size: 32px;
+  }
+
+  .mainButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mainButton {
+    width: 100%;
+  }
+}

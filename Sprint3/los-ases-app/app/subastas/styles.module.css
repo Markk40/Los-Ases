@@ -1,0 +1,106 @@
+/* ======= ESTILOS GENERALES ======= */
+.content {
+    overflow-y: auto; /* Solo la barra de desplazamiento principal */
+    padding-top: 80px;
+    padding-bottom: 5%;
+    width: 100%;
+    text-align: center;
+    background-color: #f0f0f0;
+    color: black;
+}
+
+/* Título de la búsqueda */
+.searchTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+/* ======= BARRA DE BÚSQUEDA Y FILTROS ======= */
+.filters {
+    display: flex;
+    justify-content: center; /* Centra los filtros en la fila */
+    gap: 20px; /* Espacio entre los filtros */
+    margin-bottom: 30px;
+    padding: 0 10%; /* Espacio de 10% a cada lado */
+    width: 100%;
+}
+
+/* Barra de búsqueda */
+.searchbar {
+    display: flex;
+    align-items: center;
+    width: 80%; /* Barra de búsqueda ocupa el 80% del ancho */
+    margin: 0 auto 30px auto; /* Centra la barra de búsqueda y le da más espacio hacia abajo */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.searchbar input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    color: black;
+    background-color: white;
+}
+
+.searchbar button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchbar button img {
+    width: 25px;
+    height: 25px;
+}
+
+/* Filtros en la misma fila */
+.priceFilter, .categoryFilter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%; /* Ancho del 45% para cada filtro */
+}
+
+/* Slider de precio */
+.priceFilter input {
+    width: 100%; /* Slider ocupa el 100% del ancho disponible */
+}
+
+/* Select de categoría */
+.select {
+    font-size: 20px; /* Aumentamos el tamaño de la fuente */
+    padding: 15px;  /* Aumentamos el padding para hacerlo más grande */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; /* Select ocupa el 100% del ancho disponible */
+    min-width: 120px;
+    margin-left: 10px;
+    height: 50px; /* Aumentamos el alto del select */
+}
+
+.select option {
+    font-size: 16px;
+}
+
+/* ======= RESULTADOS DE SUBASTA ======= */
+.auctionResults {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden; /* Evita desbordamientos */
+}
