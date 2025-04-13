@@ -1,4 +1,5 @@
-/* ====== ESTILOS GENERALES ====== */
+/* page.module.css */
+
 .body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,29 +7,26 @@
     background-image: url('/exposicionCoches.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
     min-height: 100vh;
     overflow: auto;
-    background-attachment: fixed;
 }
 
-/* ====== CONTENEDOR PRINCIPAL ====== */
 .main {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     padding-top: 80px;
-    position: relative;
+    width: 100%;
+    color: black;
+    flex: 1;
 }
 
 .account {
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     background-color: rgba(255, 255, 255, 1);
     padding: 30px;
     border-radius: 10px;
@@ -36,53 +34,47 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
 }
 
-/* ====== FOTO DE PERFIL ====== */
-.profileImage {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border: 3px solid #417780;
-}
-
-/* ====== INFORMACIÓN DEL USUARIO ====== */
 .userInfo {
     width: 100%;
+    margin-top: 20px;
 }
 
 .infoRow {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .label {
-    font-weight: bold;
-    margin-bottom: 5px;
     font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
 }
 
 .inputField {
     width: 100%;
     padding: 10px;
-    margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    text-align: center;
+    color: white;
+    background-color: black;
 }
 
-/* ====== BOTONES ====== */
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
 .buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     width: 100%;
+    gap: 10px;
     margin-top: 20px;
 }
 
@@ -100,17 +92,4 @@
 
 .submitButton:hover {
     background-color: #30585e;
-}
-
-/* ====== RESPONSIVE DESIGN ====== */
-@media (max-width: 768px) {
-    .account {
-        max-width: 90%;
-        padding: 20px;
-    }
-
-    .profileImage {
-        width: 100px;
-        height: 100px;
-    }
 }
