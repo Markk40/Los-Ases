@@ -157,8 +157,8 @@ export default function CreateAuction() {
                 className={styles.select}
               >
                 <option value="">Selecciona una categoría</option>
-                {Array.isArray(categories) &&
-                  categories.map((cat) => (
+                {Array.isArray(categories.results) &&
+                  categories.results.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
                     </option>
