@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000/api/auctions/";
+const API_BASE_URL = "http://los-ases-backend.onrender.com/api/auctions/";
 
 export const getAllAuctions = async () => {
   const res = await fetch(API_BASE_URL);
@@ -115,7 +115,7 @@ export const deleteBid = async (auctionId, bidId) => {
   const token = localStorage.getItem("accessToken");
 
   const res = await fetch(
-    `http://localhost:8000/api/auctions/${auctionId}/bid/${bidId}/`,
+    `http://los-ases-backend.onrender.com/api/auctions/${auctionId}/bid/${bidId}/`,
     {
       method: "DELETE",
       headers: {
@@ -135,7 +135,7 @@ export const getBidsByAuction = async (auctionId) => {
 
 export const getAllBids = async () => {
   try {
-    const res = await fetch("http://localhost:8000/api/bids/");
+    const res = await fetch("http://los-ases-backend.onrender.com/api/bids/");
     if (!res.ok) {
       throw new Error("Error al obtener pujas");
     }

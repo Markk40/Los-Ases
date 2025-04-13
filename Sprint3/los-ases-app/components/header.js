@@ -11,7 +11,7 @@ export default function Header() {
     const token = localStorage.getItem("accessToken");
 
     if (token) {
-      fetch("http://localhost:8000/api/users/profile/", {
+      fetch("http://los-ases-backend.onrender.com/api/users/profile/", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
