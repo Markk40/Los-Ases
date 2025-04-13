@@ -3,21 +3,27 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./AuctionItem.module.css";
 
-export default function AuctionItem({ car }) {
+export default function AuctionItem({ car, bids }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentPrice, setCurrentPrice] = useState(car.price);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) setIsLoggedIn(true);
-  }, []);
+
+    const relevantBids = bids.filter(b => b.auction === car.id);
+    if (relevantBids.length > 0) {
+      const highest = Math.max(...relevantBids.map(b => parseFloat(b.price)));
+      setCurrentPrice(highest);
+    }
+  }, [bids, car.id, car.price]);
 
   const handleCardClick = () => {
     window.location.href = `/subastas/${encodeURIComponent(car.id)}`;
   };
 
-  const stopPropagation = (e) => e.stopPropagation(); // evita redirección al hacer click en "Editar"
+  const stopPropagation = (e) => e.stopPropagation();
 
-  // Calculamos tiempo restante
   const calculateTimeLeft = (closingDate) => {
     const diff = new Date(closingDate) - new Date();
     if (diff <= 0) return "Finalizada";
@@ -25,7 +31,6 @@ export default function AuctionItem({ car }) {
     const minutes = Math.floor(diff / (1000 * 60)) % 60;
     const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
     return `${days}d ${hours}h ${minutes}m`;
   };
 
@@ -40,7 +45,7 @@ export default function AuctionItem({ car }) {
         <h3 className={styles.auctionDetailsTitle}>{car.title}</h3>
 
         <p className={styles.auctionDetailsText}>
-          Precio actual: {car.price.toLocaleString()}€
+          Precio actual: {currentPrice.toLocaleString()}€
         </p>
 
         <p className={styles.auctionDetailsText}>

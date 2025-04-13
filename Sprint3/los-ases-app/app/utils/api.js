@@ -111,3 +111,8 @@ export const getBidsByAuction = async (auctionId) => {
   return res.json();
 };
 
+export const getAllBids = async () => {
+  const res = await fetch("http://localhost:8000/api/bids/");
+  if (!res.ok) throw new Error("Error al obtener pujas");
+  return res.json();
+};
