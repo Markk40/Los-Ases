@@ -46,7 +46,7 @@ export default function SearchResults() {
     async function loadCategories() {
       try {
         const data = await getAllCategories();
-        setCategories(data);
+        setCategories(data.results);
       } catch (error) {
         console.error("Error cargando categorías:", error);
       }
