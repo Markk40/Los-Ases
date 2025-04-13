@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getAllAuctions, getBidsByAuction, deleteBid } from "@/utils/api";
+import { getAllAuctions, getBidsByAuction, deleteBid } from "../../utils/api";
 import styles from "./styles.module.css";
 
 export default function MisPujas() {
@@ -29,7 +29,9 @@ export default function MisPujas() {
         let allUserBids = [];
 
         for (const auction of auctionData.results) {
-          const bids = await getBidsByAuction(auction.id);
+          const rawBids = await getBidsByAuction(auction.id);
+          const bids = Array.isArray(rawBids) ? rawBids : rawBids.results || [];
+
           const userBidsInAuction = bids.filter(
             (bid) => bid.bidder === currentUserId
           );
