@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getAuctionById, deleteAuction, createBid } from "../../utils/api";
+import { getAuctionById, deleteAuction, createBid, getBidsByAuction } from "../../utils/api";
 import styles from "./styles.module.css";
 
 export default function CarDetails() {
@@ -15,22 +15,24 @@ export default function CarDetails() {
   const [successMsg, setSuccessMsg] = useState("");
   const [user, setUser] = useState(null); // Variable para almacenar datos del usuario
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [bids, setBids] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Cargar los datos de la subasta
         const data = await getAuctionById(id);
         setCar(data);
-
-        // Verificar si el usuario está logueado
+  
+        const bidsData = await getBidsByAuction(id);
+        setBids(bidsData);
+  
         const token = localStorage.getItem("accessToken");
         if (token) {
           const payload = JSON.parse(atob(token.split(".")[1]));
           const userId = payload.user_id || payload.id;
           if (userId) {
             setIsUserLoggedIn(true);
-            setUser(payload); // Guardamos el objeto del usuario (incluye si es administrador)
+            setUser(payload);
           }
         }
       } catch (err) {
@@ -39,6 +41,7 @@ export default function CarDetails() {
     }
     fetchData();
   }, [id]);
+  
 
   const handleDelete = async () => {
     const confirmed = window.confirm("¿Seguro que quieres eliminar esta subasta?");
@@ -83,6 +86,8 @@ export default function CarDetails() {
       // recargar subasta actualizada desde el backend
       const updatedAuction = await getAuctionById(car.id);
       setCar(updatedAuction);
+      const updatedBids = await getBidsByAuction(car.id);
+      setBids(updatedBids);
 
       setBidAmount("");
     } catch (err) {
@@ -96,6 +101,8 @@ export default function CarDetails() {
   const isOwner = user && car.auctioneer === user.user_id;
   const isAdmin = user && user.is_staff;
 
+  const highestBid = bids.length > 0 ? Math.max(...bids.map(b => parseFloat(b.price))) : null;
+  const displayedPrice = highestBid ?? car.price;
   return (
     <div className={styles.container}>
       <Header />
@@ -114,7 +121,7 @@ export default function CarDetails() {
             <li>Descripción: {car.description}</li>
             <li>Marca: {car.brand}</li>
             <li>Categoría: {car.category}</li>
-            <li>Precio: {car.price}€</li>
+            <li>Precio: {displayedPrice}€</li>
             <li>Stock: {car.stock}</li>
             <li>Valoración: {car.rating}</li>
             <li>Fecha de cierre: {new Date(car.closing_date).toLocaleString()}</li>
