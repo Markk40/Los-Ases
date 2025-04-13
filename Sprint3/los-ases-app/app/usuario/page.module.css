@@ -1,0 +1,95 @@
+/* page.module.css */
+
+.body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/exposicionCoches.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;
+    width: 100%;
+    color: black;
+    flex: 1;
+}
+
+.account {
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userInfo {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.infoRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.inputField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+    background-color: black;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.submitButton {
+    background-color: #417780;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.submitButton:hover {
+    background-color: #30585e;
+}
