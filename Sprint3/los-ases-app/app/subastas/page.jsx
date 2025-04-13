@@ -59,7 +59,7 @@ export default function SearchResults() {
     const filtered = cars.filter((car) => {
       const matchesSearch = car.title.toLowerCase().includes(search);
       const matchesPrice = car.price <= price;
-      const matchesCategory = cat === "all" || car.category === cat;
+      const matchesCategory = cat === "all" || car.category === parseInt(cat);
       return matchesSearch && matchesPrice && matchesCategory;
     });
     setFilteredCars(filtered);
@@ -111,13 +111,13 @@ export default function SearchResults() {
 
           <label>Categoría</label>
           <select value={category} onChange={handleCategoryChange}>
-            <option value="all">Todas</option>
-            {Array.isArray(categories) && categories.map((cat) => (
-              <option key={cat.id} value={cat.name}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
+          <option value="all">Todas</option>
+          {Array.isArray(categories) && categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
         </div>
 
         <div className={styles.auctionResults}>
