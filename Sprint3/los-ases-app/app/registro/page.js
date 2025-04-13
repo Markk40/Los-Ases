@@ -135,6 +135,8 @@ const RegisterUser = () => {
   const handleReset = () => {
     setFormData({
       username: '',
+      first_name: '',
+      last_name: '',
       dni: '',
       email: '',
       fnac: '',
@@ -170,6 +172,8 @@ const RegisterUser = () => {
     // Preparar datos para la API
     const userData = {
       username: formData.username,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
       email: formData.email,
       password: formData.password,
       birth_date: new Date(formData.fnac).toISOString().split("T")[0],
@@ -222,7 +226,27 @@ const RegisterUser = () => {
             />
             {warnings.username && <p className={styles.warning}>{warnings.username}</p>}
             {errors.username && <p className={styles.error}>{errors.username}</p>}
+            <label htmlFor="first_name">Nombre:</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleChange}
+              required
+              className={styles.inputField}
+            />
 
+            <label htmlFor="last_name">Apellido:</label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleChange}
+              required
+              className={styles.inputField}
+            />
             <label htmlFor="dni">DNI/NIE:</label>
             <input
               type="text"
