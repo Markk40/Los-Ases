@@ -48,11 +48,11 @@ export default function CarDetails() {
       return;
     }
 
-    // Extraer username del JWT
+    // Extraer user ID del JWT
     const payload = JSON.parse(atob(token.split(".")[1]));
-    const username = payload.username || payload.name || payload.sub;
-    if (!username) {
-      setBidError("No se pudo obtener el nombre del usuario.");
+    const userId = payload.user_id || payload.id;
+    if (!userId) {
+      setBidError("No se pudo obtener el ID del usuario.");
       return;
     }
 
@@ -63,13 +63,18 @@ export default function CarDetails() {
     }
 
     try {
-      await createBid(car.id, { price: bidValue, bidder: username }, token);
+      await createBid(car.id, { price: bidValue, bidder: userId }, token);
       setSuccessMsg("¡Puja realizada con éxito!");
-      setCar({ ...car, price: bidValue });
+
+      // recargar subasta actualizada desde el backend
+      const updatedAuction = await getAuctionById(car.id);
+      setCar(updatedAuction);
+
       setBidAmount("");
     } catch (err) {
       console.error("Error al pujar", err);
-      setBidError("Hubo un error al procesar la puja.");
+      setBidError(err.message || "Hubo un error al procesar la puja.");
+
     }
   };
 

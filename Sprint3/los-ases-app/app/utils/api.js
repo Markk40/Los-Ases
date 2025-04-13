@@ -46,14 +46,33 @@ export const getAllCategories = async () => {
 };
 
 export const createBid = async (auctionId, bidData, token) => {
+  // Incluir el campo 'auction' en el bidData
+  const bidPayload = {
+    ...bidData,      // Precio y el postor
+    auction: auctionId  // Añadimos el id de la subasta
+  };
+
   const res = await fetch(`${API_BASE_URL}${auctionId}/bid/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(bidData),
+    body: JSON.stringify(bidPayload), // Enviamos el bid con el auction
   });
-  if (!res.ok) throw new Error("Error al crear la puja");
+
+  if (!res.ok) {
+    let errorMessage = "Error al crear la puja";
+    try {
+      const errorData = await res.json();
+      console.error("Detalles del error:", errorData);
+      errorMessage = errorData.detail || JSON.stringify(errorData);
+    } catch (e) {
+      console.error("No se pudo parsear el error:", e);
+    }
+    throw new Error(errorMessage);
+  }
+
   return res.json();
 };
+
