@@ -121,5 +121,5 @@ export const getAllBids = async () => {
   } catch (error) {
     // console.error("❌ Error en getAllBids:", error.message);
     return []; // devolvemos un array vacío si hay fallo
-  }
+  }
 };

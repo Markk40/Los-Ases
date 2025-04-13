@@ -3,35 +3,42 @@ import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import AuctionItem from "@/components/AuctionItem";
-import { getAllAuctions } from "../../utils/api";
+import { getAllAuctions, getAllBids } from "../../utils/api";
 import styles from "./styles.module.css";
 
 export default function UserAuctions() {
   const [userAuctions, setUserAuctions] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [bids, setBids] = useState([]);
 
   useEffect(() => {
-    const fetchAuctions = async () => {
+    const fetchAuctionsAndBids = async () => {
       try {
         const token = localStorage.getItem("accessToken");
         if (!token) return;
-
+  
         const payload = JSON.parse(atob(token.split(".")[1]));
         const currentUserId = payload.user_id || payload.id;
-
+  
         setUserId(currentUserId);
-
-        const data = await getAllAuctions();
-        const filtered = data.results.filter(
+  
+        const [auctionData, bidData] = await Promise.all([
+          getAllAuctions(),
+          getAllBids(),
+        ]);
+  
+        const filtered = auctionData.results.filter(
           (auction) => auction.auctioneer === currentUserId
         );
+  
         setUserAuctions(filtered);
+        setBids(bidData); // 👈 Aquí añadimos todas las pujas
       } catch (error) {
-        console.error("Error cargando subastas del usuario:", error);
+        console.error("Error cargando subastas o pujas:", error);
       }
     };
-
-    fetchAuctions();
+  
+    fetchAuctionsAndBids();
   }, []);
 
   return (
@@ -48,7 +55,7 @@ export default function UserAuctions() {
             ) : (
               <div className={styles.auctionList}>
                 {userAuctions.map((auction) => (
-                  <AuctionItem key={auction.id} car={auction} />
+                  <AuctionItem key={auction.id} car={auction} bids={bids}/>
                 ))}
               </div>
             )}
