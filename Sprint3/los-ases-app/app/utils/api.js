@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://los-ases-backend.onrender.com/api/auctions/";
+const API_BASE_URL = "https://los-ases-backend.onrender.com/api/auctions/";
 
 export const getAllAuctions = async () => {
   const res = await fetch(API_BASE_URL);
