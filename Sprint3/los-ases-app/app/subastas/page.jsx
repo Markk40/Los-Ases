@@ -4,10 +4,11 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import AuctionItem from "@/components/AuctionItem";
 import styles from "./styles.module.css";
-import { getAllAuctions, getAllCategories } from "../utils/api";
+import { getAllAuctions, getAllCategories, getAllBids } from "../utils/api";
 
 export default function SearchResults() {
   const [cars, setCars] = useState([]);
+  const [bids, setBids] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState(300000);
@@ -26,6 +27,18 @@ export default function SearchResults() {
       }
     }
     loadCars();
+  }, []);
+
+  useEffect(() => {
+    async function loadBids() {
+      try {
+        const data = await getAllBids();
+        setBids(data); // asumiendo que es un array directo
+      } catch (error) {
+        console.error("Error cargando pujas:", error);
+      }
+    }
+    loadBids();
   }, []);
 
   // Cargar categorías dinámicamente
@@ -112,7 +125,7 @@ export default function SearchResults() {
             <p>No se han encontrado subastas.</p>
           ) : (
             filteredCars.map((car) => (
-              <AuctionItem key={car.id} car={car} />
+              <AuctionItem key={car.id} car={car} bids={bids}/>
             ))
           )}
         </div>
