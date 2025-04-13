@@ -59,8 +59,9 @@ export default function Header() {
             <Link href="/subastas/misSubastas">
               <button className={styles.profileBtn}>Mis Subastas</button>
             </Link>
-            <Link href="/subastas/crear">
-              <button className={styles.profileBtn}>Crear Subasta</button>
+            <Link href="/subastas">
+              <button className={styles.profileBtn}>Mis Pujas
+              </button>
             </Link>
           </>
         )}

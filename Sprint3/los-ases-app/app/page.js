@@ -20,7 +20,7 @@ export default function Home() {
               <button className={styles.mainButton}>Buscar Subastas</button>
             </Link>
             
-            <Link href="/vender">
+            <Link href="/subastas/crear">
               <button className={styles.mainButton}>Vender Producto</button>
             </Link>
           </nav>
