@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getAuctionById, updateAuction } from "../../utils/api";
+import { getAuctionById, updateAuction } from "../../../utils/api";
 import styles from "./styles.module.css";
 
 export default function EditAuction() {

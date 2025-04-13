@@ -33,7 +33,7 @@ const Login = () => {
             const accessToken = tokenData.access;
 
             // 2. Obtener perfil de usuario
-            const profileRes = await fetch("http://localhost:8000/api/users/me/", {
+            const profileRes = await fetch("http://localhost:8000/api/users/profile/", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
