@@ -53,12 +53,10 @@ export default function AuctionItem({ car, bids }) {
         </p>
 
         {isLoggedIn && (
-          <Link href={`/subastas/${car.id}/editar`} onClick={stopPropagation}>
-            <button className={styles.editButton}>Editar Subasta</button>
-          </Link>
+          <button className={styles.bidButton}>Pujar</button>
         )}
 
-        <button className={styles.bidButton}>Pujar</button>
+        
       </div>
     </div>
   );

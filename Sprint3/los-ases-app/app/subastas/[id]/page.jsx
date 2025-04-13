@@ -13,12 +13,26 @@ export default function CarDetails() {
   const [bidAmount, setBidAmount] = useState("");
   const [bidError, setBidError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [user, setUser] = useState(null); // Variable para almacenar datos del usuario
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        // Cargar los datos de la subasta
         const data = await getAuctionById(id);
         setCar(data);
+
+        // Verificar si el usuario está logueado
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          const userId = payload.user_id || payload.id;
+          if (userId) {
+            setIsUserLoggedIn(true);
+            setUser(payload); // Guardamos el objeto del usuario (incluye si es administrador)
+          }
+        }
       } catch (err) {
         console.error("Error al cargar la subasta", err);
       }
@@ -42,13 +56,13 @@ export default function CarDetails() {
     setBidError("");
     setSuccessMsg("");
 
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
+    if (!isUserLoggedIn) {
       setBidError("Debes estar logeado para pujar.");
       return;
     }
 
     // Extraer user ID del JWT
+    const token = localStorage.getItem("accessToken");
     const payload = JSON.parse(atob(token.split(".")[1]));
     const userId = payload.user_id || payload.id;
     if (!userId) {
@@ -74,11 +88,13 @@ export default function CarDetails() {
     } catch (err) {
       console.error("Error al pujar", err);
       setBidError(err.message || "Hubo un error al procesar la puja.");
-
     }
   };
 
   if (!car) return <div className={styles.loading}>Cargando...</div>;
+
+  const isOwner = user && car.auctioneer === user.user_id;
+  const isAdmin = user && user.is_staff;
 
   return (
     <div className={styles.container}>
@@ -105,25 +121,29 @@ export default function CarDetails() {
           </ul>
         </div>
 
-        <div className={styles.bidSection}>
-          <h4>Pujar en esta subasta</h4>
-          <input
-            type="number"
-            placeholder="Introduce tu puja (€)"
-            value={bidAmount}
-            onChange={(e) => setBidAmount(e.target.value)}
-          />
-          <button className={styles.btnBid} onClick={handleBid}>
-            Pujar
-          </button>
-          {bidError && <p className={styles.error}>{bidError}</p>}
-          {successMsg && <p className={styles.success}>{successMsg}</p>}
-        </div>
+        {isUserLoggedIn && (
+          <div className={styles.bidSection}>
+            <h4>Pujar en esta subasta</h4>
+            <input
+              type="number"
+              placeholder="Introduce tu puja (€)"
+              value={bidAmount}
+              onChange={(e) => setBidAmount(e.target.value)}
+            />
+            <button className={styles.btnBid} onClick={handleBid}>
+              Pujar
+            </button>
+            {bidError && <p className={styles.error}>{bidError}</p>}
+            {successMsg && <p className={styles.success}>{successMsg}</p>}
+          </div>
+        )}
 
-        <div className={styles.actions}>
-          <button className={styles.btnEdit} onClick={() => router.push(`/subastas/${id}/editar`)}>Editar</button>
-          <button className={styles.btnDelete} onClick={handleDelete}>Eliminar</button>
-        </div>
+        {(isOwner || isAdmin) && (
+          <div className={styles.actions}>
+            <button className={styles.btnEdit} onClick={() => router.push(`/subastas/${id}/editar`)}>Editar</button>
+            <button className={styles.btnDelete} onClick={handleDelete}>Eliminar</button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>

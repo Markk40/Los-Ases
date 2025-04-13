@@ -197,3 +197,11 @@
     color: green;
     margin-top: 10px;
 }
+
+.mainButtonPlaceholder {
+    width: 150px; /* Ajusta al tamaño de los botones normales */
+    height: 40px; /* O el tamaño que tengas para tus botones */
+    background-color: transparent;
+    border: 1px solid transparent; /* Mantiene el borde sin mostrarlo */
+  }
+  
