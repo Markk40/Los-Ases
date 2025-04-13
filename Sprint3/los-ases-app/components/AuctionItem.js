@@ -15,7 +15,7 @@ export default function AuctionItem({ car }) {
     window.location.href = `/subastas/${encodeURIComponent(car.id)}`;
   };
 
-  const stopPropagation = (e) => e.stopPropagation(); // ⛔ evita redirección al hacer click en "Editar"
+  const stopPropagation = (e) => e.stopPropagation(); // evita redirección al hacer click en "Editar"
 
   // Calculamos tiempo restante
   const calculateTimeLeft = (closingDate) => {
@@ -32,7 +32,7 @@ export default function AuctionItem({ car }) {
   return (
     <div className={styles.auctionItem} onClick={handleCardClick}>
       <img
-        src={car.thumbnail}
+        src={car.thumbnail.startsWith("/") ? car.thumbnail : `/${car.thumbnail}`}
         alt={car.title}
         className={styles.auctionImage}
       />

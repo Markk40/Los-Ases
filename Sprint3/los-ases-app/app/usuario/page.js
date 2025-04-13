@@ -128,7 +128,6 @@ const AccountPage = () => {
                 <div className={styles.account}>
                     <h2>Mi Cuenta</h2>
                     <div className={styles.userInfo}>
-                        <img src="/defaultProfile.jpg" alt="Foto de perfil" className={styles.profileImage} />
 
                         <div className={styles.infoRow}>
                             <label htmlFor="username" className={styles.label}>Nombre de Usuario:</label>

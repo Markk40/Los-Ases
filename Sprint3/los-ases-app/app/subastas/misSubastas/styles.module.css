@@ -18,10 +18,9 @@
     gap: 30px;
 }
   
-p {
+.emptyMessage {
     text-align: center;
     font-size: 1.1rem;
     color: #666;
     margin-top: 40px;
 }
-  

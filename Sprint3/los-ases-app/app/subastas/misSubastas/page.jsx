@@ -40,7 +40,7 @@ export default function UserAuctions() {
       <div className={styles.container}>
         <h2 className={styles.title}>Mis Subastas</h2>
         {userAuctions.length === 0 ? (
-          <p>No has creado ninguna subasta todavía.</p>
+          <p className={styles.emptyMessage}>No has creado ninguna subasta todavía.</p>
         ) : (
           <div className={styles.auctionList}>
             {userAuctions.map((auction) => (
