@@ -23,19 +23,32 @@ export const createAuction = async (data) => {
 };
 
 export const updateAuction = async (id, data) => {
+  const token = localStorage.getItem("accessToken");
+
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
     body: JSON.stringify(data),
   });
+
   if (!res.ok) throw new Error("Error al actualizar la subasta");
   return res.json();
 };
 
+
 export const deleteAuction = async (id) => {
+  const token = localStorage.getItem("accessToken");
+
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
   });
+
   if (!res.ok) throw new Error("Error al eliminar la subasta");
 };
 
@@ -73,6 +86,28 @@ export const createBid = async (auctionId, bidData, token) => {
     throw new Error(errorMessage);
   }
 
+  return res.json();
+};
+
+export const deleteBid = async (auctionId, bidId) => {
+  const token = localStorage.getItem("accessToken");
+
+  const res = await fetch(
+    `http://localhost:8000/api/auctions/${auctionId}/bid/${bidId}/`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!res.ok) throw new Error("Error al eliminar la puja");
+};
+
+export const getBidsByAuction = async (auctionId) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/bid/`);
+  if (!res.ok) throw new Error("Error al obtener las pujas de la subasta");
   return res.json();
 };
 
