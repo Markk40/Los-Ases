@@ -182,7 +182,7 @@ const RegisterUser = () => {
     };
 
     try {
-      const response = await fetch("http://los-ases-backend.onrender.com/api/users/register/", {
+      const response = await fetch("https://los-ases-backend.onrender.com/api/users/register/", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)

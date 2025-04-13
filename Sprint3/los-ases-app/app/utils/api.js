@@ -115,7 +115,7 @@ export const deleteBid = async (auctionId, bidId) => {
   const token = localStorage.getItem("accessToken");
 
   const res = await fetch(
-    `http://los-ases-backend.onrender.com/api/auctions/${auctionId}/bid/${bidId}/`,
+    `https://los-ases-backend.onrender.com/api/auctions/${auctionId}/bid/${bidId}/`,
     {
       method: "DELETE",
       headers: {
@@ -135,7 +135,7 @@ export const getBidsByAuction = async (auctionId) => {
 
 export const getAllBids = async () => {
   try {
-    const res = await fetch("http://los-ases-backend.onrender.com/api/bids/");
+    const res = await fetch("https://los-ases-backend.onrender.com/api/bids/");
     if (!res.ok) {
       throw new Error("Error al obtener pujas");
     }
