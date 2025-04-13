@@ -1,26 +1,36 @@
-.container {
-    padding: 40px 20px;
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .mainContent {
+    flex: 1;
+  }
+  
+  .container {
+    padding: 100px 20px 40px; /* deja espacio superior para el header */
     max-width: 1200px;
     margin: 0 auto;
-    min-height: 70vh; /* para empujar el footer abajo */
-}
+  }
   
-.title {
+  .title {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 30px;
     text-align: center;
-}
+  }
   
-.auctionList {
+  .auctionList {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
-}
+  }
   
-.emptyMessage {
+  .emptyMessage {
     text-align: center;
     font-size: 1.1rem;
     color: #666;
     margin-top: 40px;
-}
+  }
+  

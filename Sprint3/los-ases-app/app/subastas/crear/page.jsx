@@ -68,45 +68,94 @@ export default function CreateAuction() {
           <h2 className={styles.title}>Crear Nueva Subasta</h2>
           {error && <p className={styles.error}>{error}</p>}
 
-          <form onSubmit={handleSubmit}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
-              <label>Título:</label>
-              <input type="text" name="title" value={formData.title} onChange={handleChange} />
+              <label className={styles.label}>Título:</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Descripción:</label>
-              <textarea name="description" value={formData.description} onChange={handleChange} />
+              <label className={styles.label}>Descripción:</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className={styles.textarea}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Fecha de cierre:</label>
-              <input type="datetime-local" name="closing_date" value={formData.closing_date} onChange={handleChange} />
+              <label className={styles.label}>Fecha de cierre:</label>
+              <input
+                type="datetime-local"
+                name="closing_date"
+                value={formData.closing_date}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Imagen (URL):</label>
-              <input type="text" name="thumbnail" value={formData.thumbnail} onChange={handleChange} />
+              <label className={styles.label}>Imagen (URL):</label>
+              <input
+                type="text"
+                name="thumbnail"
+                value={formData.thumbnail}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Precio de salida (€):</label>
-              <input type="number" name="price" value={formData.price} onChange={handleChange} />
+              <label className={styles.label}>Precio de salida (€):</label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Stock:</label>
-              <input type="number" name="stock" value={formData.stock} onChange={handleChange} />
+              <label className={styles.label}>Stock:</label>
+              <input
+                type="number"
+                name="stock"
+                value={formData.stock}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Valoración:</label>
-              <input type="number" step="0.1" min="0" max="5" name="rating" value={formData.rating} onChange={handleChange} />
+              <label className={styles.label}>Valoración:</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="5"
+                name="rating"
+                value={formData.rating}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label>Categoría:</label>
-              <select name="category" value={formData.category} onChange={handleChange}>
+              <label className={styles.label}>Categoría:</label>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className={styles.select}
+              >
                 <option value="">Selecciona una categoría</option>
                 {Array.isArray(categories) &&
                   categories.map((cat) => (
@@ -118,8 +167,14 @@ export default function CreateAuction() {
             </div>
 
             <div className={styles.formGroup}>
-              <label>Marca:</label>
-              <input type="text" name="brand" value={formData.brand} onChange={handleChange} />
+              <label className={styles.label}>Marca:</label>
+              <input
+                type="text"
+                name="brand"
+                value={formData.brand}
+                onChange={handleChange}
+                className={styles.input}
+              />
             </div>
 
             <div className={styles.buttonContainer}>
