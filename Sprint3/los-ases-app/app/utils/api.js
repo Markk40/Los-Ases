@@ -44,20 +44,17 @@ export const createAuction = async (data) => {
   return res.json();
 };
 
-export const updateAuction = async (id, data) => {
+export const updateAuction = async (id, formData) => {
   const token = localStorage.getItem("accessToken");
-
   const res = await fetch(`${API_BASE_URL}${id}/`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
+    body: formData,
   });
-
-  if (!res.ok) throw new Error("Error al actualizar la subasta");
-  return res.json();
+  if (!res.ok) throw new Error("Falló la actualización");
+  return await res.json();
 };
 
 

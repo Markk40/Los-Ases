@@ -42,10 +42,16 @@ export default function EditAuction() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== "" && value != null) {
+        data.append(key, value);
+      }
+    });
     try {
-      await updateAuction(id, formData);
+      await updateAuction(id, data);
       router.push(`/subastas/${id}`);
-    } catch (err) {
+    } catch {
       setError("Error al guardar los cambios.");
     }
   };
@@ -69,7 +75,7 @@ export default function EditAuction() {
           <input className={styles.input} type="datetime-local" name="closing_date" value={formData.closing_date} onChange={handleChange} />
 
           <label className={styles.label}>Imagen (URL)</label>
-          <input className={styles.input} type="text" name="thumbnail" value={formData.thumbnail} onChange={handleChange} />
+          <input className={styles.input} type="text" name="thumbnail" accept="image/jpeg,image/png,image/webp" value={formData.thumbnail} onChange={handleChange} />
 
           <label className={styles.label}>Precio de salida</label>
           <input className={styles.input} type="number" name="price" value={formData.price} onChange={handleChange} />
