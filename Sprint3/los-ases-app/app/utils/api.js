@@ -13,39 +13,35 @@ export const getAuctionById = async (id) => {
 };
 
 export const createAuction = async (data) => {
-  // Obtener el token de autenticación del almacenamiento local
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
     throw new Error("No estás logueado. El token de autenticación es necesario.");
   }
 
-  // Extraer el user_id del token
   const payload = JSON.parse(atob(token.split(".")[1]));
   const userId = payload.user_id || payload.id;
 
-  // Añadir el userId como auctioneer al cuerpo de la solicitud
   const auctionData = { ...data, auctioneer: userId };
 
-  // Realizar la petición POST con los datos y el token
   const res = await fetch(API_BASE_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`, // Enviar el token en los headers
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(auctionData),
   });
 
   if (!res.ok) {
-  const errorData = await res.json();  // <--- Obtén los detalles del error
-  console.error("Detalles del error:", errorData);  // <--- Muestra los detalles
-  throw new Error("Error al crear la subasta");
-}
-
+    const errorDetail = await res.json();
+    console.error("Detalles del error de backend:", errorDetail); // 👈 esto es clave
+    throw new Error("Error al crear la subasta");
+  }
 
   return res.json();
 };
+
 
 export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
