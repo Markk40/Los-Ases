@@ -75,7 +75,7 @@ export default function EditAuction() {
           <input className={styles.input} type="datetime-local" name="closing_date" value={formData.closing_date} onChange={handleChange} />
 
           <label className={styles.label}>Imagen</label>
-          <input className={styles.input} type="text" name="thumbnail" accept="image/jpeg,image/jpg,image/png,image/webp" value={formData.thumbnail} onChange={handleChange} />
+          <input className={styles.input} type="file" name="thumbnail" value={formData.thumbnail} onChange={handleChange} />
 
           <label className={styles.label}>Precio de salida</label>
           <input className={styles.input} type="number" name="price" value={formData.price} onChange={handleChange} />
