@@ -38,8 +38,11 @@ export const createAuction = async (data) => {
   });
 
   if (!res.ok) {
-    throw new Error("Error al crear la subasta");
-  }
+  const errorData = await res.json();  // <--- Obtén los detalles del error
+  console.error("Detalles del error:", errorData);  // <--- Muestra los detalles
+  throw new Error("Error al crear la subasta");
+}
+
 
   return res.json();
 };
