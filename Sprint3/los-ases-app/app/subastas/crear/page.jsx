@@ -51,6 +51,14 @@ export default function CreateAuction() {
     }
   };
 
+  const convertDateFormat = (dateString) => {
+    const [day, month, yearTime] = dateString.split("-");
+    const [year, time] = yearTime.split(" ");
+    const [hour, minute] = time.split(":");
+    return `${year}-${month}-${day}T${hour}:${minute}:00`;
+  };
+
+
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -69,15 +77,29 @@ export default function CreateAuction() {
     return;
   }
 
+  // Imprimir formData para verificar los valores capturados
+  console.log("Datos del formulario antes de enviarlos:", formData);
+
   // 2) Montar FormData para multipart/form-data
   const payload = new FormData();
   payload.append("title", formData.title);
   payload.append("description", formData.description);
 
-  // Convertimos la fecha a formato ISO si se proporciona
+  // Convertir la fecha a formato ISO si se proporciona
   if (formData.closing_date) {
-    const closingDate = new Date(formData.closing_date).toISOString();
-    payload.append("closing_date", closingDate); // Usar fecha en formato ISO
+    console.log("Fecha antes de convertir:", formData.closing_date);  // Ver qué fecha estamos capturando
+    const convertedDate = convertDateFormat(formData.closing_date);
+    console.log("Fecha convertida:", convertedDate);  // Ver la fecha convertida
+
+    const closingDate = new Date(convertedDate);
+    if (isNaN(closingDate)) {
+      setError("La fecha de cierre es inválida.");
+      return;
+    }
+
+    const closingDateISO = closingDate.toISOString();
+    console.log("Fecha convertida a ISO:", closingDateISO);  // Ver la fecha ISO que se enviará
+    payload.append("closing_date", closingDateISO);
   }
 
   payload.append("thumbnail", formData.thumbnail);  // Asegúrate de que sea un archivo
@@ -95,6 +117,7 @@ export default function CreateAuction() {
     setError("Error al crear la subasta.");
   }
 };
+
 
 
 
