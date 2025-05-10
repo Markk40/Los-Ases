@@ -22,10 +22,8 @@ export const createAuction = async (data) => {
   const payload = JSON.parse(atob(token.split(".")[1]));
   const userId = payload.user_id || payload.id;
 
-  // Crear un objeto FormData para enviar los datos, incluyendo la imagen
+  // Crear FormData para enviar todos los datos, incluyendo imágenes
   const formData = new FormData();
-
-  // Añadir todos los campos de la subasta al FormData
   formData.append("auctioneer", userId);
   formData.append("title", data.title);
   formData.append("description", data.description);
@@ -36,26 +34,31 @@ export const createAuction = async (data) => {
   formData.append("category", data.category);
   formData.append("brand", data.brand);
 
-  // Añadir la imagen de la subasta si existe
-  if (data.thumbnail) {
-    formData.append("thumbnail", data.thumbnail); // Asegúrate de que `data.thumbnail` sea el archivo de la imagen
+  // Asegurarse de que `data.thumbnail` es un archivo y agregarlo
+  if (data.thumbnail && data.thumbnail instanceof File) {
+    formData.append("thumbnail", data.thumbnail);
+  } else {
+    console.error("No se ha seleccionado una imagen válida.");
+    throw new Error("No se ha seleccionado una imagen válida.");
   }
 
+  // Realizar la petición POST
   const res = await fetch(API_BASE_URL, {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${token}`, // Enviar el token en los headers
+      "Authorization": `Bearer ${token}`,
     },
-    body: formData, // Usar formData como el cuerpo de la solicitud
+    body: formData, // Usar FormData para el cuerpo de la solicitud
   });
 
   if (!res.ok) {
-    throw new Error("Error al crear la subasta");
+    const errorDetails = await res.json();
+    console.error("Detalles del error:", errorDetails);
+    throw new Error(errorDetails.detail || "Error al crear la subasta");
   }
 
   return res.json();
 };
-
 
 export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
@@ -70,8 +73,10 @@ export const updateAuction = async (id, data) => {
   formData.append("category", data.category);
   formData.append("brand", data.brand);
 
-  if (data.thumbnail) {
-    formData.append("thumbnail", data.thumbnail); // Agregar la nueva imagen si existe
+  if (data.thumbnail && data.thumbnail instanceof File) {
+    formData.append("thumbnail", data.thumbnail);
+  } else {
+    console.error("No se ha seleccionado una imagen válida.");
   }
 
   const res = await fetch(`${API_BASE_URL}${id}/`, {
@@ -82,11 +87,14 @@ export const updateAuction = async (id, data) => {
     body: formData,
   });
 
-  if (!res.ok) throw new Error("Falló la actualización");
+  if (!res.ok) {
+    const errorDetails = await res.json();
+    console.error("Detalles del error:", errorDetails);
+    throw new Error(errorDetails.detail || "Falló la actualización");
+  }
+
   return await res.json();
 };
-
-
 
 export const deleteAuction = async (id) => {
   const token = localStorage.getItem("accessToken");
@@ -108,7 +116,6 @@ export const getAllCategories = async () => {
 };
 
 export const createBid = async (auctionId, bidData, token) => {
-  // Incluir el campo 'auction' en el bidData
   const bidPayload = {
     ...bidData,      // Precio y el postor
     auction: auctionId  // Añadimos el id de la subasta
@@ -120,7 +127,7 @@ export const createBid = async (auctionId, bidData, token) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(bidPayload), // Enviamos el bid con el auction
+    body: JSON.stringify(bidPayload),
   });
 
   if (!res.ok) {
@@ -168,7 +175,6 @@ export const getAllBids = async () => {
     }
     return await res.json();
   } catch (error) {
-    // console.error("❌ Error en getAllBids:", error.message);
     return []; // devolvemos un array vacío si hay fallo
   }
 };
