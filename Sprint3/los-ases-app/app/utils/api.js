@@ -13,28 +13,40 @@ export const getAuctionById = async (id) => {
 };
 
 export const createAuction = async (data) => {
-  // Obtener el token de autenticación del almacenamiento local
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
     throw new Error("No estás logueado. El token de autenticación es necesario.");
   }
 
-  // Extraer el user_id del token
   const payload = JSON.parse(atob(token.split(".")[1]));
   const userId = payload.user_id || payload.id;
 
-  // Añadir el userId como auctioneer al cuerpo de la solicitud
-  const auctionData = { ...data, auctioneer: userId };
+  // Crear un objeto FormData para enviar los datos, incluyendo la imagen
+  const formData = new FormData();
 
-  // Realizar la petición POST con los datos y el token
+  // Añadir todos los campos de la subasta al FormData
+  formData.append("auctioneer", userId);
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("closing_date", data.closing_date);
+  formData.append("price", data.price);
+  formData.append("stock", data.stock);
+  formData.append("rating", data.rating);
+  formData.append("category", data.category);
+  formData.append("brand", data.brand);
+
+  // Añadir la imagen de la subasta si existe
+  if (data.thumbnail) {
+    formData.append("thumbnail", data.thumbnail); // Asegúrate de que `data.thumbnail` sea el archivo de la imagen
+  }
+
   const res = await fetch(API_BASE_URL, {
     method: "POST",
     headers: {
-      // "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`, // Enviar el token en los headers
     },
-    body: JSON.stringify(auctionData),
+    body: formData, // Usar formData como el cuerpo de la solicitud
   });
 
   if (!res.ok) {
@@ -44,8 +56,24 @@ export const createAuction = async (data) => {
   return res.json();
 };
 
-export const updateAuction = async (id, formData) => {
+
+export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
+
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("closing_date", data.closing_date);
+  formData.append("price", data.price);
+  formData.append("stock", data.stock);
+  formData.append("rating", data.rating);
+  formData.append("category", data.category);
+  formData.append("brand", data.brand);
+
+  if (data.thumbnail) {
+    formData.append("thumbnail", data.thumbnail); // Agregar la nueva imagen si existe
+  }
+
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PATCH",
     headers: {
@@ -53,9 +81,11 @@ export const updateAuction = async (id, formData) => {
     },
     body: formData,
   });
+
   if (!res.ok) throw new Error("Falló la actualización");
   return await res.json();
 };
+
 
 
 export const deleteAuction = async (id) => {
