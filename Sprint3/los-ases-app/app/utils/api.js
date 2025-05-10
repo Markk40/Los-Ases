@@ -28,11 +28,12 @@ export const createAuction = async (data) => {
   formData.append("title", data.title);
   formData.append("description", data.description);
 
-  // Validar que la fecha sea válida antes de intentar convertirla
+  // Verificamos el valor de la fecha
+  console.log("Fecha de cierre recibida:", data.closing_date);  // Ver qué estamos recibiendo
   let closingDate;
   if (data.closing_date) {
     closingDate = new Date(data.closing_date);
-    if (isNaN(closingDate)) {
+    if (isNaN(closingDate.getTime())) {
       console.error("Fecha de cierre inválida:", data.closing_date);
       throw new Error("La fecha de cierre no es válida.");
     }
@@ -78,6 +79,7 @@ export const createAuction = async (data) => {
     throw new Error("Error al realizar la petición: " + error.message);
   }
 };
+
 
 
 
