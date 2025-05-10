@@ -35,7 +35,7 @@ export const createAuction = async (data) => {
 
   if (!res.ok) {
     const errorDetail = await res.json();
-    console.error("Detalles del error de backend:", errorDetail); // 👈 esto es clave
+    console.error("Detalles del error de backend:", errorDetail);
     throw new Error("Error al crear la subasta");
   }
 
@@ -55,8 +55,11 @@ export const updateAuction = async (id, data) => {
     body: JSON.stringify(data),
   });
 
-  if (!res.ok) throw new Error("Error al actualizar la subasta");
-  return res.json();
+  if (!res.ok) {
+  const errorData = await res.json();
+  console.error("Detalles del error de backend:", errorData);
+  throw new Error("Error al actualizar la subasta");
+}
 };
 
 
