@@ -73,7 +73,13 @@ export default function CreateAuction() {
   const payload = new FormData();
   payload.append("title", formData.title);
   payload.append("description", formData.description);
-  payload.append("closing_date", new Date(formData.closing_date).toISOString());
+
+  // Convertimos la fecha a formato ISO si se proporciona
+  if (formData.closing_date) {
+    const closingDate = new Date(formData.closing_date).toISOString();
+    payload.append("closing_date", closingDate); // Usar fecha en formato ISO
+  }
+
   payload.append("thumbnail", formData.thumbnail);  // Asegúrate de que sea un archivo
   payload.append("price", formData.price);
   payload.append("stock", formData.stock);
@@ -89,6 +95,7 @@ export default function CreateAuction() {
     setError("Error al crear la subasta.");
   }
 };
+
 
 
   return (
