@@ -52,7 +52,11 @@ export default function CreateAuction() {
     }
 
     try {
-      await createAuction(formData);
+      const fixedData = {
+        ...formData,
+        closing_date: new Date(formData.closing_date).toISOString(), // 🔧 esto lo convierte al formato ISO requerido por Django
+      };
+      await createAuction(fixedData);
       router.push("/subastas");
     } catch (err) {
       console.error(err);
