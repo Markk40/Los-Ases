@@ -39,7 +39,16 @@ export const createAuction = async (data) => {
 
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    throw new Error(err?.detail || "Error al crear la subasta");
+    // Construimos un mensaje con cada campo
+    if (err && typeof err === "object") {
+      const msg = Object.entries(err)
+        .map(([k, v]) =>
+          `${k}: ${Array.isArray(v) ? v.join(" ") : v}`
+        )
+        .join("; ");
+      throw new Error(msg);
+    }
+    throw new Error("Error al crear la subasta");
   }
   return res.json();
 };

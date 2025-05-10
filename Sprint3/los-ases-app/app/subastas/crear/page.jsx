@@ -8,12 +8,11 @@ import styles from "./styles.module.css";
 
 export default function CreateAuction() {
   const router = useRouter();
-
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     closing_date: "",
-    thumbnail: null,
+    thumbnail: null,  // File o null
     price: "",
     stock: "",
     rating: "",
@@ -26,7 +25,9 @@ export default function CreateAuction() {
   useEffect(() => {
     getAllCategories()
       .then(setCategories)
-      .catch((err) => console.error("Error al cargar categorías:", err));
+      .catch((err) =>
+        console.error("Error al cargar categorías:", err)
+      );
   }, []);
 
   const handleChange = (e) => {
@@ -38,9 +39,9 @@ export default function CreateAuction() {
         setError("Solo JPEG, PNG o WebP.");
         return;
       }
-      setFormData((prev) => ({ ...prev, [name]: file }));
+      setFormData((p) => ({ ...p, [name]: file }));
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((p) => ({ ...p, [name]: value }));
     }
   };
 
@@ -48,14 +49,18 @@ export default function CreateAuction() {
     e.preventDefault();
     setError("");
 
-    // 1) Campos obligatorios
-    const required = ["title", "description", "closing_date", "thumbnail", "price"];
+    // Validar todos los campos obligatorios
+    const required = [
+      "title", "description", "closing_date",
+      "thumbnail", "price", "stock",
+      "rating", "category", "brand"
+    ];
     if (required.some((f) => !formData[f])) {
       setError("Por favor, completa todos los campos obligatorios.");
       return;
     }
 
-    // 2) Prepara el objeto plano
+    // Convertir fecha a ISO
     let isoDate;
     try {
       const d = new Date(formData.closing_date);
@@ -66,11 +71,12 @@ export default function CreateAuction() {
       return;
     }
 
+    // Aquí **NO** creamos FormData, solo un objeto plano
     const payload = {
       title: formData.title,
       description: formData.description,
       closing_date: isoDate,
-      thumbnail: formData.thumbnail, // File
+      thumbnail: formData.thumbnail,  // File
       price: formData.price,
       stock: formData.stock,
       rating: formData.rating,
@@ -78,8 +84,8 @@ export default function CreateAuction() {
       brand: formData.brand,
     };
 
-    // 3) Llama a createAuction (que construye el FormData)
     try {
+      // createAuction construye él solo el FormData
       await createAuction(payload);
       router.push("/subastas");
     } catch (err) {
@@ -134,7 +140,7 @@ export default function CreateAuction() {
               <input
                 type="file"
                 name="thumbnail"
-                accept="image/jpeg,image/png,image/webp"
+                accept="image/jpeg,image/png,image/webp,image/jpg"
                 onChange={handleChange}
                 className={styles.input}
               />
