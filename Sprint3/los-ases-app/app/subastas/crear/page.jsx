@@ -106,10 +106,11 @@ export default function CreateAuction() {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.label}>Imagen (URL):</label>
+              <label className={styles.label}>Imagen:</label>
               <input
                 type="text"
                 name="thumbnail"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
                 value={formData.thumbnail}
                 onChange={handleChange}
                 className={styles.input}
