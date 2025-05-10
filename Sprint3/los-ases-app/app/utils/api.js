@@ -31,7 +31,7 @@ export const createAuction = async (data) => {
   const res = await fetch(API_BASE_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`, // Enviar el token en los headers
     },
     body: JSON.stringify(auctionData),
