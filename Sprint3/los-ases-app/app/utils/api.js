@@ -14,73 +14,35 @@ export const getAuctionById = async (id) => {
 
 export const createAuction = async (data) => {
   const token = localStorage.getItem("accessToken");
-
-  if (!token) {
-    throw new Error("No estás logueado. El token de autenticación es necesario.");
-  }
+  if (!token) throw new Error("No estás logueado");
 
   const payload = JSON.parse(atob(token.split(".")[1]));
   const userId = payload.user_id || payload.id;
 
-  // Crear FormData para enviar todos los datos, incluyendo imágenes
   const formData = new FormData();
   formData.append("auctioneer", userId);
   formData.append("title", data.title);
   formData.append("description", data.description);
-
-  // Verificamos el valor de la fecha
-  console.log("Fecha de cierre recibida:", data.closing_date);  // Ver qué estamos recibiendo
-  let closingDate;
-  if (data.closing_date) {
-    closingDate = new Date(data.closing_date);
-    if (isNaN(closingDate.getTime())) {
-      console.error("Fecha de cierre inválida:", data.closing_date);
-      throw new Error("La fecha de cierre no es válida.");
-    }
-  } else {
-    console.error("No se proporcionó fecha de cierre.");
-    throw new Error("La fecha de cierre es obligatoria.");
-  }
-
-  formData.append("closing_date", closingDate.toISOString());
+  formData.append("closing_date", data.closing_date);
+  formData.append("thumbnail", data.thumbnail);
   formData.append("price", data.price);
   formData.append("stock", data.stock);
   formData.append("rating", data.rating);
   formData.append("category", data.category);
   formData.append("brand", data.brand);
 
-  // Verificar si `data.thumbnail` es un archivo antes de añadirlo
-  if (data.thumbnail && data.thumbnail instanceof File) {
-    formData.append("thumbnail", data.thumbnail); // Enviar archivo como FormData
-  } else {
-    console.error("No se ha seleccionado una imagen válida.");
-    throw new Error("No se ha seleccionado una imagen válida.");
+  const res = await fetch(API_BASE_URL, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(err?.detail || "Error al crear la subasta");
   }
-
-  // Realizar la petición POST
-  try {
-    const res = await fetch('https://los-ases-backend.onrender.com/api/auctions/', {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${token}`,  // Token de autenticación
-      },
-      body: formData,  // Usar FormData para el cuerpo de la solicitud
-    });
-
-    if (!res.ok) {
-      const errorDetails = await res.json();
-      console.error("Detalles del error:", errorDetails); // Imprimir el error completo
-      throw new Error(errorDetails.detail || "Error al crear la subasta");
-    }
-
-    return await res.json();  // Devolver la respuesta JSON
-  } catch (error) {
-    console.error("Error de la petición:", error);
-    throw new Error("Error al realizar la petición: " + error.message);
-  }
+  return res.json();
 };
-
-
 
 
 export const updateAuction = async (id, data) => {

@@ -13,7 +13,7 @@ export default function CreateAuction() {
     title: "",
     description: "",
     closing_date: "",
-    thumbnail: null,    // null para file
+    thumbnail: null,
     price: "",
     stock: "",
     rating: "",
@@ -24,89 +24,67 @@ export default function CreateAuction() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const data = await getAllCategories();
-        setCategories(data);
-      } catch (err) {
-        console.error("Error al cargar categorías:", err);
-      }
-    }
-    fetchCategories();
+    getAllCategories()
+      .then(setCategories)
+      .catch((err) => console.error("Error al cargar categorías:", err));
   }, []);
 
   const handleChange = (e) => {
     const { name, type, value, files } = e.target;
     if (type === "file") {
       const file = files[0];
-      // Validar que el archivo es una imagen
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-      if (file && !allowedTypes.includes(file.type)) {
-        setError("Solo se permiten imágenes en formato JPEG, PNG o WebP.");
+      const allowed = ["image/jpeg", "image/png", "image/webp"];
+      if (file && !allowed.includes(file.type)) {
+        setError("Solo JPEG, PNG o WebP.");
         return;
       }
-      setFormData(prev => ({ ...prev, [name]: file }));
+      setFormData((prev) => ({ ...prev, [name]: file }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // 1) Validar campos obligatorios
+    // 1) Campos obligatorios
     const required = ["title", "description", "closing_date", "thumbnail", "price"];
-    if (required.some(field => !formData[field])) {
+    if (required.some((f) => !formData[f])) {
       setError("Por favor, completa todos los campos obligatorios.");
       return;
     }
 
-    // Validar que el thumbnail sea un archivo válido
-    if (formData.thumbnail && !(formData.thumbnail instanceof File)) {
-      setError("No se ha seleccionado una imagen válida.");
-      return;
-    }
-
-    // 2) Montar FormData para multipart/form-data
-    const payload = new FormData();
-    payload.append("title", formData.title);
-    payload.append("description", formData.description);
-
-    // Asegurarse de que la fecha esté en formato ISO correcto
-    if (formData.closing_date) {
-      console.log("Fecha antes de enviar:", formData.closing_date);  // Ver qué fecha estamos enviando
-      const closingDate = new Date(formData.closing_date);
-
-      // Verificar que la fecha es válida
-      if (isNaN(closingDate)) {
-        setError("La fecha de cierre es inválida.");
-        return;
-      }
-
-      // Convertir la fecha a ISO para enviarla
-      const closingDateISO = closingDate.toISOString();
-      console.log("Fecha convertida a ISO:", closingDateISO);  // Ver la fecha ISO que se enviará
-      payload.append("closing_date", closingDateISO);  // Asegurarse de que se envía en formato ISO
-    } else {
-      setError("La fecha de cierre es obligatoria.");
-      return;
-    }
-
-    payload.append("thumbnail", formData.thumbnail);  // Asegúrate de que sea un archivo
-    payload.append("price", formData.price);
-    payload.append("stock", formData.stock);
-    payload.append("rating", formData.rating);
-    payload.append("category", formData.category);
-    payload.append("brand", formData.brand);
-
+    // 2) Prepara el objeto plano
+    let isoDate;
     try {
-      await createAuction(payload); // Enviar FormData con la fecha ya en formato ISO
+      const d = new Date(formData.closing_date);
+      if (isNaN(d.getTime())) throw new Error();
+      isoDate = d.toISOString();
+    } catch {
+      setError("Fecha de cierre inválida.");
+      return;
+    }
+
+    const payload = {
+      title: formData.title,
+      description: formData.description,
+      closing_date: isoDate,
+      thumbnail: formData.thumbnail, // File
+      price: formData.price,
+      stock: formData.stock,
+      rating: formData.rating,
+      category: formData.category,
+      brand: formData.brand,
+    };
+
+    // 3) Llama a createAuction (que construye el FormData)
+    try {
+      await createAuction(payload);
       router.push("/subastas");
     } catch (err) {
       console.error(err);
-      setError("Error al crear la subasta.");
+      setError("Error al crear la subasta: " + err.message);
     }
   };
 
@@ -119,7 +97,6 @@ export default function CreateAuction() {
           {error && <p className={styles.error}>{error}</p>}
 
           <form className={styles.form} onSubmit={handleSubmit}>
-            {/* Título */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Título:</label>
               <input
@@ -131,7 +108,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Descripción */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Descripción:</label>
               <textarea
@@ -142,7 +118,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Fecha de cierre */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Fecha de cierre:</label>
               <input
@@ -154,7 +129,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Imagen */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Imagen:</label>
               <input
@@ -166,7 +140,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Precio */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Precio de salida (€):</label>
               <input
@@ -178,7 +151,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Stock */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Stock:</label>
               <input
@@ -190,7 +162,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Valoración */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Valoración:</label>
               <input
@@ -205,7 +176,6 @@ export default function CreateAuction() {
               />
             </div>
 
-            {/* Categoría */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Categoría:</label>
               <select
@@ -216,7 +186,7 @@ export default function CreateAuction() {
               >
                 <option value="">Selecciona una categoría</option>
                 {Array.isArray(categories.results) &&
-                  categories.results.map(cat => (
+                  categories.results.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
                     </option>
@@ -224,7 +194,6 @@ export default function CreateAuction() {
               </select>
             </div>
 
-            {/* Marca */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Marca:</label>
               <input
