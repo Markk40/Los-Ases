@@ -27,7 +27,7 @@ export const createAuction = async (data) => {
   formData.append("auctioneer", userId);
   formData.append("title", data.title);
   formData.append("description", data.description);
-  formData.append("closing_date", data.closing_date);
+  formData.append("closing_date", new Date(data.closing_date).toISOString());  // Asegurar que la fecha sea ISO
   formData.append("price", data.price);
   formData.append("stock", data.stock);
   formData.append("rating", data.rating);
@@ -44,12 +44,12 @@ export const createAuction = async (data) => {
 
   // Realizar la petición POST
   try {
-    const res = await fetch(API_BASE_URL, {
+    const res = await fetch('https://los-ases-backend.onrender.com/api/auctions/', {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,  // Token de autenticación
       },
-      body: formData, // Usar FormData para el cuerpo de la solicitud
+      body: formData,  // Usar FormData para el cuerpo de la solicitud
     });
 
     if (!res.ok) {
@@ -58,12 +58,13 @@ export const createAuction = async (data) => {
       throw new Error(errorDetails.detail || "Error al crear la subasta");
     }
 
-    return res.json();
+    return await res.json();  // Devolver la respuesta JSON
   } catch (error) {
     console.error("Error de la petición:", error);
     throw new Error("Error al realizar la petición: " + error.message);
   }
 };
+
 
 
 export const updateAuction = async (id, data) => {
