@@ -27,7 +27,21 @@ export const createAuction = async (data) => {
   formData.append("auctioneer", userId);
   formData.append("title", data.title);
   formData.append("description", data.description);
-  formData.append("closing_date", new Date(data.closing_date).toISOString());  // Asegurar que la fecha sea ISO
+
+  // Validar que la fecha sea válida antes de intentar convertirla
+  let closingDate;
+  if (data.closing_date) {
+    closingDate = new Date(data.closing_date);
+    if (isNaN(closingDate)) {
+      console.error("Fecha de cierre inválida:", data.closing_date);
+      throw new Error("La fecha de cierre no es válida.");
+    }
+  } else {
+    console.error("No se proporcionó fecha de cierre.");
+    throw new Error("La fecha de cierre es obligatoria.");
+  }
+
+  formData.append("closing_date", closingDate.toISOString());
   formData.append("price", data.price);
   formData.append("stock", data.stock);
   formData.append("rating", data.rating);
