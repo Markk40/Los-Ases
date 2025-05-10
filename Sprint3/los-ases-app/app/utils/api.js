@@ -13,42 +13,58 @@ export const getAuctionById = async (id) => {
 };
 
 export const createAuction = async (data) => {
-  // 1) Token y userId
   const token = localStorage.getItem("accessToken");
-  if (!token) throw new Error("No estás logueado. El token es necesario.");
+
+  if (!token) {
+    throw new Error("No estás logueado. El token de autenticación es necesario.");
+  }
+
   const payload = JSON.parse(atob(token.split(".")[1]));
   const userId = payload.user_id || payload.id;
 
-  // 2) Encabezados dinámicos y body
-  const headers = { Authorization: `Bearer ${token}` };
-  let body;
+  // Crear FormData para enviar todos los datos, incluyendo imágenes
+  const formData = new FormData();
+  formData.append("auctioneer", userId);
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("closing_date", data.closing_date);
+  formData.append("price", data.price);
+  formData.append("stock", data.stock);
+  formData.append("rating", data.rating);
+  formData.append("category", data.category);
+  formData.append("brand", data.brand);
 
-  if (data instanceof FormData) {
-    // multipart
-    data.append("auctioneer", userId);
-    body = data;
+  // Verificar si `data.thumbnail` es un archivo antes de añadirlo
+  if (data.thumbnail && data.thumbnail instanceof File) {
+    formData.append("thumbnail", data.thumbnail); // Enviar archivo como FormData
   } else {
-    // JSON
-    body = JSON.stringify({ ...data, auctioneer: userId });
-    headers["Content-Type"] = "application/json";
+    console.error("No se ha seleccionado una imagen válida.");
+    throw new Error("No se ha seleccionado una imagen válida.");
   }
 
-  // 3) Petición
-  const res = await fetch(API_BASE_URL, {
-    method: "POST",
-    headers,
-    body,
-  });
+  // Realizar la petición POST
+  try {
+    const res = await fetch(API_BASE_URL, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: formData, // Usar FormData para el cuerpo de la solicitud
+    });
 
-  if (!res.ok) {
-    // Intentamos leer mensaje de error
-    const errData = await res.json().catch(() => null);
-    throw new Error(
-      errData ? JSON.stringify(errData) : "Error al crear la subasta"
-    );
+    if (!res.ok) {
+      const errorDetails = await res.json();
+      console.error("Detalles del error:", errorDetails); // Imprimir el error completo
+      throw new Error(errorDetails.detail || "Error al crear la subasta");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Error de la petición:", error);
+    throw new Error("Error al realizar la petición: " + error.message);
   }
-  return res.json();
 };
+
 
 export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
