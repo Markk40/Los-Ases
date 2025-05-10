@@ -47,7 +47,7 @@ export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
 
   const res = await fetch(`${API_BASE_URL}${id}/`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
