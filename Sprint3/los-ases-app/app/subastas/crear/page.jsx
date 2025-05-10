@@ -51,69 +51,64 @@ export default function CreateAuction() {
     }
   };
 
-  const convertDateFormat = (dateString) => {
-    const [day, month, yearTime] = dateString.split("-");
-    const [year, time] = yearTime.split(" ");
-    const [hour, minute] = time.split(":");
-    return `${year}-${month}-${day}T${hour}:${minute}:00`;
-  };
-
-
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
+    e.preventDefault();
+    setError("");
 
-  // 1) Validar campos obligatorios
-  const required = ["title", "description", "closing_date", "thumbnail", "price"];
-  if (required.some(field => !formData[field])) {
-    setError("Por favor, completa todos los campos obligatorios.");
-    return;
-  }
-
-  // Validar que el thumbnail sea un archivo válido
-  if (formData.thumbnail && !(formData.thumbnail instanceof File)) {
-    setError("No se ha seleccionado una imagen válida.");
-    return;
-  }
-
-  // 2) Montar FormData para multipart/form-data
-  const payload = new FormData();
-  payload.append("title", formData.title);
-  payload.append("description", formData.description);
-
-  // Usar directamente la fecha si ya está en formato ISO
-  if (formData.closing_date) {
-    console.log("Fecha antes de enviar:", formData.closing_date);  // Ver qué fecha estamos enviando
-    const closingDate = new Date(formData.closing_date);
-    if (isNaN(closingDate)) {
-      setError("La fecha de cierre es inválida.");
+    // 1) Validar campos obligatorios
+    const required = ["title", "description", "closing_date", "thumbnail", "price"];
+    if (required.some(field => !formData[field])) {
+      setError("Por favor, completa todos los campos obligatorios.");
       return;
     }
 
-    const closingDateISO = closingDate.toISOString();
-    console.log("Fecha convertida a ISO:", closingDateISO);  // Ver la fecha ISO que se enviará
-    payload.append("closing_date", closingDateISO);
-  }
+    // Validar que el thumbnail sea un archivo válido
+    if (formData.thumbnail && !(formData.thumbnail instanceof File)) {
+      setError("No se ha seleccionado una imagen válida.");
+      return;
+    }
 
-  payload.append("thumbnail", formData.thumbnail);  // Asegúrate de que sea un archivo
-  payload.append("price", formData.price);
-  payload.append("stock", formData.stock);
-  payload.append("rating", formData.rating);
-  payload.append("category", formData.category);
-  payload.append("brand", formData.brand);
+    // 2) Montar FormData para multipart/form-data
+    const payload = new FormData();
+    payload.append("title", formData.title);
+    payload.append("description", formData.description);
 
-  try {
-    await createAuction(payload);
-    router.push("/subastas");
-  } catch (err) {
-    console.error(err);
-    setError("Error al crear la subasta.");
-  }
-};
+    // Asegurarse de que la fecha esté en formato ISO correcto
+    if (formData.closing_date) {
+      console.log("Fecha antes de enviar:", formData.closing_date);  // Ver qué fecha estamos enviando
+      const closingDate = new Date(formData.closing_date);
 
+      // Verificar que la fecha es válida
+      if (isNaN(closingDate)) {
+        setError("La fecha de cierre es inválida.");
+        return;
+      }
 
+      // Convertir la fecha a ISO para enviarla
+      const closingDateISO = closingDate.toISOString();
+      console.log("Fecha convertida a ISO:", closingDateISO);  // Ver la fecha ISO que se enviará
+      payload.append("closing_date", closingDateISO);  // Asegurarse de que se envía en formato ISO
+    } else {
+      setError("La fecha de cierre es obligatoria.");
+      return;
+    }
 
+    payload.append("thumbnail", formData.thumbnail);  // Asegúrate de que sea un archivo
+    payload.append("price", formData.price);
+    payload.append("stock", formData.stock);
+    payload.append("rating", formData.rating);
+    payload.append("category", formData.category);
+    payload.append("brand", formData.brand);
+
+    try {
+      await createAuction(payload); // Enviar FormData con la fecha ya en formato ISO
+      router.push("/subastas");
+    } catch (err) {
+      console.error(err);
+      setError("Error al crear la subasta.");
+    }
+  };
 
   return (
     <>
