@@ -77,21 +77,15 @@ export default function CreateAuction() {
     return;
   }
 
-  // Imprimir formData para verificar los valores capturados
-  console.log("Datos del formulario antes de enviarlos:", formData);
-
   // 2) Montar FormData para multipart/form-data
   const payload = new FormData();
   payload.append("title", formData.title);
   payload.append("description", formData.description);
 
-  // Convertir la fecha a formato ISO si se proporciona
+  // Usar directamente la fecha si ya está en formato ISO
   if (formData.closing_date) {
-    console.log("Fecha antes de convertir:", formData.closing_date);  // Ver qué fecha estamos capturando
-    const convertedDate = convertDateFormat(formData.closing_date);
-    console.log("Fecha convertida:", convertedDate);  // Ver la fecha convertida
-
-    const closingDate = new Date(convertedDate);
+    console.log("Fecha antes de enviar:", formData.closing_date);  // Ver qué fecha estamos enviando
+    const closingDate = new Date(formData.closing_date);
     if (isNaN(closingDate)) {
       setError("La fecha de cierre es inválida.");
       return;
