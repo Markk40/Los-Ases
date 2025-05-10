@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -13,14 +13,13 @@ export default function CreateAuction() {
     title: "",
     description: "",
     closing_date: "",
-    thumbnail: "",
+    thumbnail: null,    // null para file
     price: "",
     stock: "",
     rating: "",
     category: "",
     brand: "",
   });
-
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
 
@@ -37,26 +36,39 @@ export default function CreateAuction() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, type, value, files } = e.target;
+    if (type === "file") {
+      setFormData(prev => ({ ...prev, [name]: files[0] }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    const requiredFields = ["title", "description", "closing_date", "thumbnail", "price"];
-    const isMissing = requiredFields.some((field) => !formData[field]);
-
-    if (isMissing) {
+    // 1) Validar campos obligatorios
+    const required = ["title", "description", "closing_date", "thumbnail", "price"];
+    if (required.some(field => !formData[field])) {
       setError("Por favor, completa todos los campos obligatorios.");
       return;
     }
 
+    // 2) Montar FormData para multipart/form-data
+    const payload = new FormData();
+    payload.append("title", formData.title);
+    payload.append("description", formData.description);
+    payload.append("closing_date", new Date(formData.closing_date).toISOString());
+    payload.append("thumbnail", formData.thumbnail);
+    payload.append("price", formData.price);
+    payload.append("stock", formData.stock);
+    payload.append("rating", formData.rating);
+    payload.append("category", formData.category);
+    payload.append("brand", formData.brand);
+
     try {
-      const fixedData = {
-        ...formData,
-        closing_date: new Date(formData.closing_date).toISOString(),
-      };
-      await createAuction(fixedData);
+      await createAuction(payload);
       router.push("/subastas");
     } catch (err) {
       console.error(err);
@@ -73,6 +85,7 @@ export default function CreateAuction() {
           {error && <p className={styles.error}>{error}</p>}
 
           <form className={styles.form} onSubmit={handleSubmit}>
+            {/* Título */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Título:</label>
               <input
@@ -84,6 +97,7 @@ export default function CreateAuction() {
               />
             </div>
 
+            {/* Descripción */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Descripción:</label>
               <textarea
@@ -94,6 +108,7 @@ export default function CreateAuction() {
               />
             </div>
 
+            {/* Fecha de cierre */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Fecha de cierre:</label>
               <input
@@ -105,17 +120,19 @@ export default function CreateAuction() {
               />
             </div>
 
+            {/* Imagen */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Imagen:</label>
               <input
                 type="file"
                 name="thumbnail"
-                value={formData.thumbnail}
+                accept="image/jpeg,image/png,image/webp"
                 onChange={handleChange}
                 className={styles.input}
               />
             </div>
 
+            {/* Precio */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Precio de salida (€):</label>
               <input
@@ -127,6 +144,7 @@ export default function CreateAuction() {
               />
             </div>
 
+            {/* Stock */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Stock:</label>
               <input
@@ -138,6 +156,7 @@ export default function CreateAuction() {
               />
             </div>
 
+            {/* Valoración */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Valoración:</label>
               <input
@@ -152,6 +171,7 @@ export default function CreateAuction() {
               />
             </div>
 
+            {/* Categoría */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Categoría:</label>
               <select
@@ -162,7 +182,7 @@ export default function CreateAuction() {
               >
                 <option value="">Selecciona una categoría</option>
                 {Array.isArray(categories.results) &&
-                  categories.results.map((cat) => (
+                  categories.results.map(cat => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
                     </option>
@@ -170,6 +190,7 @@ export default function CreateAuction() {
               </select>
             </div>
 
+            {/* Marca */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Marca:</label>
               <input

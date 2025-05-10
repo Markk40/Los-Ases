@@ -13,46 +13,40 @@ export const getAuctionById = async (id) => {
 };
 
 export const createAuction = async (data) => {
+  // 1) Token y userId
   const token = localStorage.getItem("accessToken");
-
-  if (!token) {
-    throw new Error("No estás logueado. El token de autenticación es necesario.");
-  }
-
+  if (!token) throw new Error("No estás logueado. El token es necesario.");
   const payload = JSON.parse(atob(token.split(".")[1]));
   const userId = payload.user_id || payload.id;
 
-  // Crear un objeto FormData para enviar los datos, incluyendo la imagen
-  const formData = new FormData();
+  // 2) Encabezados dinámicos y body
+  const headers = { Authorization: `Bearer ${token}` };
+  let body;
 
-  // Añadir todos los campos de la subasta al FormData
-  formData.append("auctioneer", userId);
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("closing_date", data.closing_date);
-  formData.append("price", data.price);
-  formData.append("stock", data.stock);
-  formData.append("rating", data.rating);
-  formData.append("category", data.category);
-  formData.append("brand", data.brand);
-
-  // Añadir la imagen de la subasta si existe
-  if (data.thumbnail) {
-    formData.append("thumbnail", data.thumbnail); // Asegúrate de que `data.thumbnail` sea el archivo de la imagen
+  if (data instanceof FormData) {
+    // multipart
+    data.append("auctioneer", userId);
+    body = data;
+  } else {
+    // JSON
+    body = JSON.stringify({ ...data, auctioneer: userId });
+    headers["Content-Type"] = "application/json";
   }
 
+  // 3) Petición
   const res = await fetch(API_BASE_URL, {
     method: "POST",
-    headers: {
-      "Authorization": `Bearer ${token}`, // Enviar el token en los headers
-    },
-    body: formData, // Usar formData como el cuerpo de la solicitud
+    headers,
+    body,
   });
 
   if (!res.ok) {
-    throw new Error("Error al crear la subasta");
+    // Intentamos leer mensaje de error
+    const errData = await res.json().catch(() => null);
+    throw new Error(
+      errData ? JSON.stringify(errData) : "Error al crear la subasta"
+    );
   }
-
   return res.json();
 };
 
