@@ -243,3 +243,62 @@ export const getUserRatingByAuction = async (auctionId) => {
 
   return await res.json();
 };
+
+// Obtener todos los comentarios de una subasta
+export const getCommentsByAuction = async (auctionId) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/comments/`);
+  if (!res.ok) throw new Error("Error al obtener comentarios");
+  return await res.json();
+};
+
+// Crear un comentario
+export const createComment = async (auctionId, { title, content }, token) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/comments/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ title, content })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(err?.detail || "Error al crear comentario");
+  }
+  return await res.json();
+};
+
+// Editar un comentario
+export const updateComment = async (auctionId, commentId, { title, content }, token) => {
+  const res = await fetch(
+    `${API_BASE_URL}${auctionId}/comments/${commentId}/`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ title, content })
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(err?.detail || "Error al actualizar comentario");
+  }
+  return await res.json();
+};
+
+// Eliminar un comentario
+export const deleteComment = async (auctionId, commentId, token) => {
+  const res = await fetch(
+    `${API_BASE_URL}${auctionId}/comments/${commentId}/`,
+    {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` }
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(err?.detail || "Error al eliminar comentario");
+  }
+};

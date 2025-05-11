@@ -52,8 +52,7 @@ export default function CreateAuction() {
     // Validar todos los campos obligatorios
     const required = [
       "title", "description", "closing_date",
-      "thumbnail", "price", "stock",
-      "rating", "category", "brand"
+      "thumbnail", "price", "stock", "category", "brand"
     ];
     if (required.some((f) => !formData[f])) {
       setError("Por favor, completa todos los campos obligatorios.");

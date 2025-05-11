@@ -287,6 +287,15 @@ export default function CarDetails() {
             </button>
           </div>
         )}
+
+        <div className={styles.actions}>
+          <button
+            className={styles.btnEdit}
+            onClick={() => router.push(`/subastas/${id}/comentarios`)}
+          >
+            Comentarios
+          </button>
+        </div>
       </div>
       <Footer />
     </div>
