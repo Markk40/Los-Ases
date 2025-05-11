@@ -241,7 +241,8 @@ export const getUserRatingByAuction = async auctionId => {
     throw new Error("Error al obtener tu valoración");
   }
 
-  const list = await res.json();
-  // Sólo devolvemos la valoración de este usuario
+  const data = await res.json();
+  // Si tu API es paginada:
+  const list = Array.isArray(data) ? data : data.results || [];
   return list.find(r => r.reviewer === myId) || null;
 };
