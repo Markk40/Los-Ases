@@ -116,9 +116,9 @@ export default function CarDetails() {
       const token = localStorage.getItem("accessToken");
       // Si ya tienes valoración:
       if (car.user_rating) {
-        await updateRating(id, car.user_rating.id, { score }, token);
+        await updateRating(id, car.user_rating.id, score, token);
       } else {
-        await createRating(id, { score }, token);
+        await createRating(id, score, token);
       }
       // refresca la subasta para obtener nueva media:
       const updated = await getAuctionById(id);

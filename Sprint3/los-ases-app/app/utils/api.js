@@ -173,38 +173,38 @@ export const getAllBids = async () => {
   }
 };
 
-export const createRating = async (auctionId, ratingData, token) => {
-  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`, {
+export const createRating = async (auctionId, point, token) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/rating/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(ratingData),
+    body: JSON.stringify({ point }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => null);
     const msg = err && typeof err === "object"
-      ? Object.entries(err).map(([k, v]) => `${k}: ${v}`).join("; ")
+      ? Object.entries(err).map(([k,v])=>`${k}: ${v}`).join("; ")
       : "Error al crear la valoración";
     throw new Error(msg);
   }
   return await res.json();
 };
 
-export const updateRating = async (auctionId, ratingId, ratingData, token) => {
-  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/${ratingId}/`, {
+export const updateRating = async (auctionId, ratingId, point, token) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/rating/${ratingId}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(ratingData),
+    body: JSON.stringify({ point }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => null);
     const msg = err && typeof err === "object"
-      ? Object.entries(err).map(([k, v]) => `${k}: ${v}`).join("; ")
+      ? Object.entries(err).map(([k,v])=>`${k}: ${v}`).join("; ")
       : "Error al actualizar la valoración";
     throw new Error(msg);
   }
@@ -213,17 +213,14 @@ export const updateRating = async (auctionId, ratingId, ratingData, token) => {
 
 export const deleteRating = async (auctionId, ratingId, token) => {
   const res = await fetch(
-    `${API_BASE_URL}${auctionId}/ratings/${ratingId}/`,
+    `${API_BASE_URL}${auctionId}/rating/${ratingId}/`,
     {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     }
   );
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    const msg = err?.detail || "Error al eliminar la valoración";
-    throw new Error(msg);
+    throw new Error(err?.detail || "Error al eliminar la valoración");
   }
 };
