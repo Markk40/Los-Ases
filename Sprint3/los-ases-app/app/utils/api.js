@@ -224,3 +224,9 @@ export const deleteRating = async (auctionId, ratingId, token) => {
     throw new Error(err?.detail || "Error al eliminar la valoración");
   }
 };
+
+export const getRatingsByAuction = async (auctionId) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`);
+  if (!res.ok) throw new Error("Error al obtener las valoraciones");
+  return res.json(); // [{ id, points, auction, reviewer }, …]
+};
