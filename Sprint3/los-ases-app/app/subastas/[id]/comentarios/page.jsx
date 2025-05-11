@@ -8,8 +8,8 @@ import {
   createComment,
   updateComment,
   deleteComment
-} from "@/utils/api";
-import styles from "./comments.module.css";
+} from "../../../utils/api";
+import styles from "./styles.module.css";
 
 export default function CommentsPage() {
   const { id } = useParams();
