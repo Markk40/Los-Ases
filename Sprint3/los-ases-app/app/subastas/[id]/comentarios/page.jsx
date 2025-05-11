@@ -19,13 +19,28 @@ export default function CommentsPage() {
   const [editing, setEditing] = useState(null);
   const [error, setError] = useState("");
   const token = localStorage.getItem("accessToken");
+  const [myId, setMyId] = useState(null);
 
   const load = async () => {
     const data = await getCommentsByAuction(id);
     setComments(data);
   };
 
-  useEffect(() => { load(); }, [id]);
+    useEffect(() => {
+        async function fetchCommentsAndUser() {
+            // 1) carga los comentarios
+            await load();
+
+            // 2) extrae el ID del usuario autenticado
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            setMyId(payload.user_id ?? payload.id);
+            }
+        }
+
+        fetchCommentsAndUser();
+    }, [id]);
 
   const handleChange = (e) => {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));
@@ -112,7 +127,7 @@ export default function CommentsPage() {
                     </span>
                 </div>
 
-                {token && String(c.reviewer) === JSON.parse(atob(token.split(".")[1])).user_id && (
+                {c.reviewer === myId && (
                     <div className={styles.actions}>
                     <button onClick={() => startEdit(c)}>Editar</button>
                     <button onClick={() => handleDelete(c.id)}>Eliminar</button>
