@@ -225,24 +225,21 @@ export const deleteRating = async (auctionId, ratingId, token) => {
   }
 };
 
-export const getUserRatingByAuction = async auctionId => {
+export const getUserRatingByAuction = async (auctionId) => {
   const token = localStorage.getItem("accessToken");
   if (!token) return null;
 
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  const myId = payload.user_id || payload.id;
-
   const res = await fetch(
-    `${API_BASE_URL}${auctionId}/ratings/`,
-    { headers: { Authorization: `Bearer ${token}` } }
+    `${API_BASE_URL}${auctionId}/my-rating/`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
   );
+
   if (!res.ok) {
     if (res.status === 404) return null;
     throw new Error("Error al obtener tu valoración");
   }
 
-  const data = await res.json();
-  // Si tu API es paginada:
-  const list = Array.isArray(data) ? data : data.results || [];
-  return list.find(r => r.reviewer === myId) || null;
+  return await res.json();
 };
