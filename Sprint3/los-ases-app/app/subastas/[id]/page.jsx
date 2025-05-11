@@ -153,24 +153,26 @@ export default function CarDetails() {
   };
 
   const handleDeleteRating = async () => {
-    setRatingError("");
-    if (!isUserLoggedIn) {
-      setRatingError("Debes estar logueado para eliminar tu valoración.");
-      return;
-    }
-    try {
-      const token = localStorage.getItem("accessToken");
-      await deleteRating(id, userRating.id, token);
-      // Refresca la subasta para que se actualice average_rating y user_rating
-      // X) refresca las valoraciones y recalcula media y propia:
-      const myAfter = await getUserRatingByAuction(id);
-      setUserRating(myAfter);
-      router.replace(router.asPath);
-    } catch (err) {
-      console.error(err);
-      setRatingError("Error al eliminar la valoración.");
-    }
-  };
+  setRatingError("");
+  if (!isUserLoggedIn) {
+    setRatingError("Debes estar logueado para eliminar tu valoración.");
+    return;
+  }
+  try {
+    const token = localStorage.getItem("accessToken");
+    await deleteRating(id, userRating.id, token);
+
+    //Refresca subasta y elimina rating del estado
+    const updatedAuction = await getAuctionById(id);
+    setCar(updatedAuction);
+    setUserRating(null);
+    
+  } catch (err) {
+    console.error(err);
+    setRatingError("Error al eliminar la valoración.");
+  }
+};
+
 
   if (!car) return <div className={styles.loading}>Cargando...</div>;
 
