@@ -173,14 +173,14 @@ export const getAllBids = async () => {
   }
 };
 
-export const createRating = async (auctionId, point, token) => {
+export const createRating = async (auctionId, points, token) => {
   const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ point }),
+    body: JSON.stringify({ points }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => null);
@@ -192,14 +192,14 @@ export const createRating = async (auctionId, point, token) => {
   return await res.json();
 };
 
-export const updateRating = async (auctionId, ratingId, point, token) => {
+export const updateRating = async (auctionId, ratingId, points, token) => {
   const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/${ratingId}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ point }),
+    body: JSON.stringify({ points }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => null);
