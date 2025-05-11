@@ -37,7 +37,7 @@ export default function AuctionItem({ car, bids }) {
   return (
     <div className={styles.auctionItem} onClick={handleCardClick}>
       <img
-        src={car.thumbnail.startsWith("/") ? car.thumbnail : `/${car.thumbnail}`}
+        src={car.thumbnail_url}
         alt={car.title}
         className={styles.auctionImage}
       />
