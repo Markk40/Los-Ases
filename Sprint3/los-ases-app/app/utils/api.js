@@ -56,29 +56,13 @@ export const createAuction = async (data) => {
 
 export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
-
-  const formData = new FormData();
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("closing_date", data.closing_date);
-  formData.append("price", data.price);
-  formData.append("stock", data.stock);
-  formData.append("rating", data.rating);
-  formData.append("category", data.category);
-  formData.append("brand", data.brand);
-
-  if (data.thumbnail && data.thumbnail instanceof File) {
-    formData.append("thumbnail", data.thumbnail);
-  } else {
-    console.error("No se ha seleccionado una imagen válida.");
-  }
-
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PATCH",
     headers: {
+      "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
     },
-    body: formData,
+    body: JSON.stringify(data),
   });
 
   if (!res.ok) {

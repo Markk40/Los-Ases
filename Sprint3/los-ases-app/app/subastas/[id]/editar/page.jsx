@@ -21,7 +21,7 @@ export default function EditAuction() {
           description: auction.description,
           closing_date: auction.closing_date.slice(0, 16), // formato compatible con input[type="datetime-local"]
           creation_date: auction.creation_date,
-          thumbnail: auction.thumbnail,
+          // thumbnail: auction.thumbnail,
           price: auction.price,
           stock: auction.stock,
           // rating: auction.rating,
@@ -42,16 +42,20 @@ export default function EditAuction() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== "" && value != null) {
-        data.append(key, value);
-      }
-    });
+    const payload = {
+      title:       formData.title,
+      description: formData.description,
+      closing_date: new Date(formData.closing_date).toISOString(),
+      price:       parseFloat(formData.price),
+      stock:       parseInt(formData.stock, 10),
+      category:    parseInt(formData.category, 10),
+      brand:       formData.brand
+    };
     try {
-      await updateAuction(id, data);
+      await updateAuction(id, payload);
       router.push(`/subastas/${id}`);
-    } catch {
+    } catch (err) {
+      console.error("Detalles del error:", err);
       setError("Error al guardar los cambios.");
     }
   };
