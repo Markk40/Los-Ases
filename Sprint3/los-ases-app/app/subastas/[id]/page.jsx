@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getAuctionById, deleteAuction, createBid, getBidsByAuction } from "../../utils/api";
+import { getAuctionById, deleteAuction, createBid, getBidsByAuction, createRating, updateRating, } from "../../utils/api";
 import styles from "./styles.module.css";
 
 export default function CarDetails() {
@@ -16,6 +16,9 @@ export default function CarDetails() {
   const [user, setUser] = useState(null); // Variable para almacenar datos del usuario
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [bids, setBids] = useState([]);
+  const [showRating, setShowRating]     = useState(false);
+  const [hoverRating, setHoverRating]   = useState(0);
+  const [ratingError, setRatingError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -96,6 +99,30 @@ export default function CarDetails() {
     }
   };
 
+  const handleRate = async (score) => {
+    setRatingError("");
+    if (!isUserLoggedIn) {
+      setRatingError("Debes estar logueado para valorar.");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("accessToken");
+      // Si ya tienes valoración:
+      if (car.user_rating) {
+        await updateRating(id, car.user_rating.id, { score }, token);
+      } else {
+        await createRating(id, { score }, token);
+      }
+      // refresca la subasta para obtener nueva media:
+      const updated = await getAuctionById(id);
+      setCar(updated);
+      setShowRating(false);
+    } catch (err) {
+      setRatingError("Error al enviar tu valoración.");
+      console.error(err);
+    }
+  };
+
   if (!car) return <div className={styles.loading}>Cargando...</div>;
 
   const isOwner = user && car.auctioneer === user.user_id;
@@ -123,10 +150,53 @@ export default function CarDetails() {
             <li>Categoría: {car.category}</li>
             <li>Precio: {displayedPrice}€</li>
             <li>Stock: {car.stock}</li>
-            <li>Valoración: {car.rating}</li>
+            <li>Media de valoraciones: {car.average_rating?.toFixed(2) ?? "0.00"} ★</li>
             <li>Fecha de cierre: {new Date(car.closing_date).toLocaleString()}</li>
           </ul>
         </div>
+
+        <div className={styles.ratingWrapper}>
+          <button
+            className={styles.rateButton}
+            onClick={() => {
+              setRatingError("");
+              setShowRating(true);
+            }}
+          >
+            Valorar esta subasta
+          </button>
+        </div>
+        {ratingError && <p className={styles.error}>{ratingError}</p>}
+
+        {showRating && (
+          <div className={styles.ratingModalBackdrop}>
+            <div className={styles.ratingModal}>
+              <h3>¿Cómo valoras esta subasta?</h3>
+              <div className={styles.stars}>
+                {[1, 2, 3, 4, 5].map(i => {
+                  const filled = i <= (hoverRating || car.user_rating?.score || 0);
+                  return (
+                    <span
+                      key={i}
+                      className={filled ? styles.starFilled : styles.star}
+                      onMouseEnter={() => setHoverRating(i)}
+                      onMouseLeave={() => setHoverRating(0)}
+                      onClick={() => handleRate(i)}
+                    >
+                      ★
+                    </span>
+                  );
+                })}
+              </div>
+              <button
+                className={styles.rateButton}
+                onClick={() => setShowRating(false)}
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        )}
 
         {isUserLoggedIn && (
           <div className={styles.bidSection}>
@@ -147,8 +217,15 @@ export default function CarDetails() {
 
         {(isOwner || isAdmin) && (
           <div className={styles.actions}>
-            <button className={styles.btnEdit} onClick={() => router.push(`/subastas/${id}/editar`)}>Editar</button>
-            <button className={styles.btnDelete} onClick={handleDelete}>Eliminar</button>
+            <button
+              className={styles.btnEdit}
+              onClick={() => router.push(`/subastas/${id}/editar`)}
+            >
+              Editar
+            </button>
+            <button className={styles.btnDelete} onClick={handleDelete}>
+              Eliminar
+            </button>
           </div>
         )}
       </div>

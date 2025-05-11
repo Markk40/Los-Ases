@@ -203,5 +203,69 @@
     height: 40px; /* O el tamaño que tengas para tus botones */
     background-color: transparent;
     border: 1px solid transparent; /* Mantiene el borde sin mostrarlo */
-  }
-  
+}
+
+/* ======= RATING STYLES ======= */
+.ratingWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.ratingValue {
+  font-weight: 500;
+  color: #333;
+}
+
+.rateButton {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ratingModalBackdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ratingModal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+  gap: 0.5rem;
+}
+
+.star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.starFilled {
+  font-size: 2rem;
+  color: #f5b50a;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* Error de valoración (si lo muestras) */
+.error {
+  color: #c00;
+  margin-top: 0.5rem;
+}

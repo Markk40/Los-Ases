@@ -172,3 +172,41 @@ export const getAllBids = async () => {
     return []; // devolvemos un array vacío si hay fallo
   }
 };
+
+export const createRating = async (auctionId, ratingData, token) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(ratingData),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    const msg = err && typeof err === "object"
+      ? Object.entries(err).map(([k, v]) => `${k}: ${v}`).join("; ")
+      : "Error al crear la valoración";
+    throw new Error(msg);
+  }
+  return await res.json();
+};
+
+export const updateRating = async (auctionId, ratingId, ratingData, token) => {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/${ratingId}/`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(ratingData),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    const msg = err && typeof err === "object"
+      ? Object.entries(err).map(([k, v]) => `${k}: ${v}`).join("; ")
+      : "Error al actualizar la valoración";
+    throw new Error(msg);
+  }
+  return await res.json();
+};
