@@ -248,7 +248,8 @@ export const getUserRatingByAuction = async (auctionId) => {
 export const getCommentsByAuction = async (auctionId) => {
   const res = await fetch(`${API_BASE_URL}${auctionId}/comments/`);
   if (!res.ok) throw new Error("Error al obtener comentarios");
-  return await res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : data.results;
 };
 
 // Crear un comentario

@@ -94,24 +94,32 @@ export default function CommentsPage() {
                     {error && <p className={styles.error}>{error}</p>}
                 </form>
             </div>
-        )}
+        )}  
 
         <ul className={styles.commentsContainer}>
-          {comments.map(c => (
-            <li key={c.id} className={styles.commentCard}>
-              <h4>{c.title}</h4>
-              <p>{c.content}</p>
-              <small>
-                {new Date(c.created_at).toLocaleString()} — {c.reviewer_username}
-              </small>
-              {token && String(c.reviewer) === JSON.parse(atob(token.split(".")[1])).user_id && (
-                <div>
-                  <button onClick={() => startEdit(c)}>Editar</button>
-                  <button onClick={() => handleDelete(c.id)}>Eliminar</button>
+            {comments.map(c => (
+                <li key={c.id} className={styles.commentCard}>
+                <h4>{c.title}</h4>
+                <p>{c.content}</p>
+
+                <div className={styles.commentMeta}>
+                    <span className={styles.username}>Por: {c.reviewer_username}</span>
+                    <span className={styles.date}>
+                    Creado: {new Date(c.created_at).toLocaleString()}
+                    </span>
+                    <span className={styles.date}>
+                    Últ. mod.: {new Date(c.updated_at ?? c.created_at).toLocaleString()}
+                    </span>
                 </div>
-              )}
-            </li>
-          ))}
+
+                {token && String(c.reviewer) === JSON.parse(atob(token.split(".")[1])).user_id && (
+                    <div className={styles.actions}>
+                    <button onClick={() => startEdit(c)}>Editar</button>
+                    <button onClick={() => handleDelete(c.id)}>Eliminar</button>
+                    </div>
+                )}
+                </li>
+            ))}
         </ul>
 
         <button onClick={() => router.back()}>Volver</button>
