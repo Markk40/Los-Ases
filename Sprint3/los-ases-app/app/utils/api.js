@@ -174,7 +174,7 @@ export const getAllBids = async () => {
 };
 
 export const createRating = async (auctionId, point, token) => {
-  const res = await fetch(`${API_BASE_URL}${auctionId}/rating/`, {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -193,7 +193,7 @@ export const createRating = async (auctionId, point, token) => {
 };
 
 export const updateRating = async (auctionId, ratingId, point, token) => {
-  const res = await fetch(`${API_BASE_URL}${auctionId}/rating/${ratingId}/`, {
+  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/${ratingId}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -213,7 +213,7 @@ export const updateRating = async (auctionId, ratingId, point, token) => {
 
 export const deleteRating = async (auctionId, ratingId, token) => {
   const res = await fetch(
-    `${API_BASE_URL}${auctionId}/rating/${ratingId}/`,
+    `${API_BASE_URL}${auctionId}/ratings/${ratingId}/`,
     {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
