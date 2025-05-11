@@ -213,7 +213,7 @@ export const updateRating = async (auctionId, ratingId, ratingData, token) => {
 
 export const deleteRating = async (auctionId, ratingId, token) => {
   const res = await fetch(
-    `${API_BASE_URL}${auctionId}/rating/${ratingId}/`,
+    `${API_BASE_URL}${auctionId}/ratings/${ratingId}/`,
     {
       method: "DELETE",
       headers: {

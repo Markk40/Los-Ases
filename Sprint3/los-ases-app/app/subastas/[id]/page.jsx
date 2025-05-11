@@ -23,23 +23,30 @@ export default function CarDetails() {
   useEffect(() => {
     async function fetchData() {
       try {
+        // 1) Carga la subasta
         const data = await getAuctionById(id);
         setCar(data);
-  
-        const bidsData = await getBidsByAuction(id);
-        setBids(bidsData);
-  
+
+        // 2) Carga las pujas (si falla, solo lo logueamos)
+        try {
+          const bidsData = await getBidsByAuction(id);
+          setBids(bidsData);
+        } catch (err) {
+          console.error("Error al cargar las pujas", err);
+        }
+
+        // 3) Detectar usuario
         const token = localStorage.getItem("accessToken");
         if (token) {
           const payload = JSON.parse(atob(token.split(".")[1]));
-          const userId = payload.user_id || payload.id;
-          if (userId) {
-            setIsUserLoggedIn(true);
-            setUser(payload);
-          }
+          setIsUserLoggedIn(true);
+          setUser(payload);
         }
       } catch (err) {
         console.error("Error al cargar la subasta", err);
+        setLoadError("No se pudo cargar la subasta.");
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
