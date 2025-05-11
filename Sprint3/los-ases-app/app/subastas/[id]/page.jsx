@@ -47,7 +47,7 @@ export default function CarDetails() {
           setUser(payload);
           try {
             const my = await getUserRatingByAuction(id);
-            setUserRating(my);
+            setUserRating(my!==null);
           } catch (err) {
             console.error("No se pudo cargar tu valoración", err);
           }
