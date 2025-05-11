@@ -225,8 +225,15 @@ export const deleteRating = async (auctionId, ratingId, token) => {
   }
 };
 
-export const getRatingsByAuction = async (auctionId) => {
-  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`);
-  if (!res.ok) throw new Error("Error al obtener las valoraciones");
-  return res.json(); // [{ id, points, auction, reviewer }, …]
+export const getUserRatingByAuction = async (auctionId) => {
+  const token = localStorage.getItem("accessToken");
+  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) {
+    if (res.status === 404) return null;
+    throw new Error("Error al obtener tu valoración");
+  }
+  const list = await res.json();
+  return list.length > 0 ? list[0] : null;
 };

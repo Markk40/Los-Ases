@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getAuctionById, deleteAuction, createBid, getBidsByAuction, createRating, updateRating, deleteRating, getRatingsByAuction} from "../../utils/api";
+import { getAuctionById, deleteAuction, createBid, getBidsByAuction, createRating, updateRating, deleteRating, getUserRatingByAuction} from "../../utils/api";
 import styles from "./styles.module.css";
 
 export default function CarDetails() {
@@ -40,25 +40,20 @@ export default function CarDetails() {
           console.error("Error al cargar las pujas", err);
         }
 
-        try {
-          const ratingsData = await getRatingsByAuction(id);
-          setRatings(ratingsData);
-          const sum = ratingsData.reduce((s, r) => s + r.points, 0);
-          setAvgRating(ratingsData.length ? sum / ratingsData.length : 0);
-          const token = localStorage.getItem("accessToken");
-          if (token) {
-            const payload = JSON.parse(atob(token.split(".")[1]));
-            setIsUserLoggedIn(true);
-            setUser(payload);
-            const my = ratingsData.find(r => r.reviewer === (payload.user_id || payload.id));
-            setUserRating(my || null);
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          setIsUserLoggedIn(true);
+          setUser(payload);
+          try {
+            const my = await getUserRatingByAuction(id);
+            setUserRating(my);
+          } catch (err) {
+            console.error("No se pudo cargar tu valoración", err);
           }
-        } catch (err) {
-          console.error("Error al cargar las valoraciones", err);
         }
 
         // 3) Detectar usuario
-        const token = localStorage.getItem("accessToken");
         if (token) {
           const payload = JSON.parse(atob(token.split(".")[1]));
           setIsUserLoggedIn(true);
@@ -137,19 +132,17 @@ export default function CarDetails() {
     try {
       const token = localStorage.getItem("accessToken");
       // Si ya tienes valoración:
-      if (car.user_rating) {
-        await updateRating(id, car.user_rating.id, score, token);
+      if (userRating) {
+        await updateRating(id, userRating.id, score, token);
       } else {
         await createRating(id, score, token);
       }
       // refresca la subasta para obtener nueva media:
-      const ratingsData = await getRatingsByAuction(id);
-      setRatings(ratingsData);
-      const sum = ratingsData.reduce((s, r) => s + r.points, 0);
-      setAvgRating(ratingsData.length ? sum / ratingsData.length : 0);
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const my = ratingsData.find(r => r.reviewer === (payload.user_id || payload.id));
-      setUserRating(my || null);
+      const updatedAuction = await getAuctionById(id);
+      setCar(updatedAuction);
+      const my = await getUserRatingByAuction(id);
+      setUserRating(my);
+      setShowRating(false);
       // C) cierra el modal
       setShowRating(false);
     } catch (err) {
@@ -166,14 +159,11 @@ export default function CarDetails() {
     }
     try {
       const token = localStorage.getItem("accessToken");
-      await deleteRating(id, car.user_rating.id, token);
+      await deleteRating(id, userRating.id, token);
       // Refresca la subasta para que se actualice average_rating y user_rating
       // X) refresca las valoraciones y recalcula media y propia:
-      const ratingsData = await getRatingsByAuction(id);
-      setRatings(ratingsData);
-      const sum = ratingsData.reduce((s, r) => s + r.points, 0);
-      setAvgRating(ratingsData.length ? sum / ratingsData.length : 0);
-      setUserRating(null);
+      const myAfter = await getUserRatingByAuction(id);
+      setUserRating(myAfter);
     } catch (err) {
       console.error(err);
       setRatingError("Error al eliminar la valoración.");
@@ -207,7 +197,7 @@ export default function CarDetails() {
             <li>Categoría: {car.category}</li>
             <li>Precio: {displayedPrice}€</li>
             <li>Stock: {car.stock}</li>
-            <li>Media de valoraciones: {car.average_rating?.toFixed(2) ?? "0.00"} ★</li>
+            <li>Media de valoraciones: {avgRating?.toFixed(2) ?? "0.00"} ★</li>
             <li>Fecha de cierre: {new Date(car.closing_date).toLocaleString()}</li>
           </ul>
         </div>
@@ -220,10 +210,10 @@ export default function CarDetails() {
               setShowRating(true);
             }}
           >
-            {car.user_rating ? "Editar mi valoración" : "Valorar esta subasta"}
+            {userRating ? "Editar mi valoración" : "Valorar esta subasta"}
           </button>
 
-          {car.user_rating && (
+          {userRating && (
             <button
               className={styles.rateButton}
               onClick={handleDeleteRating}
@@ -238,10 +228,10 @@ export default function CarDetails() {
         {showRating && (
           <div className={styles.ratingModalBackdrop}>
             <div className={styles.ratingModal}>
-              <h3>{car.user_rating ? "Editar valoración" : "¿Cómo valoras esta subasta?"}</h3>
+              <h3>{userRating ? "Editar valoración" : "¿Cómo valoras esta subasta?"}</h3>
               <div className={styles.stars}>
                 {[1, 2, 3, 4, 5].map(i => {
-                  const filled = i <= (hoverRating || car.user_rating?.score || 0);
+                  const filled = i <= (hoverRating || userRating?.points || 0);
                   return (
                     <span
                       key={i}
