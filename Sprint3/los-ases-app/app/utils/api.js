@@ -225,15 +225,23 @@ export const deleteRating = async (auctionId, ratingId, token) => {
   }
 };
 
-export const getUserRatingByAuction = async (auctionId) => {
+export const getUserRatingByAuction = async auctionId => {
   const token = localStorage.getItem("accessToken");
-  const res = await fetch(`${API_BASE_URL}${auctionId}/ratings/`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
+  if (!token) return null;
+
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  const myId = payload.user_id || payload.id;
+
+  const res = await fetch(
+    `${API_BASE_URL}${auctionId}/ratings/`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
   if (!res.ok) {
     if (res.status === 404) return null;
     throw new Error("Error al obtener tu valoración");
   }
+
   const list = await res.json();
-  return list.length > 0 ? list[0] : null;
+  // Sólo devolvemos la valoración de este usuario
+  return list.find(r => r.reviewer === myId) || null;
 };

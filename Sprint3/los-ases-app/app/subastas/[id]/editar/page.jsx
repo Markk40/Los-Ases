@@ -24,7 +24,7 @@ export default function EditAuction() {
           thumbnail: auction.thumbnail,
           price: auction.price,
           stock: auction.stock,
-          rating: auction.rating,
+          // rating: auction.rating,
           category: auction.category,
           brand: auction.brand,
         });
@@ -83,8 +83,8 @@ export default function EditAuction() {
           <label className={styles.label}>Stock</label>
           <input className={styles.input} type="number" name="stock" value={formData.stock} onChange={handleChange} />
 
-          <label className={styles.label}>Valoración</label>
-          <input className={styles.input} type="number" name="rating" step="0.1" min="1" max="5" value={formData.rating} onChange={handleChange} />
+          {/* <label className={styles.label}>Valoración</label>
+          <input className={styles.input} type="number" name="rating" step="0.1" min="1" max="5" value={formData.rating} onChange={handleChange} /> */}
 
           <label className={styles.label}>Categoría</label>
           <input className={styles.input} type="text" name="category" value={formData.category} onChange={handleChange} />

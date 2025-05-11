@@ -79,7 +79,7 @@ export default function CreateAuction() {
       thumbnail: formData.thumbnail,  // File
       price: formData.price,
       stock: formData.stock,
-      rating: formData.rating,
+      // rating: formData.rating,
       category: formData.category,
       brand: formData.brand,
     };
@@ -168,7 +168,7 @@ export default function CreateAuction() {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            {/* <div className={styles.formGroup}>
               <label className={styles.label}>Valoración:</label>
               <input
                 type="number"
@@ -180,7 +180,7 @@ export default function CreateAuction() {
                 onChange={handleChange}
                 className={styles.input}
               />
-            </div>
+            </div> */}
 
             <div className={styles.formGroup}>
               <label className={styles.label}>Categoría:</label>
