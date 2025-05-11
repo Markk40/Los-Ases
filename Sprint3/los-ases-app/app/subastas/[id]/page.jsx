@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getAuctionById, deleteAuction, createBid, getBidsByAuction, createRating, updateRating, } from "../../utils/api";
+import { getAuctionById, deleteAuction, createBid, getBidsByAuction, createRating, updateRating, deleteRating} from "../../utils/api";
 import styles from "./styles.module.css";
 
 export default function CarDetails() {
@@ -123,6 +123,24 @@ export default function CarDetails() {
     }
   };
 
+  const handleDeleteRating = async () => {
+    setRatingError("");
+    if (!isUserLoggedIn) {
+      setRatingError("Debes estar logueado para eliminar tu valoración.");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("accessToken");
+      await deleteRating(id, car.user_rating.id, token);
+      // Refresca la subasta para que se actualice average_rating y user_rating
+      const updated = await getAuctionById(id);
+      setCar(updated);
+    } catch (err) {
+      console.error(err);
+      setRatingError("Error al eliminar la valoración.");
+    }
+  };
+
   if (!car) return <div className={styles.loading}>Cargando...</div>;
 
   const isOwner = user && car.auctioneer === user.user_id;
@@ -163,15 +181,25 @@ export default function CarDetails() {
               setShowRating(true);
             }}
           >
-            Valorar esta subasta
+            {car.user_rating ? "Editar mi valoración" : "Valorar esta subasta"}
           </button>
+
+          {car.user_rating && (
+            <button
+              className={styles.rateButton}
+              onClick={handleDeleteRating}
+            >
+              Eliminar mi valoración
+            </button>
+          )}
         </div>
         {ratingError && <p className={styles.error}>{ratingError}</p>}
 
+        {/* Modal para crear/editar valoración */}
         {showRating && (
           <div className={styles.ratingModalBackdrop}>
             <div className={styles.ratingModal}>
-              <h3>¿Cómo valoras esta subasta?</h3>
+              <h3>{car.user_rating ? "Editar valoración" : "¿Cómo valoras esta subasta?"}</h3>
               <div className={styles.stars}>
                 {[1, 2, 3, 4, 5].map(i => {
                   const filled = i <= (hoverRating || car.user_rating?.score || 0);

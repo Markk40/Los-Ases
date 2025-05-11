@@ -210,3 +210,20 @@ export const updateRating = async (auctionId, ratingId, ratingData, token) => {
   }
   return await res.json();
 };
+
+export const deleteRating = async (auctionId, ratingId, token) => {
+  const res = await fetch(
+    `${API_BASE_URL}${auctionId}/rating/${ratingId}/`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    const msg = err?.detail || "Error al eliminar la valoración";
+    throw new Error(msg);
+  }
+};
