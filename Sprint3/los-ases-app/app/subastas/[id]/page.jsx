@@ -47,7 +47,7 @@ export default function CarDetails() {
           setUser(payload);
           try {
             const my = await getUserRatingByAuction(id);
-            setUserRating(my!==null);
+            setUserRating(my);
           } catch (err) {
             console.error("No se pudo cargar tu valoración", err);
           }
@@ -145,6 +145,7 @@ export default function CarDetails() {
       setShowRating(false);
       // C) cierra el modal
       setShowRating(false);
+      router.replace(router.asPath);
     } catch (err) {
       setRatingError("Error al enviar tu valoración.");
       console.error(err);
@@ -164,6 +165,7 @@ export default function CarDetails() {
       // X) refresca las valoraciones y recalcula media y propia:
       const myAfter = await getUserRatingByAuction(id);
       setUserRating(myAfter);
+      router.replace(router.asPath);
     } catch (err) {
       console.error(err);
       setRatingError("Error al eliminar la valoración.");
