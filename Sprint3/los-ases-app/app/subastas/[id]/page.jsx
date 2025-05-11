@@ -197,7 +197,7 @@ export default function CarDetails() {
             <li>Categoría: {car.category}</li>
             <li>Precio: {displayedPrice}€</li>
             <li>Stock: {car.stock}</li>
-            <li>Media de valoraciones: {avgRating?.toFixed(2)} ★</li>
+            <li>Media de valoraciones: {car.average_ratings.toFixed(2)} ★</li>
             <li>Fecha de cierre: {new Date(car.closing_date).toLocaleString()}</li>
           </ul>
         </div>
