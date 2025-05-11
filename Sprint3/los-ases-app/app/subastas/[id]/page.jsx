@@ -188,10 +188,11 @@ export default function CarDetails() {
         <a href="/subastas" className={styles.backBtn}>&#10094; Atrás</a>
         <h2 className={styles.carTitle}>{car.title}</h2>
         <img
-          src={car.thumbnail.startsWith("/") ? car.thumbnail : `/${car.thumbnail}`}
+          src={car.thumbnail_url}
           alt={car.title}
-          className={styles.mainImage}
+          className={styles.auctionImage}
         />
+
 
         <div className={styles.carSpecs}>
           <h3 className={styles.specsTitle}>Detalles:</h3>
