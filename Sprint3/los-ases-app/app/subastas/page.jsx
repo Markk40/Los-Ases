@@ -39,7 +39,6 @@ export default function SearchResults() {
   useEffect(() => {
     const params = new URLSearchParams()
     if (onlyOpen)  params.set("is_open", "true")
-    if (ratingMin) params.set("rating_min", ratingMin)
 
     const fetchUrl = `${API_BASE_URL}${params.toString() ? `?${params}` : ""}`
     console.log("Fetch auctions:", fetchUrl)
@@ -112,21 +111,6 @@ export default function SearchResults() {
             <span className={styles.switchLabel}>
               {onlyOpen ? "Activas" : "Todas"}
             </span>
-          </div>
-
-          <div className={styles.ratingFilter}>
-            <label>Valoración mínima</label>
-            <div className={styles.starFilter}>
-              {[1,2,3,4,5].map(i => (
-                <span
-                  key={i}
-                  className={ i <= ratingMin ? styles.starFilled : styles.star }
-                  onClick={() => setRatingMin(ratingMin === i ? 0 : i)}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
           </div>
         </div>
 
