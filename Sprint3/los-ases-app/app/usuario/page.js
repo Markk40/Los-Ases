@@ -73,7 +73,7 @@ const AccountPage = () => {
                 }
 
                 const passwordRes = await fetch("https://los-ases-backend.onrender.com/api/users/change-password/", {
-                    method: "PUT",
+                    method: "PATCH",
                     headers: {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",
@@ -89,7 +89,7 @@ const AccountPage = () => {
 
             // Guardar otros campos
             const response = await fetch("https://los-ases-backend.onrender.com/api/users/profile/", {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
