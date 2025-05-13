@@ -40,6 +40,7 @@ export default function SearchResults() {
     const params = new URLSearchParams();
     if (onlyOpen) params.set("is_open", "true");
     if (ratingMin) params.set("rating_min", ratingMin);
+    console.log("Fetch auctions:", url);
     fetch(`${API_BASE_URL}?${params.toString()}`)
       .then(r => {
         if (!r.ok) throw new Error("Error al cargar subastas");
@@ -73,8 +74,7 @@ export default function SearchResults() {
         </div>
 
         <div className={styles.filters}>
-          {/* Precio */}
-          <div>
+          <div className={styles.priceFilter}>
             <label>Precio máximo</label>
             <input
               type="range"
@@ -86,8 +86,7 @@ export default function SearchResults() {
             <span>{maxPrice}€</span>
           </div>
 
-          {/* Categoría */}
-          <div>
+          <div className={styles.categoryFilter}>
             <label>Categoría</label>
             <select value={category} onChange={e => setCategory(e.target.value)}>
               <option value="all">Todas</option>
@@ -97,19 +96,22 @@ export default function SearchResults() {
             </select>
           </div>
 
-          {/* Solo activas */}
-          <div>
+          <div className={styles.openFilter}>
             <label>Estado</label>
-            <button
-              className={onlyOpen ? styles.activeBtn : styles.inactiveBtn}
-              onClick={() => setOnlyOpen(o => !o)}
-            >
-              {onlyOpen ? "Mostrar todas" : "Solo activas"}
-            </button>
+            <label className={styles.switch}>
+              <input
+                type="checkbox"
+                checked={onlyOpen}
+                onChange={() => setOnlyOpen(o => !o)}
+              />
+              <span className={styles.slider}></span>
+            </label>
+            <span className={styles.switchLabel}>
+              {onlyOpen ? "Activas" : "Todas"}
+            </span>
           </div>
 
-          {/* Valoración mínima */}
-          <div>
+          <div className={styles.ratingFilter}>
             <label>Valoración mínima</label>
             <div className={styles.starFilter}>
               {[1,2,3,4,5].map(i => (
@@ -117,7 +119,9 @@ export default function SearchResults() {
                   key={i}
                   className={ i <= ratingMin ? styles.starFilled : styles.star }
                   onClick={() => setRatingMin(ratingMin === i ? 0 : i)}
-                >★</span>
+                >
+                  ★
+                </span>
               ))}
             </div>
           </div>

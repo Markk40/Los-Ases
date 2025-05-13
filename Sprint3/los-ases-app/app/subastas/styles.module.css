@@ -13,7 +13,7 @@
 .searchTitle {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     color: black;
 }
 
@@ -22,8 +22,9 @@
     display: flex;
     justify-content: center; /* Centra los filtros en la fila */
     gap: 20px; /* Espacio entre los filtros */
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     padding: 0 10%; /* Espacio de 10% a cada lado */
+    padding-top: 20px;
     width: 100%;
 }
 
@@ -101,12 +102,59 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     justify-content: center;
-    padding: 20px;
+    padding: 40px;
     overflow: hidden; /* Evita desbordamientos */
+    margin-top: 20px;
 }
-
-.activeBtn { background: #0070f3; color: white; }
-.inactiveBtn { background: #eee; color: #333; }
-.star { cursor: pointer; font-size: 1.2rem; color: #ccc; }
-.starFilled { cursor: pointer; font-size: 1.2rem; color: #f5a623; }
-.starFilter { display: inline-block; }
+/* ======= TOGGLE SWITCH ======= */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 8px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+.switch input:checked + .slider {
+  background-color: #0070f3;
+}
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.switchLabel {
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+/* ======= STAR FILTER ======= */
+.starFilter {
+  display: inline-block;
+}
+.star, .starFilled {
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.star { color: #ccc; }
+.starFilled { color: #f5a623; }
