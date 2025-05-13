@@ -48,23 +48,26 @@ export const createAuction = async (data) => {
 
 
 export const updateAuction = async (id, data) => {
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("accessToken")
+  if (!token) throw new Error("No estás logueado")
+
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PATCH",
     headers: {
+      "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify(data),
-  });
+  })
 
   if (!res.ok) {
-    const errorDetails = await res.json();
-    console.error("Detalles del error:", errorDetails);
-    throw new Error(errorDetails.detail || "Falló la actualización");
+    const err = await res.json().catch(() => null)
+    const msg = err?.detail || JSON.stringify(err) || "Falló la actualización"
+    throw new Error(msg)
   }
 
-  return await res.json();
-};
+  return await res.json()
+}
 
 export const deleteAuction = async (id) => {
   const token = localStorage.getItem("accessToken");

@@ -37,21 +37,21 @@ export default function SearchResults() {
 
   // carga subastas cada vez que cambian los filtros de backend
   useEffect(() => {
-    const params = new URLSearchParams();
-  if (onlyOpen)   params.set("is_open", "true");
-  if (ratingMin)  params.set("rating_min", ratingMin);
+    const params = new URLSearchParams()
+    if (onlyOpen)  params.set("is_open", "true")
+    if (ratingMin) params.set("rating_min", ratingMin)
 
-  const queryString = params.toString();
-  const fetchUrl = `${API_BASE_URL}${queryString ? `?${queryString}` : ""}`;
-  console.log("Fetch auctions:", fetchUrl);
+    const fetchUrl = `${API_BASE_URL}${params.toString() ? `?${params}` : ""}`
+    console.log("Fetch auctions:", fetchUrl)
+
     fetch(fetchUrl)
-      .then(r => {
-        if (!r.ok) throw new Error("Error al cargar subastas");
-        return r.json();
+      .then(res => {
+        if (!res.ok) throw new Error("Error al cargar subastas")
+        return res.json()
       })
-      .then(d => setCars(d.results))
-      .catch(console.error);
-  }, [onlyOpen, ratingMin]);
+      .then(data => setCars(data.results))
+      .catch(err => console.error("Error fetching auctions:", err))
+  }, [onlyOpen, ratingMin])
 
   // filtrado local (search, price, category)
   const filtered = cars.filter(car => {
