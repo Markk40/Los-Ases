@@ -11,6 +11,7 @@ const AccountPage = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
     const router = useRouter();
 
     useEffect(() => {
@@ -222,6 +223,17 @@ const AccountPage = () => {
 
                         {isEditable && (
                             <>
+                                <div className={styles.infoRow}>
+                                <label htmlFor="currentPassword" className={styles.label}>Contraseña Actual:</label>
+                                <input
+                                    type="password"
+                                    id="currentPassword"
+                                    name="currentPassword"
+                                    value={currentPassword}
+                                    onChange={e => setCurrentPassword(e.target.value)}
+                                    className={styles.inputField}
+                                />
+                                </div>
                                 <div className={styles.infoRow}>
                                     <label htmlFor="password" className={styles.label}>Nueva Contraseña:</label>
                                     <input
