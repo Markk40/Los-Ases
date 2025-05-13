@@ -72,6 +72,11 @@ const AccountPage = () => {
                     setPasswordError("Las contraseñas no coinciden.");
                     return;
                 }
+                
+                const payload = { 
+                    old_password: currentPassword, 
+                    new_password: password 
+                };
 
                 const passwordRes = await fetch("https://los-ases-backend.onrender.com/api/users/change-password/", {
                     method: "POST",
@@ -79,7 +84,7 @@ const AccountPage = () => {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ password }),
+                    body: JSON.stringify(payload),
                 });
 
                 if (!passwordRes.ok) {
