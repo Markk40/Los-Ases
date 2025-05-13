@@ -27,24 +27,22 @@ export const createAuction = async (data) => {
   formData.append("thumbnail", data.thumbnail);
   formData.append("price", data.price);
   formData.append("stock", data.stock);
-  formData.append("rating", data.rating);
   formData.append("category", data.category);
   formData.append("brand", data.brand);
 
   const res = await fetch(API_BASE_URL, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    // Construimos un mensaje con cada campo
     if (err && typeof err === "object") {
       const msg = Object.entries(err)
-        .map(([k, v]) =>
-          `${k}: ${Array.isArray(v) ? v.join(" ") : v}`
-        )
+        .map(([k,v]) => `${k}: ${Array.isArray(v)? v.join(" "): v}`)
         .join("; ");
       throw new Error(msg);
     }
@@ -56,10 +54,14 @@ export const createAuction = async (data) => {
 
 export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
+  Object.entries(data).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      formData.append(key, value);
+    }
+  });
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify(data),
