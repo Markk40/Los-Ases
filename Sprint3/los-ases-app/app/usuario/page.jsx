@@ -12,6 +12,7 @@ const AccountPage = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
+    const [passwordWarning, setPasswordWarning] = useState("");
     const router = useRouter();
 
     useEffect(() => {
@@ -88,8 +89,15 @@ const AccountPage = () => {
                 });
 
                 if (!passwordRes.ok) {
-                    console.error("Error al cambiar la contraseña.");
+                    const errData = await passwordRes.json().catch(() => null);
+                    setPasswordWarning(
+                    errData?.detail ||
+                    errData?.old_password?.join(" ") ||
+                    "No se pudo cambiar la contraseña."
+                    );
                     return;
+                } else {
+                    setPasswordWarning("");
                 }
             }
 
@@ -264,7 +272,8 @@ const AccountPage = () => {
                                 </div>
 
                                 {passwordError && (
-                                    <p className={styles.error}>{passwordError}</p>
+                                    <p className={styles.error}>{passwordError}</p>,
+                                    <p className={styles.error}>{passwordWarning}</p>
                                 )}
                             </>
                         )}
