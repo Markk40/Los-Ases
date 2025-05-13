@@ -4,84 +4,58 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import AuctionItem from "@/components/AuctionItem";
 import styles from "./styles.module.css";
-import { getAllAuctions, getAllCategories, getAllBids } from "../utils/api";
+
+const API_BASE_URL = "https://los-ases-backend.onrender.com/api/auctions/";
 
 export default function SearchResults() {
   const [cars, setCars] = useState([]);
   const [bids, setBids] = useState([]);
-  const [filteredCars, setFilteredCars] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState(300000);
   const [category, setCategory] = useState("all");
   const [categories, setCategories] = useState([]);
 
-  // Cargar subastas
+  // filtros nuevos
+  const [onlyOpen, setOnlyOpen] = useState(false);
+  const [ratingMin, setRatingMin] = useState(0);
+
+  // carga pujas (igual que antes)
   useEffect(() => {
-    async function loadCars() {
-      try {
-        const data = await getAllAuctions();
-        setCars(data.results);
-        setFilteredCars(data.results);
-      } catch (error) {
-        console.error("Error cargando subastas:", error);
-      }
-    }
-    loadCars();
+    fetch("https://los-ases-backend.onrender.com/api/bids/")
+      .then(r => r.ok ? r.json() : [])
+      .then(setBids)
+      .catch(console.error);
   }, []);
 
+  // carga categorías (igual)
   useEffect(() => {
-    async function loadBids() {
-      try {
-        const data = await getAllBids();
-        setBids(data); // asumiendo que es un array directo
-      } catch (error) {
-        console.error("Error cargando pujas:", error);
-      }
-    }
-    loadBids();
+    fetch(`${API_BASE_URL}categories/`)
+      .then(r => r.json())
+      .then(d => setCategories(d.results))
+      .catch(console.error);
   }, []);
 
-  // Cargar categorías dinámicamente
+  // carga subastas cada vez que cambian los filtros de backend
   useEffect(() => {
-    async function loadCategories() {
-      try {
-        const data = await getAllCategories();
-        setCategories(data.results);
-      } catch (error) {
-        console.error("Error cargando categorías:", error);
-      }
-    }
-    loadCategories();
-  }, []);
+    const params = new URLSearchParams();
+    if (onlyOpen) params.set("is_open", "true");
+    if (ratingMin) params.set("rating_min", ratingMin);
+    fetch(`${API_BASE_URL}?${params.toString()}`)
+      .then(r => {
+        if (!r.ok) throw new Error("Error al cargar subastas");
+        return r.json();
+      })
+      .then(d => setCars(d.results))
+      .catch(console.error);
+  }, [onlyOpen, ratingMin]);
 
-  // Filtrado general
-  const filterCars = (search, price, cat) => {
-    const filtered = cars.filter((car) => {
-      const matchesSearch = car.title.toLowerCase().includes(search);
-      const matchesPrice = car.price <= price;
-      const matchesCategory = cat === "all" || car.category === parseInt(cat);
-      return matchesSearch && matchesPrice && matchesCategory;
-    });
-    setFilteredCars(filtered);
-  };
-
-  const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-    filterCars(query, maxPrice, category);
-  };
-
-  const handleMaxPriceChange = (e) => {
-    const newMax = parseInt(e.target.value);
-    setMaxPrice(newMax);
-    filterCars(searchQuery, newMax, category);
-  };
-
-  const handleCategoryChange = (e) => {
-    const newCat = e.target.value;
-    setCategory(newCat);
-    filterCars(searchQuery, maxPrice, newCat);
-  };
+  // filtrado local (search, price, category)
+  const filtered = cars.filter(car => {
+    const matchesSearch = car.title.toLowerCase().includes(searchQuery);
+    const matchesPrice  = car.price <= maxPrice;
+    const matchesCat    = category === "all" || car.category === +category;
+    return matchesSearch && matchesPrice && matchesCat;
+  });
 
   return (
     <div>
@@ -94,40 +68,68 @@ export default function SearchResults() {
             type="text"
             placeholder="Buscar subastas..."
             value={searchQuery}
-            onChange={handleSearch}
+            onChange={e => setSearchQuery(e.target.value.toLowerCase())}
           />
         </div>
 
         <div className={styles.filters}>
-          <label>Precio máximo</label>
-          <input
-            type="range"
-            min="20000"
-            max="300000"
-            value={maxPrice}
-            onChange={handleMaxPriceChange}
-          />
-          <span>{maxPrice}€</span>
+          {/* Precio */}
+          <div>
+            <label>Precio máximo</label>
+            <input
+              type="range"
+              min="20000"
+              max="300000"
+              value={maxPrice}
+              onChange={e => setMaxPrice(+e.target.value)}
+            />
+            <span>{maxPrice}€</span>
+          </div>
 
-          <label>Categoría</label>
-          <select value={category} onChange={handleCategoryChange}>
-          <option value="all">Todas</option>
-          {Array.isArray(categories) && categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+          {/* Categoría */}
+          <div>
+            <label>Categoría</label>
+            <select value={category} onChange={e => setCategory(e.target.value)}>
+              <option value="all">Todas</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Solo activas */}
+          <div>
+            <label>Estado</label>
+            <button
+              className={onlyOpen ? styles.activeBtn : styles.inactiveBtn}
+              onClick={() => setOnlyOpen(o => !o)}
+            >
+              {onlyOpen ? "Mostrar todas" : "Solo activas"}
+            </button>
+          </div>
+
+          {/* Valoración mínima */}
+          <div>
+            <label>Valoración mínima</label>
+            <div className={styles.starFilter}>
+              {[1,2,3,4,5].map(i => (
+                <span
+                  key={i}
+                  className={ i <= ratingMin ? styles.starFilled : styles.star }
+                  onClick={() => setRatingMin(ratingMin === i ? 0 : i)}
+                >★</span>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className={styles.auctionResults}>
-          {filteredCars.length === 0 ? (
-            <p>No se han encontrado subastas.</p>
-          ) : (
-            filteredCars.map((car) => (
-              <AuctionItem key={car.id} car={car} bids={bids}/>
-            ))
-          )}
+          {filtered.length === 0
+            ? <p>No se han encontrado subastas.</p>
+            : filtered.map(car => (
+                <AuctionItem key={car.id} car={car} bids={bids}/>
+              ))
+          }
         </div>
       </div>
       <Footer />

@@ -104,3 +104,9 @@
     padding: 20px;
     overflow: hidden; /* Evita desbordamientos */
 }
+
+.activeBtn { background: #0070f3; color: white; }
+.inactiveBtn { background: #eee; color: #333; }
+.star { cursor: pointer; font-size: 1.2rem; color: #ccc; }
+.starFilled { cursor: pointer; font-size: 1.2rem; color: #f5a623; }
+.starFilter { display: inline-block; }
