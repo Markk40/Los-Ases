@@ -17,36 +17,31 @@ export const createAuction = async (data) => {
   if (!token) throw new Error("No estás logueado");
 
   const payload = JSON.parse(atob(token.split(".")[1]));
-  const userId = payload.user_id || payload.id;
+  const userId  = payload.user_id || payload.id;
 
   const formData = new FormData();
   formData.append("auctioneer", userId);
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("closing_date", data.closing_date);
-  formData.append("thumbnail", data.thumbnail);
-  formData.append("price", data.price);
-  formData.append("stock", data.stock);
-  formData.append("category", data.category);
-  formData.append("brand", data.brand);
+  formData.append("title",      data.title);
+  formData.append("description",data.description);
+  formData.append("closing_date",data.closing_date);
+  formData.append("thumbnail",  data.thumbnail);
+  formData.append("price",      data.price);
+  formData.append("stock",      data.stock);
+  formData.append("category",   data.category);
+  formData.append("brand",      data.brand);
 
-  const res = await fetch(API_BASE_URL, {
+  const res = await fetch(`${API_BASE_URL}`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
 
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    if (err && typeof err === "object") {
-      const msg = Object.entries(err)
-        .map(([k,v]) => `${k}: ${Array.isArray(v)? v.join(" "): v}`)
-        .join("; ");
-      throw new Error(msg);
-    }
-    throw new Error("Error al crear la subasta");
+    const msg = err && typeof err === "object"
+      ? Object.entries(err).map(([k,v])=>`${k}: ${v}`).join("; ")
+      : "Error al crear la subasta";
+    throw new Error(msg);
   }
   return res.json();
 };
@@ -54,11 +49,6 @@ export const createAuction = async (data) => {
 
 export const updateAuction = async (id, data) => {
   const token = localStorage.getItem("accessToken");
-  Object.entries(data).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      formData.append(key, value);
-    }
-  });
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PATCH",
     headers: {

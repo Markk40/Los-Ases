@@ -272,7 +272,9 @@ const AccountPage = () => {
                                 </div>
 
                                 {passwordError && (
-                                    <p className={styles.error}>{passwordError}</p>,
+                                    <p className={styles.error}>{passwordError}</p>
+                                )}
+                                {passwordWarning && (
                                     <p className={styles.error}>{passwordWarning}</p>
                                 )}
                             </>
