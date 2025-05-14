@@ -37,13 +37,28 @@ export const createAuction = async (data) => {
   });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    const msg = err && typeof err === "object"
-      ? Object.entries(err).map(([k,v])=>`${k}: ${v}`).join("; ")
-      : "Error al crear la subasta";
-    throw new Error(msg);
+    let errorMessage = "Error al crear la subasta";
+    let errorJson = null;
+
+    try {
+      errorJson = await res.json();
+    } catch (e) {
+      // No hacer nada, por si no se puede parsear JSON
+    }
+
+    if (errorJson && typeof errorJson === "object") {
+      errorMessage = Object.entries(errorJson)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join("; ");
+    }
+
+    throw new Error(errorMessage);
   }
-  return res.json();
+
+  // Aquí ya no llamamos de nuevo a res.json(), ya que sería ilegal después de haberlo leído
+  const responseJson = await res.json(); // ✅ Esto es seguro si no entró al bloque de error
+  return responseJson;
+
 };
 
 
