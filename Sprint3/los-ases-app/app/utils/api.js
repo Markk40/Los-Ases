@@ -13,43 +13,59 @@ export const getAuctionById = async (id) => {
 };
 
 export const createAuction = async (data) => {
-  const token = localStorage.getItem("accessToken")
-  if (!token) throw new Error("No estás logueado")
+  const token = localStorage.getItem("accessToken");
+  if (!token) throw new Error("No estás logueado");
 
-  const payload = JSON.parse(atob(token.split(".")[1]))
-  const userId  = payload.user_id || payload.id
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  const userId = payload.user_id || payload.id;
 
-  const formData = new FormData()
-  formData.append("auctioneer", userId)
-  formData.append("title",       data.title)
-  formData.append("description", data.description)
-  formData.append("closing_date",data.closing_date)
-  formData.append("thumbnail",   data.thumbnail)
-  formData.append("price",       data.price)
-  formData.append("stock",       data.stock)
-  formData.append("category",    data.category)
-  formData.append("brand",       data.brand)
+  const formData = new FormData();
+  formData.append("auctioneer", userId);
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("closing_date", data.closing_date);
+  formData.append("thumbnail", data.thumbnail);
+  formData.append("price", data.price);
+  formData.append("stock", data.stock);
+  formData.append("category", data.category);
+  formData.append("brand", data.brand);
 
   const res = await fetch(`${API_BASE_URL}`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
-  })
+  });
 
-  // leer el cuerpo completo de la respuesta para depurar
-  const text = await res.text()
-  if (!res.ok) {
-    console.error("⚠️ Error al crear la subasta, respuesta bruta:", text)
-    let errObj
-    try { errObj = JSON.parse(text) } catch {}
-    const msg = errObj
-      ? Object.entries(errObj).map(([k,v])=>`${k}: ${v}`).join("; ")
-      : text || "Error al crear la subasta"
-    throw new Error(msg)
+  let responseBody;
+  try {
+    responseBody = await res.text(); // solo una vez
+  } catch (e) {
+    console.error("No se pudo leer la respuesta del servidor");
+    throw new Error("Error desconocido al crear la subasta");
   }
 
-  return await res.json()
-}
+  if (!res.ok) {
+    console.error("Error al crear la subasta, respuesta bruta:", responseBody);
+    let errObj;
+    try {
+      errObj = JSON.parse(responseBody);
+    } catch {}
+
+    const msg = errObj && typeof errObj === "object"
+      ? Object.entries(errObj).map(([k, v]) => `${k}: ${v}`).join("; ")
+      : responseBody || "Error al crear la subasta";
+
+    throw new Error(msg);
+  }
+
+  // Si todo fue bien, parseamos el JSON desde el texto ya leído
+  try {
+    return JSON.parse(responseBody);
+  } catch {
+    throw new Error("La respuesta del servidor no es un JSON válido");
+  }
+};
+
 
 
 export const updateAuction = async (id, data) => {
