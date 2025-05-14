@@ -13,73 +13,66 @@ export const getAuctionById = async (id) => {
 };
 
 export const createAuction = async (data) => {
-  const token = localStorage.getItem("accessToken");
-  if (!token) throw new Error("No estás logueado");
+  const token = localStorage.getItem("accessToken")
+  if (!token) throw new Error("No estás logueado")
 
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  const userId  = payload.user_id || payload.id;
+  const payload = JSON.parse(atob(token.split(".")[1]))
+  const userId  = payload.user_id || payload.id
 
-  const formData = new FormData();
-  formData.append("auctioneer", userId);
-  formData.append("title",      data.title);
-  formData.append("description",data.description);
-  formData.append("closing_date",data.closing_date);
-  formData.append("thumbnail",  data.thumbnail);
-  formData.append("price",      data.price);
-  formData.append("stock",      data.stock);
-  formData.append("category",   data.category);
-  formData.append("brand",      data.brand);
+  const formData = new FormData()
+  formData.append("auctioneer", userId)
+  formData.append("title",       data.title)
+  formData.append("description", data.description)
+  formData.append("closing_date",data.closing_date)
+  formData.append("thumbnail",   data.thumbnail)
+  formData.append("price",       data.price)
+  formData.append("stock",       data.stock)
+  formData.append("category",    data.category)
+  formData.append("brand",       data.brand)
 
   const res = await fetch(`${API_BASE_URL}`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
-  });
+  })
 
+  // leer el cuerpo completo de la respuesta para depurar
+  const text = await res.text()
   if (!res.ok) {
-    let errorMessage = "Error al crear la subasta";
-    let errorJson = null;
-
-    try {
-      errorJson = await res.json();
-    } catch (e) {
-      // No hacer nada, por si no se puede parsear JSON
-    }
-
-    if (errorJson && typeof errorJson === "object") {
-      errorMessage = Object.entries(errorJson)
-        .map(([k, v]) => `${k}: ${v}`)
-        .join("; ");
-    }
-
-    throw new Error(errorMessage);
+    console.error("⚠️ Error al crear la subasta, respuesta bruta:", text)
+    let errObj
+    try { errObj = JSON.parse(text) } catch {}
+    const msg = errObj
+      ? Object.entries(errObj).map(([k,v])=>`${k}: ${v}`).join("; ")
+      : text || "Error al crear la subasta"
+    throw new Error(msg)
   }
 
-  // Aquí ya no llamamos de nuevo a res.json(), ya que sería ilegal después de haberlo leído
-  const responseJson = await res.json(); // ✅ Esto es seguro si no entró al bloque de error
-  return responseJson;
-
-};
+  return await res.json()
+}
 
 
 export const updateAuction = async (id, data) => {
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("accessToken")
+  if (!token) throw new Error("No estás logueado")
+
   const res = await fetch(`${API_BASE_URL}${id}/`, {
     method: "PATCH",
     headers: {
+      "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify(data),
-  });
+  })
 
   if (!res.ok) {
-    const errorDetails = await res.json();
-    console.error("Detalles del error:", errorDetails);
-    throw new Error(errorDetails.detail || "Falló la actualización");
+    const err = await res.json().catch(() => null)
+    const msg = err?.detail || JSON.stringify(err) || "Falló la actualización"
+    throw new Error(msg)
   }
 
-  return await res.json();
-};
+  return await res.json()
+}
 
 export const deleteAuction = async (id) => {
   const token = localStorage.getItem("accessToken");
