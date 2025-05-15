@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 import AuctionItem from "@/components/AuctionItem";
 import styles from "./styles.module.css";
 
-const API_BASE_URL = "https://los-ases-backend.onrender.com/api/auctions/";
+const API_BASE_URL = "http://127.0.0.1:8000/api/auctions/";
 
 export default function SearchResults() {
   const [cars, setCars] = useState([]);
@@ -21,7 +21,7 @@ export default function SearchResults() {
 
   // carga pujas (igual que antes)
   useEffect(() => {
-    fetch("https://los-ases-backend.onrender.com/api/bids/")
+    fetch("http://127.0.0.1:8000/api/bids/")
       .then(r => r.ok ? r.json() : [])
       .then(setBids)
       .catch(console.error);

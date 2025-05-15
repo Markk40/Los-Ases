@@ -18,7 +18,7 @@ const Login = () => {
             setError("");
 
             // 1. Petición para obtener token
-            const tokenRes = await fetch("https://los-ases-backend.onrender.com/api/token/", {
+            const tokenRes = await fetch("http://127.0.0.1:8000//api/token/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
@@ -33,7 +33,7 @@ const Login = () => {
             const accessToken = tokenData.access;
 
             // 2. Obtener perfil de usuario
-            const profileRes = await fetch("https://los-ases-backend.onrender.com/api/users/profile/", {
+            const profileRes = await fetch("http://127.0.0.1:8000/api/users/profile/", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

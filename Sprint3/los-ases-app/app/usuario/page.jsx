@@ -24,7 +24,7 @@ const AccountPage = () => {
                     return;
                 }
 
-                const response = await fetch("https://los-ases-backend.onrender.com/api/users/profile/", {
+                const response = await fetch("http://127.0.0.1:8000/api/users/profile/", {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -79,7 +79,7 @@ const AccountPage = () => {
                     new_password: password 
                 };
 
-                const passwordRes = await fetch("https://los-ases-backend.onrender.com/api/users/change-password/", {
+                const passwordRes = await fetch("http://127.0.0.1:8000/api/users/change-password/", {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -102,7 +102,7 @@ const AccountPage = () => {
             }
 
             // Guardar otros campos
-            const response = await fetch("https://los-ases-backend.onrender.com/api/users/profile/", {
+            const response = await fetch("http://127.0.0.1:8000/api/users/profile/", {
                 method: "PATCH",
                 headers: {
                     "Authorization": `Bearer ${token}`,
